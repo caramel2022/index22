@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة الفضاء اللغوية 🚀</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap');
+
+        :root {
+            --primary-color: #00ff88;
+            --secondary-color: #7700ff;
+            --background-dark: #0a0a2a;
+            --text-glow: 0 0 10px var(--primary-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--background-dark);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .space-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .spaceship-container {
+            perspective: 1000px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .spaceship {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cosmic-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .game-title {
+            font-size: 3em;
+            color: var(--primary-color);
+            text-align: center;
+            text-shadow: var(--text-glow);
+            margin-bottom: 30px;
+        }
+
+        .word-container {
+            background: rgba(119, 0, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .current-word {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: var(--text-glow);
+            margin: 20px 0;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .cosmic-button {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cosmic-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .cosmic-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--primary-color);
+        }
+
+        .energy-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .energy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+
+        .back-button {
+            background-color: var(--background-dark);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2em;
+            margin: 20px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        @media (max-width: 600px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-background" id="space"></div>
+    
+    <div class="game-container">
+        <div class="cosmic-panel">
+            <h1 class="game-title">رحلة الفضاء اللغوية 🚀</h1>
+            
+            <div class="spaceship-container">
+                <div class="spaceship">
+                    <!-- SVG spaceship here -->
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path d="M50 10 L80 80 L50 70 L20 80 Z" fill="var(--primary-color)"/>
+                        <circle cx="50" cy="40" r="10" fill="var(--secondary-color)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stat-box">
+                    <div>النقاط الكونية</div>
+                    <div id="score">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>المستوى الفضائي</div>
+                    <div id="level">1</div>
+                </div>
+                <div class="stat-box">
+                    <div>طاقة المركبة</div>
+                    <div class="energy-bar">
+                        <div class="energy-fill" id="energy"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="word-container">
+                <div class="current-word" id="current-word">جاري تحميل الكلمة...</div>
+            </div>
+
+            <div class="button-grid">
+                <button class="cosmic-button" onclick="checkAnswer('اسم')">🌟 محطة الأسماء</button>
+                <button class="cosmic-button" onclick="checkAnswer('فعل')">⚡ محطة الأفعال</button>
+                <button class="cosmic-button" onclick="checkAnswer('حرف')">💫 محطة الحروف</button>
+            </div>
+
+            <button id="backButton" class="back-button">عودة</button>
+
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        // إنشاء النجوم في الخلفية
+        function createStars() {
+            const space = document.getElementById('space');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 1}s`);
+                space.appendChild(star);
+            }
+        }
+
+        const spaceWords = [
+            { word: 'مركبة', type: 'اسم', points: 10 },
+            { word: 'يحلق', type: 'فعل', points: 15 },
+            { word: 'في', type: 'حرف', points: 5 },
+            { word: 'فضاء', type: 'اسم', points: 10 },
+            { word: 'يستكشف', type: 'فعل', points: 15 },
+            { word: 'من', type: 'حرف', points: 5 },
+            { word: 'نجم', type: 'اسم', points: 20 },
+            { word: 'يضيء', type: 'فعل', points: 25 },
+            { word: 'إلى', type: 'حرف', points: 10 }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let level = 1;
+        let energy = 100;
+
+        function updateDisplay() {
+            document.getElementById('current-word').textContent = spaceWords[currentIndex].word;
+            document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = level;
+            document.getElementById('energy').style.width = `${energy}%`;
+        }
+
+        function checkAnswer(type) {
+            const word = spaceWords[currentIndex];
+            const messageEl = document.getElementById('message');
+
+            if (word.type === type) {
+                score += word.points * level;
+                energy = Math.min(100, energy + 10);
+                messageEl.textContent = '🌟 رائع! اكتشاف موفق! 🌟';
+                currentIndex++;
+                
+                if (currentIndex % 3 === 0) {
+                    level++;
+                }
+            } else {
+                energy = Math.max(0, energy - 20);
+                messageEl.textContent = '❌ إجابة خاطئة! فقدت بعض الطاقة! ❌';
+            }
+
+            if (energy <= 0) {
+                endGame('نفذت طاقة المركبة! انتهت الرحلة 🚀');
+                return;
+            }
+
+            if (currentIndex >= spaceWords.length) {
+                endGame('أكملت الرحلة بنجاح! 🎉');
+                return;
+            }
+
+            updateDisplay();
+        }
+
+        function endGame(message) {
+            document.getElementById('message').textContent = message;
+            document.getElementById('current-word').textContent = `النتيجة النهائية: ${score}`;
+            document.querySelectorAll('.cosmic-button').forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        // بدء اللعبة
+        createStars();
+        updateDisplay();
+
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'subject_exercices1.html';
+        });
+    </script>
+</body>
+</html>

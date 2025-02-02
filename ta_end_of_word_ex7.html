@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القصة التفاعلية - التاء في آخر الكلمة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #7c3aed;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --background-gradient: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .score {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-container {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-size: 1.3rem;
+            line-height: 2;
+        }
+
+        .word-blank {
+            display: inline-block;
+            min-width: 100px;
+            padding: 5px 15px;
+            margin: 0 5px;
+            border-bottom: 2px dashed var(--primary-color);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .word-blank.correct {
+            color: var(--success-color);
+            border-bottom-style: solid;
+        }
+
+        .word-blank.wrong {
+            color: var(--error-color);
+            border-bottom-style: solid;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .option-btn {
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feedback {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            min-height: 30px;
+            color: var(--primary-color);
+        }
+
+        .next-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: #64748b;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+
+            .story-container {
+                font-size: 1.2rem;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">القصة التفاعلية - التاء في آخر الكلمة</h1>
+        
+        <div class="score-container">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="score">القصة: <span id="storyNumber">1</span> / 3</div>
+        </div>
+
+        <div class="story-container" id="storyContainer">
+            <!-- Story content will be inserted here -->
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextStory()">القصة التالية</button>
+        <a href="ta_end_of_word_exercises.html" class="back-btn">
+            <i class="fas fa-arrow-right ml-2"></i>
+            العودة إلى التمارين
+        </a>
+    </div>
+
+    <script>
+        const stories = [
+            {
+                text: "في صباح يوم جميل، استيقظ___ سار___ من النوم. ذهب___ إلى المدرس___ مبكراً. في الفصل، جلس___ بجانب صديق___ فاطم___. خلال الحص___ الأولى، شارك___ في النشاطا___ الصفي___.",
+                words: [
+                    { position: 0, word: "استيقظت", type: "ت" },
+                    { position: 1, word: "سارة", type: "ة" },
+                    { position: 2, word: "ذهبت", type: "ت" },
+                    { position: 3, word: "المدرسة", type: "ة" },
+                    { position: 4, word: "جلست", type: "ت" },
+                    { position: 5, word: "صديقة", type: "ة" },
+                    { position: 6, word: "فاطمة", type: "ة" },
+                    { position: 7, word: "الحصة", type: "ة" },
+                    { position: 8, word: "شاركت", type: "ت" },
+                    { position: 9, word: "النشاطات", type: "ت" },
+                    { position: 10, word: "الصفية", type: "ة" }
+                ]
+            },
+            {
+                text: "في حديق___ المنزل، زرع___ أمي شجر___ جميل___. سقي___ النباتا___ كل يوم، حتى نم___ وأصبح___ كبير___. عندما رأي___ الثمر___ نضج___، قطف___ منها.",
+                words: [
+                    { position: 0, word: "حديقة", type: "ة" },
+                    { position: 1, word: "زرعت", type: "ت" },
+                    { position: 2, word: "شجرة", type: "ة" },
+                    { position: 3, word: "جميلة", type: "ة" },
+                    { position: 4, word: "سقيت", type: "ت" },
+                    { position: 5, word: "النباتات", type: "ت" },
+                    { position: 6, word: "نمت", type: "ت" },
+                    { position: 7, word: "أصبحت", type: "ت" },
+                    { position: 8, word: "كبيرة", type: "ة" },
+                    { position: 9, word: "رأيت", type: "ت" },
+                    { position: 10, word: "الثمرة", type: "ة" },
+                    { position: 11, word: "نضجت", type: "ت" },
+                    { position: 12, word: "قطفت", type: "ت" }
+                ]
+            },
+            {
+                text: "في مكتب___ المدرس___، وجد___ معلم___ العربي___ تلميذ___ مجتهد___. كتب___ الواجبا___ كامل___ وقرأ___ القص___ بعناي___.",
+                words: [
+                    { position: 0, word: "مكتبة", type: "ة" },
+                    { position: 1, word: "المدرسة", type: "ة" },
+                    { position: 2, word: "وجدت", type: "ت" },
+                    { position: 3, word: "معلمة", type: "ة" },
+                    { position: 4, word: "العربية", type: "ة" },
+                    { position: 5, word: "تلميذة", type: "ة" },
+                    { position: 6, word: "مجتهدة", type: "ة" },
+                    { position: 7, word: "كتبت", type: "ت" },
+                    { position: 8, word: "الواجبات", type: "ت" },
+                    { position: 9, word: "كاملة", type: "ة" },
+                    { position: 10, word: "قرأت", type: "ت" },
+                    { position: 11, word: "القصة", type: "ة" },
+                    { position: 12, word: "عناية", type: "ة" }
+                ]
+            }
+        ];
+
+        let currentStoryIndex = 0;
+        let score = 0;
+        let currentWord = null;
+
+        function startGame() {
+            score = 0;
+            currentStoryIndex = 0;
+            updateScore();
+            showStory();
+        }
+
+        function showStory() {
+            const story = stories[currentStoryIndex];
+            let storyHtml = story.text;
+            
+            // Replace underscores with clickable spans
+            story.words.forEach((word, index) => {
+                const placeholder = `<span class="word-blank" onclick="selectWord(${index})" id="blank_${index}">___</span>`;
+                storyHtml = storyHtml.replace('___', placeholder);
+            });
+
+            document.getElementById('storyContainer').innerHTML = storyHtml;
+            document.getElementById('storyNumber').textContent = currentStoryIndex + 1;
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            // Add options buttons if they don't exist
+            if (!document.querySelector('.options-container')) {
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+                optionsContainer.innerHTML = `
+                    <button class="option-btn" onclick="checkAnswer('ة')">تاء مربوطة (ة)</button>
+                    <button class="option-btn" onclick="checkAnswer('ت')">تاء مفتوحة (ت)</button>
+                `;
+                document.getElementById('storyContainer').after(optionsContainer);
+            }
+        }
+
+        function selectWord(index) {
+            // Reset previously selected word
+            const blanks = document.querySelectorAll('.word-blank');
+            blanks.forEach(blank => blank.style.backgroundColor = '');
+            
+            currentWord = {
+                index: index,
+                ...stories[currentStoryIndex].words[index]
+            };
+            
+            // Highlight selected word
+            document.getElementById(`blank_${index}`).style.backgroundColor = '#e0e7ff';
+        }
+
+        function checkAnswer(answer) {
+            if (!currentWord) {
+                document.getElementById('feedback').textContent = 'الرجاء اختيار كلمة أولاً';
+                document.getElementById('feedback').style.color = 'var(--error-color)';
+                return;
+            }
+
+            const blank = document.getElementById(`blank_${currentWord.index}`);
+            
+            if (answer === currentWord.type) {
+                score += 10;
+                blank.textContent = currentWord.word;
+                blank.classList.add('correct');
+                document.getElementById('feedback').textContent = 'أحسنت! إجابة صحيحة';
+                document.getElementById('feedback').style.color = 'var(--success-color)';
+            } else {
+                blank.classList.add('wrong');
+                document.getElementById('feedback').textContent = 'حاول مرة أخرى';
+                document.getElementById('feedback').style.color = 'var(--error-color)';
+                return;
+            }
+
+            updateScore();
+            
+            // Check if all words in the story are completed
+            const allWords = stories[currentStoryIndex].words.length;
+            const completedWords = document.querySelectorAll('.word-blank.correct').length;
+            
+            if (completedWords === allWords && currentStoryIndex < stories.length - 1) {
+                document.getElementById('nextBtn').style.display = 'block';
+            } else if (completedWords === allWords && currentStoryIndex === stories.length - 1) {
+                document.getElementById('feedback').textContent = 'أحسنت! لقد أكملت جميع القصص';
+            }
+
+            currentWord = null;
+        }
+
+        function nextStory() {
+            if (currentStoryIndex < stories.length - 1) {
+                currentStoryIndex++;
+                showStory();
+                document.getElementById('feedback').textContent = '';
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        // Start the game when the page loads
+        window.onload = startGame;
+    </script>
+</body>
+</html>

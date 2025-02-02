@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 8 - اكتب جملة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .exercise-area {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .prompt {
+            font-size: 20px;
+            margin: 15px;
+            color: #2c3e50;
+        }
+        .word-bank {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .word {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        textarea {
+            width: 90%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            resize: vertical;
+            direction: rtl;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        #backButton {
+            background-color: #6c757d;
+        }
+        .hint {
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 8: اكتب جملة</h1>
+        <p>اكتب جملة مفيدة تحتوي على كلمات فيها "ال" الشمسية و"ال" القمرية</p>
+        
+        <div class="exercise-area">
+            <div class="prompt" id="prompt"></div>
+            <div class="word-bank" id="wordBank">
+                <h3>الكلمات المتاحة:</h3>
+                <!-- Words will be added here by JavaScript -->
+            </div>
+            <textarea id="sentenceInput" placeholder="اكتب جملتك هنا..."></textarea>
+            <div class="hint">تأكد من استخدام كلمة واحدة على الأقل من كل نوع (شمسية وقمرية)</div>
+            <button onclick="checkSentence()">تحقق من الجملة</button>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        <button onclick="nextPrompt()">السؤال التالي</button>
+        <button onclick="resetExercise()">إعادة التمرين</button>
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script>
+        const prompts = [
+            {
+                text: "اكتب جملة عن الطبيعة",
+                words: [
+                    { word: "الشَّمس", type: "شمسية" },
+                    { word: "القَمَر", type: "قمرية" },
+                    { word: "السَّماء", type: "شمسية" },
+                    { word: "البَحر", type: "قمرية" },
+                    { word: "النَّجم", type: "شمسية" },
+                    { word: "الهَواء", type: "قمرية" }
+                ]
+            },
+            {
+                text: "اكتب جملة عن المدرسة",
+                words: [
+                    { word: "الطَّالِب", type: "شمسية" },
+                    { word: "المُعَلِّم", type: "قمرية" },
+                    { word: "الدَّرس", type: "شمسية" },
+                    { word: "الكِتاب", type: "قمرية" },
+                    { word: "التَّلميذ", type: "شمسية" },
+                    { word: "المَكتَب", type: "قمرية" }
+                ]
+            },
+            {
+                text: "اكتب جملة عن البيت",
+                words: [
+                    { word: "الطَّعام", type: "شمسية" },
+                    { word: "البَيت", type: "قمرية" },
+                    { word: "النَّافِذة", type: "شمسية" },
+                    { word: "الغُرفة", type: "قمرية" },
+                    { word: "السَّرير", type: "شمسية" },
+                    { word: "المَطبَخ", type: "قمرية" }
+                ]
+            },
+            {
+                text: "اكتب جملة عن الحديقة",
+                words: [
+                    { word: "الزَّهر", type: "شمسية" },
+                    { word: "الوَرد", type: "قمرية" },
+                    { word: "الشَّجَر", type: "شمسية" },
+                    { word: "العُشب", type: "قمرية" },
+                    { word: "الثَّمَر", type: "شمسية" },
+                    { word: "المَاء", type: "قمرية" }
+                ]
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function displayPrompt() {
+            const currentPrompt = prompts[currentIndex];
+            document.getElementById('prompt').textContent = currentPrompt.text;
+            
+            const wordBank = document.getElementById('wordBank');
+            wordBank.innerHTML = '<h3>الكلمات المتاحة:</h3>';
+            currentPrompt.words.forEach(wordObj => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                wordSpan.textContent = wordObj.word;
+                wordBank.appendChild(wordSpan);
+            });
+
+            document.getElementById('sentenceInput').value = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentIndex;
+        }
+
+        function checkSentence() {
+            const input = document.getElementById('sentenceInput').value.trim();
+            const currentPrompt = prompts[currentIndex];
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (input.length < 10) {
+                feedbackElement.textContent = "الرجاء كتابة جملة أطول";
+                feedbackElement.className = "feedback incorrect";
+                return;
+            }
+
+            let hasSolar = false;
+            let hasLunar = false;
+            let usedWords = [];
+
+            currentPrompt.words.forEach(wordObj => {
+                if (input.includes(wordObj.word)) {
+                    usedWords.push(wordObj.word);
+                    if (wordObj.type === "شمسية") hasSolar = true;
+                    if (wordObj.type === "قمرية") hasLunar = true;
+                }
+            });
+
+            if (hasSolar && hasLunar) {
+                score++;
+                feedbackElement.textContent = `أحسنت! استخدمت الكلمات: ${usedWords.join('، ')}`;
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = "يجب استخدام كلمة واحدة على الأقل من كل نوع (شمسية وقمرية)";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+
+        function nextPrompt() {
+            currentIndex++;
+            if (currentIndex >= prompts.length) {
+                showFinalScore();
+                return;
+            }
+            displayPrompt();
+        }
+
+        function showFinalScore() {
+            const exerciseArea = document.querySelector('.exercise-area');
+            exerciseArea.innerHTML = `
+                <h2>انتهى التمرين!</h2>
+                <p>نتيجتك النهائية: ${score} من ${prompts.length}</p>
+                <button onclick="resetExercise()">إعادة التمرين</button>
+            `;
+        }
+
+        function resetExercise() {
+            currentIndex = 0;
+            score = 0;
+            prompts.sort(() => Math.random() - 0.5);
+            displayPrompt();
+        }
+
+        // Start the exercise
+        prompts.sort(() => Math.random() - 0.5);
+        displayPrompt();
+    </script>
+</body>
+</html>

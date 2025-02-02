@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>ورشة القراءة - فهم واستثمار</title>
+    <style>
+        @font-face {
+            font-family: 'Boutros';
+            src: url('https://fonts.googleapis.com/earlyaccess/boutroslinotype.woff2') format('woff2');
+        }
+
+        body {
+            font-family: 'Boutros', Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .workshop-title {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            background-color: #b0c4de;
+            color: #2c3e50;
+            padding: 8px 25px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .exercise-title img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .instruction {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-right: 4px solid #4a90e2;
+            color: #2c3e50;
+        }
+
+        .question-input {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .answer-text {
+            color: #34495e;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+            padding-right: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-text::before {
+            content: "←";
+            position: absolute;
+            right: 10px;
+            color: #4a90e2;
+        }
+
+        .answer-text:hover {
+            background-color: #f8f9fa;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Boutros', Arial, sans-serif;
+            margin-top: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="workshop-title">وَرْشَةُ الْقِراءَةِ</h1>
+            <h2 class="subtitle">فَهْمٌ وَاسْتِثْمارٌ</h2>
+        </div>
+
+        <div class="exercise-title">
+            <img src="reading-icon.png" alt="أستثمر النص">
+            <h3>أَسْتَثْمِرُ النَّصَّ</h3>
+        </div>
+
+        <div class="instruction">
+            <p>أَطْرَحُ أَسْئِلَةً تُناسِبُ الْإِجاباتِ.</p>
+        </div>
+
+        <div class="question-input">
+            <div class="answer-text">أَحَسَّ أَكْرَمُ بِالْحَسْرَةِ.</div>
+            <input type="text" class="input-field" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." data-correct="بِماذا أَحَسَّ أَكْرَمُ؟">
+            <div class="feedback"></div>
+        </div>
+
+        <div class="question-input">
+            <div class="answer-text">تَجْلِسُ الْجَدَّةُ في رُكْنِ الْبَيْتِ.</div>
+            <input type="text" class="input-field" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." data-correct="أَيْنَ تَجْلِسُ الْجَدَّةُ؟">
+            <div class="feedback"></div>
+        </div>
+
+        <div class="question-input">
+            <div class="answer-text">أَشْعَلَتِ الْجَدَّةُ شَمْعَةً صَغيرَةً.</div>
+            <input type="text" class="input-field" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." data-correct="ماذا أَشْعَلَتِ الْجَدَّةُ؟">
+            <div class="feedback"></div>
+        </div>
+
+        <div class="question-input">
+            <div class="answer-text">حَكَتِ الْجَدَّةُ قِصَّةً شَيِّقَةً.</div>
+            <input type="text" class="input-field" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." data-correct="ماذا حَكَتِ الْجَدَّةُ؟">
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        const encouragingMessages = [
+            "أَحْسَنْتَ! سُؤالٌ مُناسِبٌ",
+            "مُمْتازٌ! إِجابَةٌ صَحيحَةٌ",
+            "رائِعٌ! أَنْتَ تَفْهَمُ النَّصَّ جَيِّداً"
+        ];
+
+        const tryAgainMessages = [
+            "حاوِلْ مَرَّةً أُخْرى!",
+            "فَكِّرْ في صياغَةِ السُّؤالِ بِشَكْلٍ مُخْتَلِفٍ",
+            "يُمْكِنُكَ الْمُحاوَلَةَ مَرَّةً أُخْرى"
+        ];
+
+        function getRandomMessage(messages) {
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function checkAnswer(input) {
+            const correctAnswer = input.dataset.correct;
+            const userAnswer = input.value.trim();
+            const feedback = input.nextElementSibling;
+            
+            // Clear any existing timers
+            if (feedback.timer) clearTimeout(feedback.timer);
+            
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = getRandomMessage(encouragingMessages);
+                feedback.className = 'feedback success show';
+                feedback.timer = setTimeout(() => {
+                    feedback.classList.remove('show');
+                }, 5000);
+            } else if (userAnswer) {
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback error show';
+                feedback.timer = setTimeout(() => {
+                    feedback.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Add event listeners to all input fields
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', () => checkAnswer(input));
+        });
+    </script>
+</body>
+</html>

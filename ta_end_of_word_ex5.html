@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الكتابة - التاء في آخر الكلمة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --background-gradient: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .score {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .word-display {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .word-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            font-size: 1.3rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            text-align: center;
+            direction: rtl;
+            margin-bottom: 20px;
+        }
+
+        .word-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .timer {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .feedback {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            min-height: 30px;
+            color: var(--primary-color);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: #64748b;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+            color: white;
+        }
+
+        .hint {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+
+            .word-display {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">لعبة الكتابة - التاء في آخر الكلمة</h1>
+        
+        <div class="score-container">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="score">الكلمات الصحيحة: <span id="correctWords">0</span></div>
+        </div>
+
+        <div class="timer" id="timer">60</div>
+        
+        <div class="word-display" id="wordDisplay">
+            اضغط على زر البدء للعب
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="word-input" id="wordInput" placeholder="اكتب الكلمة هنا..." disabled>
+            <div class="hint" id="hint"></div>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+        <button class="start-btn" id="startBtn" onclick="startGame()">ابدأ اللعب</button>
+        <a href="ta_end_of_word_exercises.html" class="back-btn">
+            <i class="fas fa-arrow-right ml-2"></i>
+            العودة إلى التمارين
+        </a>
+    </div>
+
+    <script>
+        const words = [
+            { word: "مدرسة", type: "ة", hint: "مكان للتعلم" },
+            { word: "شجرة", type: "ة", hint: "نبات كبير" },
+            { word: "سيارة", type: "ة", hint: "وسيلة نقل" },
+            { word: "نافذة", type: "ة", hint: "للتهوية والضوء" },
+            { word: "ساعة", type: "ة", hint: "لمعرفة الوقت" },
+            { word: "مكتبة", type: "ة", hint: "مكان للكتب" },
+            { word: "حقيبة", type: "ة", hint: "لحمل الأشياء" },
+            { word: "طاولة", type: "ة", hint: "أثاث للجلوس" },
+            { word: "قطة", type: "ة", hint: "حيوان أليف" },
+            { word: "وردة", type: "ة", hint: "نبات جميل" },
+            { word: "كتبت", type: "ت", hint: "فعل الكتابة" },
+            { word: "جلست", type: "ت", hint: "فعل الجلوس" },
+            { word: "قرأت", type: "ت", hint: "فعل القراءة" },
+            { word: "نمت", type: "ت", hint: "فعل النوم" },
+            { word: "أكلت", type: "ت", hint: "فعل الأكل" }
+        ];
+
+        let currentWord = null;
+        let score = 0;
+        let correctWords = 0;
+        let timeLeft = 60;
+        let timer = null;
+        let gameActive = false;
+
+        const wordInput = document.getElementById('wordInput');
+        wordInput.addEventListener('input', checkWord);
+
+        function startGame() {
+            if (gameActive) return;
+            
+            score = 0;
+            correctWords = 0;
+            timeLeft = 60;
+            gameActive = true;
+            
+            document.getElementById('startBtn').disabled = true;
+            wordInput.disabled = false;
+            wordInput.value = '';
+            wordInput.focus();
+            
+            updateScore();
+            nextWord();
+            startTimer();
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function nextWord() {
+            const unusedWords = words.filter(w => w !== currentWord);
+            currentWord = unusedWords[Math.floor(Math.random() * unusedWords.length)];
+            document.getElementById('wordDisplay').textContent = currentWord.word;
+            document.getElementById('hint').textContent = `تلميح: ${currentWord.hint}`;
+        }
+
+        function checkWord() {
+            if (!gameActive) return;
+
+            const input = wordInput.value.trim();
+            if (input === currentWord.word) {
+                score += 10;
+                correctWords++;
+                document.getElementById('feedback').textContent = 'أحسنت!';
+                document.getElementById('feedback').style.color = 'var(--success-color)';
+                updateScore();
+                wordInput.value = '';
+                nextWord();
+            }
+        }
+
+        function endGame() {
+            clearInterval(timer);
+            gameActive = false;
+            wordInput.disabled = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('wordDisplay').textContent = `انتهت اللعبة! النقاط: ${score}`;
+            document.getElementById('hint').textContent = 'اضغط على زر البدء للعب مرة أخرى';
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('correctWords').textContent = correctWords;
+        }
+
+        // Initialize the game
+        updateScore();
+    </script>
+</body>
+</html>

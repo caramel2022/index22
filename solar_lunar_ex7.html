@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 7 - اختر الكلمة المناسبة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .exercise-area {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .sentence {
+            font-size: 22px;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .options {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .option-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #e9ecef;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        #backButton {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 7: اختر الكلمة المناسبة</h1>
+        <p>اختر الكلمة المناسبة لإكمال الجملة مع مراعاة نوع "ال"</p>
+        
+        <div class="exercise-area">
+            <div id="currentSentence" class="sentence"></div>
+            <div id="options" class="options"></div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        <button onclick="resetExercise()">إعادة التمرين</button>
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                text: "يشرق _____ في الصباح الباكر",
+                options: ["النُّور", "الضَّوء", "الشَّمس"],
+                correct: "الشَّمس",
+                type: "شمسية"
+            },
+            {
+                text: "يظهر _____ في السماء ليلاً",
+                options: ["القَمَر", "النَّجم", "البَدر"],
+                correct: "القَمَر",
+                type: "قمرية"
+            },
+            {
+                text: "يذهب الطلاب إلى _____ كل صباح",
+                options: ["المَدرَسة", "الصَّف", "المَكتَب"],
+                correct: "المَدرَسة",
+                type: "قمرية"
+            },
+            {
+                text: "يقرأ الطالب _____ بعناية",
+                options: ["الدَّرس", "الكِتاب", "النَّص"],
+                correct: "الدَّرس",
+                type: "شمسية"
+            },
+            {
+                text: "تطير _____ في السماء",
+                options: ["الطُّيور", "العَصافير", "البَط"],
+                correct: "الطُّيور",
+                type: "شمسية"
+            },
+            {
+                text: "يشرب الناس _____ من النهر",
+                options: ["المَاء", "العَذب", "البَارِد"],
+                correct: "المَاء",
+                type: "قمرية"
+            },
+            {
+                text: "يلعب الأطفال في _____",
+                options: ["السَّاحة", "المَلعَب", "الحَديقة"],
+                correct: "السَّاحة",
+                type: "شمسية"
+            },
+            {
+                text: "يكتب المعلم على _____",
+                options: ["السَّبّورة", "اللَّوح", "الورق"],
+                correct: "السَّبّورة",
+                type: "شمسية"
+            },
+            {
+                text: "يجلس الطالب على _____",
+                options: ["الكُرسي", "المَقعَد", "البَنك"],
+                correct: "الكُرسي",
+                type: "قمرية"
+            },
+            {
+                text: "يفتح الطالب _____ بهدوء",
+                options: ["البَاب", "النَّافِذة", "الشُّبّاك"],
+                correct: "البَاب",
+                type: "قمرية"
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function displaySentence() {
+            if (currentIndex >= sentences.length) {
+                showFinalScore();
+                return;
+            }
+            
+            const currentSentence = sentences[currentIndex];
+            document.getElementById('currentSentence').textContent = currentSentence.text;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            currentSentence.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentIndex;
+        }
+
+        function checkAnswer(selected) {
+            const currentSentence = sentences[currentIndex];
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (selected === currentSentence.correct) {
+                score++;
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = `غير صحيح. الإجابة الصحيحة هي: ${currentSentence.correct}`;
+                feedbackElement.className = "feedback incorrect";
+            }
+
+            // Disable all option buttons after answer
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(button => button.disabled = true);
+
+            currentIndex++;
+            setTimeout(displaySentence, 2000);
+        }
+
+        function showFinalScore() {
+            const exerciseArea = document.querySelector('.exercise-area');
+            exerciseArea.innerHTML = `
+                <h2>انتهى التمرين!</h2>
+                <p>نتيجتك النهائية: ${score} من ${sentences.length}</p>
+                <button onclick="resetExercise()">إعادة التمرين</button>
+            `;
+        }
+
+        function resetExercise() {
+            currentIndex = 0;
+            score = 0;
+            sentences.sort(() => Math.random() - 0.5);
+            displaySentence();
+        }
+
+        // Start the exercise
+        sentences.sort(() => Math.random() - 0.5);
+        displaySentence();
+    </script>
+</body>
+</html>

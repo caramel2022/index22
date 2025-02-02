@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 4 - استمع وحدد</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .exercise-area {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .word {
+            font-size: 24px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .options {
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        #backButton {
+            background-color: #6c757d;
+        }
+        .play-button {
+            font-size: 24px;
+            padding: 15px 30px;
+            margin: 20px;
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 4: استمع وحدد</h1>
+        <p>استمع إلى نطق الكلمة وحدد نوع "ال": شمسية أم قمرية</p>
+        
+        <div class="exercise-area">
+            <div id="currentWord" class="word"></div>
+            <button onclick="playWord()" class="play-button">
+                <i class="fas fa-play"></i> استمع
+            </button>
+            <div class="options">
+                <button onclick="checkAnswer('شمسية')">ال الشمسية</button>
+                <button onclick="checkAnswer('قمرية')">ال القمرية</button>
+            </div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        <button onclick="resetExercise()">إعادة التمرين</button>
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        const words = [
+            { word: "الدَّرس", type: "شمسية", audio: "addars" },
+            { word: "القَلَم", type: "قمرية", audio: "alqalam" },
+            { word: "الصَّوت", type: "شمسية", audio: "assawt" },
+            { word: "العَين", type: "قمرية", audio: "alain" },
+            { word: "الرَّجُل", type: "شمسية", audio: "arrajul" },
+            { word: "المَسجِد", type: "قمرية", audio: "almasjid" },
+            { word: "الشَّارِع", type: "شمسية", audio: "ashshari" },
+            { word: "اليَوم", type: "قمرية", audio: "alyawm" },
+            { word: "الطَّعام", type: "شمسية", audio: "attaam" },
+            { word: "البَاب", type: "قمرية", audio: "albab" }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function displayWord() {
+            if (currentIndex >= words.length) {
+                showFinalScore();
+                return;
+            }
+            document.getElementById('currentWord').textContent = words[currentIndex].word;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentIndex;
+        }
+
+        function playWord() {
+            // Note: This is a placeholder for audio functionality
+            // In a real implementation, you would need to add actual audio files
+            alert('في النسخة الكاملة: سيتم تشغيل الصوت هنا');
+        }
+
+        function checkAnswer(answer) {
+            const correctType = words[currentIndex].type;
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (answer === correctType) {
+                score++;
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = `غير صحيح. الإجابة الصحيحة هي: ${correctType}`;
+                feedbackElement.className = "feedback incorrect";
+            }
+
+            currentIndex++;
+            setTimeout(displayWord, 1500);
+        }
+
+        function showFinalScore() {
+            const exerciseArea = document.querySelector('.exercise-area');
+            exerciseArea.innerHTML = `
+                <h2>انتهى التمرين!</h2>
+                <p>نتيجتك النهائية: ${score} من ${words.length}</p>
+                <button onclick="resetExercise()">إعادة التمرين</button>
+            `;
+        }
+
+        function resetExercise() {
+            currentIndex = 0;
+            score = 0;
+            words.sort(() => Math.random() - 0.5);
+            displayWord();
+        }
+
+        // Start the exercise
+        words.sort(() => Math.random() - 0.5);
+        displayWord();
+    </script>
+</body>
+</html>

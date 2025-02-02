@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة أقسام الكلمة</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            direction: rtl;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .question h2 {
+            color: #3498db;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .option {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        .option:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+        .option.correct {
+            background-color: #27ae60;
+        }
+        .option.wrong {
+            background-color: #e74c3c;
+        }
+        .feedback {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .feedback.correct {
+            color: #27ae60;
+        }
+        .feedback.wrong {
+            color: #e74c3c;
+        }
+        #score {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة أقسام الكلمة</h1>
+        <div id="questions">
+            <!-- الأسئلة سيتم إضافتها هنا عبر JavaScript -->
+        </div>
+        <div id="score">النقاط: 0</div>
+        <button onclick="resetGame()">إعادة اللعبة</button>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                word: "شجرة",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "اسم"
+            },
+            {
+                word: "يكتب",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "فعل"
+            },
+            {
+                word: "على",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "حرف"
+            },
+            {
+                word: "يجري",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "فعل"
+            },
+            {
+                word: "كتاب",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "اسم"
+            },
+            {
+                word: "من",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "حرف"
+            },
+            {
+                word: "يقرأ",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "فعل"
+            },
+            {
+                word: "قلم",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "اسم"
+            },
+            {
+                word: "إلى",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "حرف"
+            },
+            {
+                word: "يرسم",
+                options: ["اسم", "فعل", "حرف"],
+                correctAnswer: "فعل"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionsContainer = document.getElementById('questions');
+        const scoreElement = document.getElementById('score');
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                questionsContainer.innerHTML = `<h2>انتهت اللعبة! نقاطك النهائية: ${score}</h2>`;
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            const questionHTML = `
+                <div class="question">
+                    <h2>ما هو قسم الكلمة "${question.word}"؟</h2>
+                    <div class="options">
+                        ${question.options.map(option => `
+                            <div class="option" onclick="checkAnswer('${option}')">${option}</div>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${currentQuestionIndex}"></div>
+                </div>
+            `;
+            questionsContainer.innerHTML = questionHTML;
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const question = questions[currentQuestionIndex];
+            const feedbackElement = document.getElementById(`feedback-${currentQuestionIndex}`);
+            const options = document.querySelectorAll('.option');
+
+            if (selectedAnswer === question.correctAnswer) {
+                feedbackElement.textContent = "إجابة صحيحة!";
+                feedbackElement.classList.add('correct');
+                score += 10;
+            } else {
+                feedbackElement.textContent = `إجابة خاطئة! الإجابة الصحيحة هي: ${question.correctAnswer}`;
+                feedbackElement.classList.add('wrong');
+            }
+
+            options.forEach(option => {
+                option.style.pointerEvents = 'none'; // تعطيل النقر بعد الإجابة
+                if (option.textContent === question.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedAnswer) {
+                    option.classList.add('wrong');
+                }
+            });
+
+            scoreElement.textContent = `النقاط: ${score}`;
+            currentQuestionIndex++;
+            setTimeout(displayQuestion, 1500); // الانتقال للسؤال التالي بعد 1.5 ثانية
+        }
+
+        function resetGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreElement.textContent = `النقاط: ${score}`;
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>

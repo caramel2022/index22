@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين على شكل لعبة لاقسام الكلمة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #1976d2;
+        }
+        .game-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #1976d2;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 600px;
+        }
+        #wordParts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .word-part {
+            margin: 10px;
+            padding: 15px;
+            border: 2px solid #1976d2;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: calc(30% - 20px);
+            box-sizing: border-box;
+            transform: rotate(5deg);
+        }
+        .word-part:hover {
+            background-color: #bbdefb;
+            transform: scale(1.05) rotate(5deg);
+        }
+        .word-part.noun {
+            font-weight: bold;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            background-color: #ffcc00; /* Bright Yellow */
+            color: black;
+        }
+        .word-part.verb {
+            font-style: italic;
+            font-size: 1.5em;
+            background-color: #00ccff; /* Bright Cyan */
+            color: black;
+        }
+        .word-part:nth-child(3) {
+            background-color: #ff6699; /* Bright Pink */
+        }
+        .word-part:nth-child(4) {
+            background-color: #66ff66; /* Bright Green */
+        }
+        .word-part:nth-child(5) {
+            background-color: #ff9966; /* Bright Orange */
+        }
+        .word-part:nth-child(6) {
+            background-color: #cc66ff; /* Bright Purple */
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 2em;
+            color: #388e3c;
+        }
+        .correct {
+            font-size: 3em;
+            color: #388e3c;
+        }
+        @media (max-width: 600px) {
+            .word-part {
+                width: calc(100% - 20px);
+            }
+            .game-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>لعبة اقسام الكلمة</h1>
+    <div class="game-container">
+        <p>اضغط على الفعل من بين الكلمات التالية:</p>
+        <div id="wordParts">
+            <div class="word-part noun">دُكَّان</div>
+            <div class="word-part verb">كَتَب</div>
+            <div class="word-part noun">كِتَاب</div>
+            <div class="word-part verb">جري</div>
+            <div class="word-part noun">مَاء</div>
+            <div class="word-part verb">أَكَل</div>
+            <div class="word-part noun">بيْت</div>
+            <div class="word-part verb">ذَهَب</div>
+            <div class="word-part noun">شَجَرة</div>
+            <div class="word-part verb">رَكَل</div>
+        </div>
+        <div id="result"></div>
+        <button id='backButton' style='margin-top: 20px; padding: 10px; font-size: 1em; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;'>عودة</button>
+    </div>
+    <script>
+        const wordParts = document.querySelectorAll('.word-part');
+        const result = document.getElementById('result');
+
+        wordParts.forEach(part => {
+            part.addEventListener('click', () => {
+                if (part.classList.contains('verb')) {
+                    result.textContent = `لقد اخترت: ${part.textContent}`;
+                    result.classList.add('correct');
+                    if (part.textContent === 'أكل' || part.textContent === 'كتب' || part.textContent === 'ركل' || part.textContent === 'ذهب') {
+                        result.textContent += ' - أحسنت! استمر في العمل الجيد!';
+                    }
+                } else {
+                    result.textContent = `لقد اخترت: ${part.textContent} - خطأ!`;
+                    result.classList.remove('correct');
+                }
+            });
+        });
+
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'subject_exercices1.html';
+        });
+    </script>
+</body>
+</html>

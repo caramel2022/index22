@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 5 - اكتب الكلمة كاملة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .exercise-area {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .word-input {
+            width: 200px;
+            height: 40px;
+            font-size: 20px;
+            text-align: center;
+            margin: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            direction: rtl;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        #backButton {
+            background-color: #6c757d;
+        }
+        .word-display {
+            font-size: 24px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 5: اكتب الكلمة كاملة</h1>
+        <p>اكتب الكلمة مع "ال" التعريف المناسبة</p>
+        
+        <div class="exercise-area">
+            <div class="word-display">
+                الكلمة الأساسية: <span id="baseWord"></span>
+            </div>
+            <input type="text" class="word-input" id="wordInput" placeholder="اكتب الكلمة مع ال">
+            <button onclick="checkAnswer()">تحقق</button>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        <button onclick="resetExercise()">إعادة التمرين</button>
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script>
+        const words = [
+            { base: "شمس", complete: "الشَّمس", type: "شمسية" },
+            { base: "قمر", complete: "القَمَر", type: "قمرية" },
+            { base: "نور", complete: "النُّور", type: "شمسية" },
+            { base: "باب", complete: "البَاب", type: "قمرية" },
+            { base: "تين", complete: "التِّين", type: "شمسية" },
+            { base: "ماء", complete: "المَاء", type: "قمرية" },
+            { base: "ذهب", complete: "الذَّهَب", type: "شمسية" },
+            { base: "عين", complete: "العَين", type: "قمرية" },
+            { base: "سماء", complete: "السَّمَاء", type: "شمسية" },
+            { base: "قلم", complete: "القَلَم", type: "قمرية" }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function displayWord() {
+            if (currentIndex >= words.length) {
+                showFinalScore();
+                return;
+            }
+            document.getElementById('baseWord').textContent = words[currentIndex].base;
+            document.getElementById('wordInput').value = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentIndex;
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('wordInput').value.trim();
+            const currentWord = words[currentIndex];
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (input === currentWord.complete) {
+                score++;
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = `غير صحيح. الإجابة الصحيحة هي: ${currentWord.complete}`;
+                feedbackElement.className = "feedback incorrect";
+            }
+
+            currentIndex++;
+            setTimeout(displayWord, 2000);
+        }
+
+        function showFinalScore() {
+            const exerciseArea = document.querySelector('.exercise-area');
+            exerciseArea.innerHTML = `
+                <h2>انتهى التمرين!</h2>
+                <p>نتيجتك النهائية: ${score} من ${words.length}</p>
+                <button onclick="resetExercise()">إعادة التمرين</button>
+            `;
+        }
+
+        function resetExercise() {
+            currentIndex = 0;
+            score = 0;
+            words.sort(() => Math.random() - 0.5);
+            displayWord();
+        }
+
+        // Handle Enter key press
+        document.getElementById('wordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // Start the exercise
+        words.sort(() => Math.random() - 0.5);
+        displayWord();
+    </script>
+</body>
+</html>

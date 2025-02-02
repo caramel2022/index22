@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 1 - ال الشمسية وال القمرية</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .exercise-area {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .word {
+            font-size: 24px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .options {
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        #backButton {
+            background-color: #6c757d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 1: ال الشمسية وال القمرية</h1>
+        <p>حدد نوع "ال" في الكلمات التالية: هل هي شمسية أم قمرية؟</p>
+        
+        <div class="exercise-area">
+            <div id="currentWord" class="word"></div>
+            <div class="options">
+                <button onclick="checkAnswer('شمسية')">ال الشمسية</button>
+                <button onclick="checkAnswer('قمرية')">ال القمرية</button>
+            </div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script>
+        const words = [
+            { word: "الشَّمس", type: "شمسية" },
+            { word: "القَمَر", type: "قمرية" },
+            { word: "النَّاس", type: "شمسية" },
+            { word: "الكِتاب", type: "قمرية" },
+            { word: "الطَّعام", type: "شمسية" },
+            { word: "السَّماء", type: "شمسية" },
+            { word: "المَدرَسة", type: "قمرية" },
+            { word: "الرَّحمن", type: "شمسية" },
+            { word: "البَيت", type: "قمرية" },
+            { word: "الذِّكر", type: "شمسية" }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function displayWord() {
+            document.getElementById('currentWord').textContent = words[currentIndex].word;
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentIndex;
+            document.getElementById('feedback').textContent = '';
+        }
+
+        function checkAnswer(answer) {
+            const correctType = words[currentIndex].type;
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (answer === correctType) {
+                score++;
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = `غير صحيح. الإجابة الصحيحة هي: ${correctType}`;
+                feedbackElement.className = "feedback incorrect";
+            }
+
+            currentIndex++;
+            
+            setTimeout(() => {
+                if (currentIndex < words.length) {
+                    displayWord();
+                } else {
+                    document.querySelector('.exercise-area').innerHTML = `
+                        <h2>انتهى التمرين!</h2>
+                        <p>نتيجتك النهائية: ${score} من ${words.length}</p>
+                        <button onclick="restartExercise()">إعادة التمرين</button>
+                    `;
+                }
+            }, 1500);
+        }
+
+        function restartExercise() {
+            currentIndex = 0;
+            score = 0;
+            words.sort(() => Math.random() - 0.5);
+            displayWord();
+        }
+
+        // Start the exercise
+        words.sort(() => Math.random() - 0.5);
+        displayWord();
+    </script>
+</body>
+</html>

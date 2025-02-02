@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين 2 - تصنيف الكلمات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .category {
+            width: 45%;
+            min-height: 200px;
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .word-bank {
+            margin: 20px 0;
+        }
+        .word {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            cursor: move;
+            font-size: 18px;
+        }
+        .draggable {
+            cursor: move;
+        }
+        .score {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #backButton {
+            background-color: #6c757d;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 2: تصنيف الكلمات</h1>
+        <p>اسحب الكلمات إلى المجموعة المناسبة: ال الشمسية أو ال القمرية</p>
+
+        <div class="word-bank" id="wordBank">
+            <!-- Words will be added here by JavaScript -->
+        </div>
+
+        <div class="categories">
+            <div class="category" id="solar" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>ال الشمسية</h3>
+            </div>
+            <div class="category" id="lunar" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>ال القمرية</h3>
+            </div>
+        </div>
+
+        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
+        <button onclick="checkAnswers()">تحقق من الإجابات</button>
+        <button onclick="resetExercise()">إعادة التمرين</button>
+        <div id="feedback" class="feedback"></div>
+        
+        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <script>
+        const words = [
+            { word: "الشَّجَرة", type: "شمسية" },
+            { word: "البَحر", type: "قمرية" },
+            { word: "التِّين", type: "شمسية" },
+            { word: "العِنَب", type: "قمرية" },
+            { word: "الضَّوء", type: "شمسية" },
+            { word: "المَكتَب", type: "قمرية" },
+            { word: "الرَّحِيم", type: "شمسية" },
+            { word: "الهَواء", type: "قمرية" },
+            { word: "النَّهر", type: "شمسية" },
+            { word: "اليَد", type: "قمرية" }
+        ];
+
+        function initializeWords() {
+            const wordBank = document.getElementById('wordBank');
+            words.sort(() => Math.random() - 0.5).forEach((wordObj, index) => {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'word draggable';
+                wordElement.draggable = true;
+                wordElement.id = `word-${index}`;
+                wordElement.textContent = wordObj.word;
+                wordElement.dataset.type = wordObj.type;
+                wordElement.addEventListener('dragstart', drag);
+                wordBank.appendChild(wordElement);
+            });
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            ev.target.closest('.category').appendChild(draggedElement);
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            const total = words.length;
+            const solarCategory = document.getElementById('solar');
+            const lunarCategory = document.getElementById('lunar');
+            
+            // Check solar words
+            solarCategory.querySelectorAll('.word').forEach(word => {
+                if (word.dataset.type === 'شمسية') correct++;
+            });
+            
+            // Check lunar words
+            lunarCategory.querySelectorAll('.word').forEach(word => {
+                if (word.dataset.type === 'قمرية') correct++;
+            });
+
+            document.getElementById('score').textContent = correct;
+            document.getElementById('total').textContent = total;
+            
+            const feedback = document.getElementById('feedback');
+            if (correct === total) {
+                feedback.textContent = "أحسنت! جميع الإجابات صحيحة";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = `استمر في المحاولة! لديك ${correct} إجابات صحيحة من ${total}`;
+                feedback.style.color = "red";
+            }
+        }
+
+        function resetExercise() {
+            const wordBank = document.getElementById('wordBank');
+            const categories = document.querySelectorAll('.category');
+            
+            // Move all words back to word bank
+            categories.forEach(category => {
+                const words = category.querySelectorAll('.word');
+                words.forEach(word => wordBank.appendChild(word));
+            });
+
+            // Reset score and feedback
+            document.getElementById('score').textContent = "0";
+            document.getElementById('feedback').textContent = "";
+        }
+
+        // Initialize the exercise
+        initializeWords();
+    </script>
+</body>
+</html>

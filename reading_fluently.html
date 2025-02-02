@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة الأولى: من نحن؟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-size: 18px; /* زيادة الحجم الأساسي للخط */
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem; /* تكبير عنوان الصفحة الرئيسي */
+            margin-bottom: 1.5rem;
+        }
+
+        header p {
+            font-size: 1.5rem; /* تكبير نص الترحيب */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .units {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .unit {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .unit:hover {
+            transform: translateY(-5px);
+        }
+
+        .unit h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #3498db;
+            font-size: 2rem; /* تكبير عناوين الوحدات */
+        }
+
+        .unit ul {
+            list-style: none;
+        }
+
+        .unit li {
+            padding: 0.8rem 0;
+            color: #666;
+            transition: color 0.3s ease;
+            font-size: 1.4rem; /* تكبير العناوين الفرعية */
+        }
+
+        .unit li:hover {
+            color: #3498db;
+            cursor: pointer;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            transition: background 0.3s ease;
+            font-size: 1.3rem; /* تكبير نص زر العودة */
+        }
+
+        .back-button:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            .units {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.8rem; /* تعديل حجم العنوان للشاشات الصغيرة */
+            }
+
+            .unit h2 {
+                font-size: 1.8rem; /* تعديل حجم عناوين الوحدات للشاشات الصغيرة */
+            }
+
+            .unit li {
+                font-size: 1.2rem; /* تعديل حجم العناوين الفرعية للشاشات الصغيرة */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>قراءة بطلاقة</h1>
+        <p>مرحباً بك في صفحة قراءة بطلاقة</p>
+    </header>
+
+    <div class="container">
+        <div class="units">
+            <div class="unit">
+                <h2>الوحدة الأولى :من نحن؟</h2>
+                <ul>
+                    <li><a href="talaka1.html">الصداقة</a></li>
+                    <li><a href="talaka2.html">الألعاب والمرح</a></li>
+                    <li><a href="talaka3.html">المشاعر</a></li>
+                    <li><a href="talaka4.html">الرحلات مع العائلة</a></li>
+                    <li><a href="talaka4.html">قلم الرصاص</a></li>
+                </ul>
+            </div>
+
+            <div class="unit">
+                <h2>الوحدة الثانية: ماذا نريد؟</h2>
+                <ul>
+                    <li><a href="talaka6.html" id="withGrandparents">مع الأجداد</a></li>
+                    <li><a href="talaka7.html" id="withCityAndVillage">المدينة والقرية</a></li>
+                    <li><a href="talaka8.html">الموهبة</a></li>
+                    <li><a href="talaka9.html">معلمتي</a></li>
+                    <li><a href="talaka10.html">الفسيفساء المغربية</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#" class="back-button">عودة إلى الصفحة السابقة</a>
+    </div>
+
+    <script>
+        document.getElementById('familyTrips').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = 'talaka4.html';
+        });
+    </script>
+
+    <script>
+        document.getElementById('withGrandparents').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('talaka6.html', '_self');
+        });
+    </script>
+
+    <script>
+        document.getElementById('withCityAndVillage').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('talaka7.html', '_self');
+        });
+    </script>
+
+    <script>
+        document.getElementById('withCityAndVillage').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('talaka7.html', '_self');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.altKey) {
+                window.open('talaka6.html', '_self');
+            }
+        });
+    </script>
+</body>
+</html>
