@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>لعبة الفعل الماضي - المستوى 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --main-color: #6c5ce7;
+            --secondary-color: #ff9f43;
+            --success-color: #2ecc71;
+            --danger-color: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #2c3e50;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: var(--main-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .score-board {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-flex;
+            gap: 30px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .game-body {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card {
+            border: 3px solid var(--main-color);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--main-color);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid var(--main-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: 0.5s;
+        }
+
+        .option-btn:hover::before {
+            left: 100%;
+        }
+
+        .option-btn.correct {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+            animation: bounce 0.5s ease;
+        }
+
+        .option-btn.wrong {
+            background: var(--danger-color);
+            border-color: var(--danger-color);
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--main-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1) rotate(360deg);
+            background: #5b4bc4;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-color);
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <a href="past_tense_exercises.html" class="floating-btn">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">مملكة الأفعال الماضية 🏰</h1>
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-value" id="score">0</div>
+                    <span>النقاط</span>
+                </div>
+                <div class="score-item">
+                    <div class="score-value" id="lives">❤️❤️❤️</div>
+                    <span>المحاولات</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-body">
+            <div class="question-card">
+                <div class="question-text">
+                    🧙♂️ ساعد الأمير في تحرير القلعة بإيجاد الفعل الماضي الصحيح!
+                </div>
+                <div class="options-grid">
+                    <div class="option-btn" data-correct="true">
+                        <i class="fas fa-shield-alt"></i>
+                        قَتَلَ
+                    </div>
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-skull-crossbones"></i>
+                        يَقْتُلُ
+                    </div>
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-hourglass"></i>
+                        سَيَقْتُلُ
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    🧚♀️ اختاري الفعل الماضي لمساعدة الجنية في فك السحر:
+                </div>
+                <div class="options-grid">
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-cloud"></i>
+                        تَطِيْرُ
+                    </div>
+                    <div class="option-btn" data-correct="true">
+                        <i class="fas fa-magic"></i>
+                        طَارَتْ
+                    </div>
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-bolt"></i>
+                        سَتَطِيْرُ
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    🐉 اكتشف الفعل الماضي لهزيمة التنين:
+                </div>
+                <div class="options-grid">
+                    <div class="option-btn" data-correct="true">
+                        <i class="fas fa-dragon"></i>
+                        هَزَمَ
+                    </div>
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-fire"></i>
+                        يَهْزِمُ
+                    </div>
+                    <div class="option-btn" data-correct="false">
+                        <i class="fas fa-shield-virus"></i>
+                        سَيَهْزِمُ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let lives = 3;
+        const scoreElement = document.getElementById('score');
+        const livesElement = document.getElementById('lives');
+
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('correct') || this.classList.contains('wrong')) return;
+
+                const isCorrect = this.dataset.correct === 'true';
+                const questionCard = this.closest('.question-card');
+
+                if (isCorrect) {
+                    score += 100;
+                    scoreElement.textContent = score;
+                    this.classList.add('correct');
+                    createConfetti();
+                } else {
+                    lives--;
+                    livesElement.textContent = '❤️'.repeat(lives);
+                    this.classList.add('wrong');
+                    if (lives === 0) {
+                        alert('انتهت المحاولات! ابدأ من جديد 🛑');
+                        resetGame();
+                    }
+                }
+
+                questionCard.querySelectorAll('.option-btn').forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                    if (opt.dataset.correct === 'true') opt.classList.add('correct');
+                });
+            });
+        });
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function resetGame() {
+            score = 0;
+            lives = 3;
+            scoreElement.textContent = score;
+            livesElement.textContent = '❤️❤️❤️';
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('correct', 'wrong');
+                btn.style.pointerEvents = 'auto';
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

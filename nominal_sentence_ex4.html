@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 4 - الجملة الاسمية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(45deg, #00c6fb 0%, #005bea 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: clamp(20px, 5vw, 40px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 95%;
+            margin: 20px auto;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            color: #005bea;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #00c6fb;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+        }
+
+        .exercise-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #e6f4ff;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 91, 234, 0.1);
+        }
+
+        .sentence {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #005bea;
+        }
+
+        .drag-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .draggable {
+            background: #e6f4ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: move;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .draggable:hover {
+            background: #b3e0ff;
+        }
+
+        .drop-zone {
+            border: 2px dashed #00c6fb;
+            padding: 20px;
+            min-height: 60px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fcff;
+        }
+
+        .drop-zone.over {
+            background: #e6f4ff;
+            border-style: solid;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: rgba(72, 187, 120, 0.15);
+            color: #2f855a;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(245, 101, 101, 0.15);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .btn-check {
+            background: linear-gradient(45deg, #00c6fb, #005bea);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 198, 251, 0.3);
+        }
+
+        .btn-back {
+            background: linear-gradient(45deg, #005bea, #00c6fb);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 91, 234, 0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">تمرين 4 - الجملة الاسمية</h1>
+        
+        <div class="exercise-box">
+            <h3>رتب الكلمات لتكوين جملة اسمية صحيحة:</h3>
+            
+            <div class="drag-container" id="words1">
+                <div class="draggable" draggable="true">واسعةٌ</div>
+                <div class="draggable" draggable="true">المدرسةُ</div>
+            </div>
+            <div class="drop-zone" id="sentence1"></div>
+            <button class="btn btn-check" onclick="checkAnswer(1)">تحقق</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>رتب الكلمات لتكوين جملة اسمية صحيحة:</h3>
+            
+            <div class="drag-container" id="words2">
+                <div class="draggable" draggable="true">جميلٌ</div>
+                <div class="draggable" draggable="true">الوردُ</div>
+            </div>
+            <div class="drop-zone" id="sentence2"></div>
+            <button class="btn btn-check" onclick="checkAnswer(2)">تحقق</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>رتب الكلمات لتكوين جملة اسمية صحيحة:</h3>
+            
+            <div class="drag-container" id="words3">
+                <div class="draggable" draggable="true">نظيفٌ</div>
+                <div class="draggable" draggable="true">البيتُ</div>
+            </div>
+            <div class="drop-zone" id="sentence3"></div>
+            <button class="btn btn-check" onclick="checkAnswer(3)">تحقق</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <a href="nominal_sentence_exercises.html" class="btn-back">العودة للتمارين</a>
+    </div>
+
+    <script>
+        // Add drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', dragStart);
+                draggable.addEventListener('dragend', dragEnd);
+            });
+
+            dropZones.forEach(dropZone => {
+                dropZone.addEventListener('dragover', dragOver);
+                dropZone.addEventListener('dragenter', dragEnter);
+                dropZone.addEventListener('dragleave', dragLeave);
+                dropZone.addEventListener('drop', drop);
+            });
+        });
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.innerText);
+            e.target.classList.add('dragging');
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+            e.target.classList.add('over');
+        }
+
+        function dragLeave(e) {
+            e.target.classList.remove('over');
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text/plain');
+            const draggable = document.querySelector(`.draggable:not(.dropped)`);
+            
+            if (draggable) {
+                const clone = draggable.cloneNode(true);
+                clone.classList.add('dropped');
+                e.target.appendChild(clone);
+                draggable.style.display = 'none';
+            }
+            
+            e.target.classList.remove('over');
+        }
+
+        function checkAnswer(questionNum) {
+            const dropZone = document.getElementById(`sentence${questionNum}`);
+            const words = Array.from(dropZone.children).map(child => child.innerText);
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            
+            let correct = false;
+            let message = '';
+            
+            switch(questionNum) {
+                case 1:
+                    correct = words.join(' ') === 'المدرسةُ واسعةٌ';
+                    message = correct ? "أحسنت! الجملة صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تبدأ بالمبتدأ";
+                    break;
+                case 2:
+                    correct = words.join(' ') === 'الوردُ جميلٌ';
+                    message = correct ? "ممتاز! الجملة صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تبدأ بالمبتدأ";
+                    break;
+                case 3:
+                    correct = words.join(' ') === 'البيتُ نظيفٌ';
+                    message = correct ? "رائع! الجملة صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تبدأ بالمبتدأ";
+                    break;
+            }
+            
+            feedback.textContent = message;
+            feedback.className = `feedback ${correct ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

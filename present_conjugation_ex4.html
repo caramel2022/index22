@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصريف الفعل المضارع</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            background: linear-gradient(135deg, #6c5ce7, #a393eb);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verb-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .pronoun-text {
+            font-size: 1.8rem;
+            opacity: 0.9;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            background-color: white;
+            color: #6c5ce7;
+            border: 2px solid #6c5ce7;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            background-color: #6c5ce7;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #00b894;
+            border-color: #00b894;
+            color: white;
+        }
+
+        .option-btn.wrong {
+            background-color: #ff7675;
+            border-color: #ff7675;
+            color: white;
+        }
+
+        .score-board {
+            background-color: #6c5ce7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .next-btn {
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background-color: #5b4bc4;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #00b89420;
+            color: #00b894;
+        }
+
+        .feedback.wrong {
+            background-color: #ff767520;
+            color: #ff7675;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+            background-color: #5b4bc4;
+        }
+    </style>
+</head>
+<body>
+    <a href="present_tense_conjugation_exercises.html" class="back-btn">↩</a>
+    <div class="game-container">
+        <h1 class="text-center mb-4">تصريف الفعل المضارع</h1>
+        
+        <div class="score-board">
+            النقاط: <span id="score">0</span>
+        </div>
+
+        <div class="card">
+            <div class="verb-text" id="verb-display"></div>
+            <div class="pronoun-text" id="pronoun-display"></div>
+        </div>
+
+        <div class="options-container" id="options-container"></div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">السؤال التالي</button>
+    </div>
+
+    <script>
+        const verbs = [
+            { verb: 'رَسَمَ', pronoun: 'أنتِ', answer: 'تَرْسُمِينَ', options: ['أَرْسُمُ', 'تَرْسُمِينَ', 'يَرْسُمُ', 'نَرْسُمُ'] },
+            { verb: 'سَبَحَ', pronoun: 'هم', answer: 'يَسْبَحُونَ', options: ['تَسْبَحُ', 'يَسْبَحُونَ', 'أَسْبَحُ', 'نَسْبَحُ'] },
+            { verb: 'رَقَصَ', pronoun: 'نحن', answer: 'نَرْقُصُ', options: ['يَرْقُصُ', 'تَرْقُصُ', 'نَرْقُصُ', 'أَرْقُصُ'] },
+            { verb: 'طَبَخَ', pronoun: 'هي', answer: 'تَطْبُخُ', options: ['يَطْبُخُ', 'تَطْبُخُ', 'أَطْبُخُ', 'نَطْبُخُ'] },
+            { verb: 'غَسَلَ', pronoun: 'أنتم', answer: 'تَغْسِلُونَ', options: ['يَغْسِلُ', 'تَغْسِلُونَ', 'أَغْسِلُ', 'نَغْسِلُ'] },
+            { verb: 'رَكَضَ', pronoun: 'هما', answer: 'يَرْكُضَانِ', options: ['تَرْكُضُ', 'يَرْكُضَانِ', 'أَرْكُضُ', 'نَرْكُضُ'] }
+        ];
+
+        let currentQuestion;
+        let score = 0;
+        let canAnswer = true;
+
+        function shuffle(array) {
+            return [...array].sort(() => Math.random() - 0.5);
+        }
+
+        function showFeedback(isCorrect, message) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+            feedback.style.display = 'block';
+        }
+
+        function checkAnswer(selectedAnswer) {
+            if (!canAnswer) return;
+            canAnswer = false;
+
+            const button = event.target;
+            const isCorrect = selectedAnswer === currentQuestion.answer;
+
+            if (isCorrect) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                button.classList.add('correct');
+                showFeedback(true, 'أحسنت! إجابة صحيحة');
+            } else {
+                button.classList.add('wrong');
+                const correctButton = Array.from(document.querySelectorAll('.option-btn'))
+                    .find(btn => btn.textContent === currentQuestion.answer);
+                correctButton.classList.add('correct');
+                showFeedback(false, 'حاول مرة أخرى');
+            }
+
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            canAnswer = true;
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+
+            currentQuestion = verbs[Math.floor(Math.random() * verbs.length)];
+            document.getElementById('verb-display').textContent = currentQuestion.verb;
+            document.getElementById('pronoun-display').textContent = currentQuestion.pronoun;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const shuffledOptions = shuffle(currentQuestion.options);
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the game
+        nextQuestion();
+    </script>
+</body>
+</html>

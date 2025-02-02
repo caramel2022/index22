@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>المهمة الفضائية - الفعل الماضي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --space-dark: #0f0c29;
+            --neon-blue: #00f3ff;
+            --alien-green: #00ff87;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--space-dark);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .game-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: starMove 50s linear infinite;
+        }
+
+        @keyframes starMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+
+        .spaceship {
+            width: 200px;
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 20px var(--neon-blue));
+        }
+
+        .asteroid {
+            width: 100px;
+            position: absolute;
+            animation: asteroidFall 3s linear infinite;
+            filter: drop-shadow(0 0 10px var(--alien-green));
+        }
+
+        @keyframes asteroidFall {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .question-hologram {
+            background: rgba(0, 243, 255, 0.1);
+            border: 2px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 30px;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(0,243,255,0.2);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .alien-btn {
+            background: transparent;
+            border: 2px solid var(--alien-green);
+            color: var(--alien-green);
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alien-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,135,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .alien-btn:hover::before {
+            left: 100%;
+        }
+
+        .alien-btn.correct {
+            background: var(--alien-green);
+            color: var(--space-dark);
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .score-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-blue);
+        }
+
+        .floating-portal {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-blue), transparent);
+            animation: portalGlow 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes portalGlow {
+            0%, 100% { box-shadow: 0 0 20px var(--neon-blue); }
+            50% { box-shadow: 0 0 50px var(--neon-blue); }
+        }
+    </style>
+</head>
+<body>
+    <a href="past_tense_exercises.html" class="floating-portal">
+        <i class="fas fa-door-open" style="color: var(--neon-blue);"></i>
+    </a>
+
+    <div class="game-container">
+        <div class="stars"></div>
+        
+        <div class="question-hologram">
+            <h2 class="text-center mb-4">🚀 مهمة: إصلاح المحرك الفضائي باستخدام الأفعال الماضية!</h2>
+            <div class="options-grid">
+                <button class="alien-btn" data-correct="true">أَطْلَقَ</button>
+                <button class="alien-btn" data-correct="false">يُطْلِقُ</button>
+                <button class="alien-btn" data-correct="true">حَطَّمَ</button>
+                <button class="alien-btn" data-correct="false">يَحُطُّ</button>
+            </div>
+        </div>
+
+        <img src="https://i.ibb.co/3yW6z7N/spaceship.png" class="spaceship">
+        <div class="score-panel">
+            <h4>🛸 الطاقة: <span id="energy">100</span>%</h4>
+            <h4>⭐ النقاط: <span id="score">0</span></h4>
+        </div>
+    </div>
+
+    <script>
+        let energy = 100;
+        let score = 0;
+        const spaceship = document.querySelector('.spaceship');
+        
+        document.querySelectorAll('.alien-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.classList.contains('correct')) return;
+                
+                const isCorrect = this.dataset.correct === 'true';
+                
+                if(isCorrect) {
+                    score += 25;
+                    energy = Math.min(100, energy + 15);
+                    this.classList.add('correct');
+                    createAsteroid();
+                } else {
+                    energy -= 30;
+                    if(energy <= 0) gameOver();
+                }
+
+                updateHUD();
+                animateSpaceship();
+            });
+        });
+
+        function createAsteroid() {
+            const asteroid = document.createElement('img');
+            asteroid.src = 'https://i.ibb.co/0j7X8Pz/asteroid.png';
+            asteroid.className = 'asteroid';
+            asteroid.style.left = Math.random() * 90 + '%';
+            document.querySelector('.game-container').appendChild(asteroid);
+            
+            asteroid.addEventListener('animationend', () => {
+                asteroid.remove();
+            });
+        }
+
+        function animateSpaceship() {
+            spaceship.style.transform = `translateX(-50%) translateY(${Math.sin(Date.now()/200)*10}px)`;
+            requestAnimationFrame(animateSpaceship);
+        }
+
+        function updateHUD() {
+            document.getElementById('energy').textContent = energy;
+            document.getElementById('score').textContent = score;
+        }
+
+        function gameOver() {
+            alert(`🚨 المهمة فشلت! النقاط النهائية: ${score}`);
+            location.reload();
+        }
+
+        // بدء الحركة
+        animateSpaceship();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصديق الجديد</title>
+    <style>
+        @font-face {
+            font-family: 'Boutros';
+            src: url('https://db.onlinewebfonts.com/t/ce283a00f4ddf3779d96e9c867f4e275.woff2') format('woff2');
+        }
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #86b3d1;
+            --accent-color: #e8f1f5;
+            --text-color: #2c3e50;
+            --background-color: #f0f7fa;
+        }
+        body {
+            font-family: 'Boutros', Arial, sans-serif;
+            line-height: 2;
+            margin: 0;
+            background: var(--background-color);
+            background-image: linear-gradient(135deg, #f0f7fa 0%, #e8f1f5 100%);
+            font-size: 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        h2 {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+        .subtitle {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .exercise {
+            background-color: var(--accent-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            font-size: 22px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .exercise ul {
+            list-style: none;
+            padding: 0;
+        }
+        .exercise p {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(134, 179, 209, 0.3);
+        }
+        .story {
+            text-align: justify;
+            margin-bottom: 30px;
+            font-size: 22px;
+            line-height: 2.2;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+        }
+        .author {
+            text-align: left;
+            color: var(--primary-color);
+            font-style: italic;
+            font-size: 20px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--accent-color);
+        }
+        .dialog {
+            margin: 20px 40px;
+            font-size: 22px;
+            position: relative;
+            padding: 15px 25px;
+            background: var(--accent-color);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .dialog p {
+            margin: 10px 0;
+            position: relative;
+        }
+        .dialog p::before {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .dialog {
+                margin: 15px 20px;
+            }
+        }
+        .keywords-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f6f8ff 0%, #e9f1ff 100%);
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .keywords-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(74, 144, 226, 0.05) 0%, transparent 70%);
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .section-title {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 38px;
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+        .subtitle {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .info-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            position: relative;
+            border: none;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.05),
+                inset 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+            backdrop-filter: blur(10px);
+            border-right: 5px solid var(--primary-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 20px rgba(0,0,0,0.1),
+                inset 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+        }
+        .step {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px 60px 25px 25px;
+            border-radius: 15px;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.05),
+                inset 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .step:hover {
+            transform: translateX(-5px);
+            box-shadow: 
+                0 8px 20px rgba(0,0,0,0.1),
+                inset 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+            background: white;
+        }
+        .step::before {
+            content: attr(data-number);
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .step:hover::before {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        .interactive-exercises {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .exercise-icon {
+            width: 48px;
+            height: 48px;
+        }
+        .exercise-instruction {
+            color: var(--primary-color);
+            font-size: 26px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-color);
+        }
+        .exercise-container {
+            display: grid;
+            gap: 30px;
+        }
+        .exercise-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .question {
+            font-size: 24px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .answer-box {
+            display: grid;
+            gap: 15px;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 22px;
+            font-family: inherit;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+        }
+        .check-answer {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .check-answer:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        .feedback {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 20px;
+            display: none;
+        }
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        .dictionary-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e1eeff 100%);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .section-icon {
+            width: 48px;
+            height: 48px;
+        }
+        .section-instruction {
+            color: var(--primary-color);
+            font-size: 26px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-color);
+        }
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .dictionary-column {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .dictionary-column h3 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .word-pair {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .word {
+            font-size: 24px;
+            color: var(--text-color);
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .word-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 22px;
+            font-family: inherit;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .word-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+        }
+        .check-all {
+            display: block;
+            width: max-content;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .check-all:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        .feedback {
+            font-size: 20px;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .dictionary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .reading-comprehension {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6eaff 100%);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .questions-container {
+            display: grid;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        .question-group {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .question-group:hover {
+            transform: translateY(-2px);
+        }
+        .question-title {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-right: 15px;
+            border-right: 4px solid var(--primary-color);
+        }
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background: #e9ecef;
+        }
+        .radio-custom {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"]:checked + .radio-custom::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .option-text {
+            font-size: 22px;
+            color: var(--text-color);
+        }
+        .check-answers {
+            display: block;
+            width: max-content;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .check-answers:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: none;
+        }
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الصَّديقُ الجَديدُ</h1>
+        <div class="subtitle">الوَحْدَةُ 11</div>
+        <h2>وَرْشَةُ القِراءَةِ</h2>
+
+        <div class="exercise">
+            <p>اخْتَرْ لِكُلِّ كَلِمَةٍ أَمامَ النَّفْيِ المُناسِبَ لَها: باعَثَ - عاقَبَ - هَزِئَ - اقْتَرَفَ.</p>
+            <ul>
+                <p>لا يَرْفُقُ وَلا يَلينُ: .............................</p>
+                <p>ارْتَكَبَ ذَنْباً أَوْ خَطَأً بِشَكْلٍ مُتَعَمَّدٍ: .............................</p>
+                <p>هَزِئَ وَتَمَشّى إِلَيْهِ بِاضْطِرابٍ وَتَسَرُّعَةٍ: .............................</p>
+            </ul>
+        </div>
+
+        <div class="story">
+            <p>كانَتِ الأَمْطارُ قَدْ تَوَقَّفَتْ عَنِ الهُطولِ، حينَ هَبَّتْ ريحٌ خَفيفَةٌ، تُداعِبُ أَغْصانَ الأَشْجارِ في لُطْفٍ، بَيْنَما أَخْفَتِ الشَّمْسُ نورَها خَلْفَ السُّحُبِ الدَّكْناءِ، لِتَحْتَجِبَ زُرْقَةُ السَّماءِ. وَفي تِلْكَ اللَّحْظَةِ، سُمِعَ ضَجيجُ الأَطْفالِ وَهُمْ يَخْرُجونَ مِنْ مَنازِلِهِمْ، مُتَقافِزينَ بَيْنَ البِرَكِ الصَّغيرَةِ الَّتي خَلَّفَتْها الأَمْطارُ. وَلَمّا بَلَغوا ساحَةَ القَرْيَةِ، انْقَسَموا إِلى مَجْموعَتَيْنِ، ثُمَّ كَوَّموا بَعْضَ الحِجارَةِ لِيَرْسُموا بِها خَطَّيِ المَرْمى.</p>
+
+            <p>وَما هِيَ إِلّا لَحَظاتٌ حَتّى انْطَلَقَتِ المُباراةُ، وَراحوا يَتَقاذَفونَ الكُرَةَ في فَرَحٍ وَحَماسٍ.</p>
+
+            <p>اقْتَرَبَ مِنْهُمْ مُرادٌ، ثُمَّ جَلَسَ يُراقِبُهُمْ في صَمْتٍ. وَحينَ انْتَبَهَ ياسينُ إِلى وُجودِهِ، أَشارَ إِلَيْهِ ساخِراً:</p>
+            
+            <div class="dialog">
+                <p>- لِماذا تَجْلِسُ هُناكَ أَيُّها الصَّبِيُّ الغَريبُ؟ هَيّا اقْتَرِبْ مِنّا لِتُشارِكَنا في سَلامٍ!</p>
+            </div>
+
+            <p>تَراجَعَ مُرادٌ إِلى الخَلْفِ بِضْعَ خُطُواتٍ، لَكِنَّ ياسينَ باغَتَهُ بِرَكْلَةِ كُرَةٍ أَصابَتْ وَجْهَهُ، فَسَقَطَ عَلى الأَرْضِ مُتَأَلِّماً. فَزِعَ أَحَدُ الأَطْفالِ نَحْوَ الصَّبِيِّ، ثُمَّ مَدَّ يَدَهُ لِمُساعَدَتِهِ عَلى النُّهوضِ قائِلاً:</p>
+
+            <div class="dialog">
+                <p>- هَلْ أَنْتَ بِخَيْرٍ يا أَخي؟</p>
+            </div>
+
+            <p>تَحَلَّقَ الأَطْفالُ حَوْلَ مُرادٍ، وَالْتَفَتَ عِمْرانُ نَحْوَ ياسينَ معاتبا:</p>
+            <div class="dialog">
+                <p>- لِماذا فَعَلْتَ هَذا يا ياسينُ؟ أَيُّ ذَنْبٍ اقْتَرَفَهُ هَذا الطِّفْلُ المِسْكينُ حَتّى تَقْسوَ عَلَيْهِ هَكَذا؟</p>
+            </div>
+        </div>
+
+        <div class="author">
+            <p>عَبْدُ السَّميعِ بَصّاري</p>
+            <p>(يَتْبَعُ)</p>
+        </div>
+
+        <div class="keywords-section">
+            <h2 class="section-title">الكَلِماتُ المَفاتيحُ</h2>
+            <div class="subtitle">لِنَتَعَلَّمَ جَميعاً</div>
+
+            <div class="info-box">
+                <span class="bulb-icon">💡</span>
+                <p>تُساعِدُني إِسْتِراتيجِيَّةُ الكَلِماتِ المَفاتيحِ عَلى اسْتِخْراجِ مَعْلوماتٍ وارِدَةٍ في نَصٍّ.</p>
+            </div>
+
+            <h3>كَيْفَ أُوَظِّفُ إِسْتِراتيجِيَّةَ الكَلِماتِ المَفاتيحِ لاسْتِخْراجِ مَعْلوماتٍ؟</h3>
+
+            <ul class="steps">
+                <li class="step" data-number="١">
+                    أُحَدِّدُ الكَلِماتِ المَفاتيحَ في السُّؤالِ.
+                </li>
+                <li class="step" data-number="٢">
+                    أَقومُ بِالقِراءَةِ المَسْحِيَّةِ لأَجِدَ الكَلِماتِ المَفاتيحَ، وَأَضَعُ سَطْراً تَحْتَها.
+                </li>
+                <li class="step" data-number="٣">
+                    أَتَحَقَّقُ مِنْ وُجودِ الإِجابَةِ ثُمَّ أَصوغُ الجَوابَ في جُمْلَةٍ تامَّةٍ.
+                </li>
+            </ul>
+        </div>
+
+        <div class="interactive-exercises">
+            <div class="exercise-header">
+                <img src="https://img.icons8.com/cute-clipart/64/000000/girl.png" alt="أُنْجِزُ بِمُفْرَدي" class="exercise-icon">
+                <h2>أُنْجِزُ بِمُفْرَدي</h2>
+            </div>
+            
+            <p class="exercise-instruction">أُجيبُ عَنِ الأَسْئِلَةِ بِتَوْظيفِ إِسْتِراتيجِيَّةِ الكَلِماتِ المَفاتيحِ.</p>
+
+            <div class="exercise-container">
+                <div class="exercise-item">
+                    <div class="question">١- ماذا اسْتَخْدَمَ الأَطْفالُ لِرَسْمِ خَطَّيِ المَرْمى؟</div>
+                    <div class="answer-box">
+                        <textarea class="answer-input" placeholder="اكتب إجابتك هنا..." rows="2"></textarea>
+                        <button class="check-answer" data-correct="كَوَّموا بَعْضَ الحِجارَةِ لِيَرْسُموا بِها خَطَّيِ المَرْمى">تحقق من الإجابة</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="question">٢- ماذا فَعَلَ مُرادٌ عِنْدَما اقْتَرَبَ مِنَ الأَطْفالِ؟</div>
+                    <div class="answer-box">
+                        <textarea class="answer-input" placeholder="اكتب إجابتك هنا..." rows="2"></textarea>
+                        <button class="check-answer" data-correct="جَلَسَ يُراقِبُهُمْ في صَمْتٍ">تحقق من الإجابة</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dictionary-section">
+            <div class="section-header">
+                <img src="https://img.icons8.com/cute-clipart/64/000000/book.png" alt="أَسْتَثْمِرُ مُعْجَمَ النَّصِّ" class="section-icon">
+                <h2>أَسْتَثْمِرُ مُعْجَمَ النَّصِّ</h2>
+            </div>
+            
+            <p class="section-instruction">أُكْمِلُ بِما يُناسِبُ مِنَ النَّصِّ.</p>
+
+            <div class="dictionary-grid">
+                <div class="dictionary-column">
+                    <h3>ضِدّ</h3>
+                    <div class="word-pair">
+                        <div class="word">انْتَهَتْ</div>
+                        <input type="text" class="word-input" data-correct="بَدَأَتْ" placeholder="≠">
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="word-pair">
+                        <div class="word">ابْتَعَدَ</div>
+                        <input type="text" class="word-input" data-correct="اقْتَرَبَ" placeholder="≠">
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="dictionary-column">
+                    <h3>مُرادِف</h3>
+                    <div class="word-pair">
+                        <div class="word">فاجَأَهُ</div>
+                        <input type="text" class="word-input" data-correct="باغَتَهُ" placeholder="=">
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="word-pair">
+                        <div class="word">أَسْرَعَ</div>
+                        <input type="text" class="word-input" data-correct="هَرَعَ" placeholder="=">
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="dictionary-column">
+                    <h3>جَمْع</h3>
+                    <div class="word-pair">
+                        <div class="word">الطِّفْلُ</div>
+                        <input type="text" class="word-input" data-correct="الأَطْفالُ" placeholder="→">
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="word-pair">
+                        <div class="word">البِرْكَةُ</div>
+                        <input type="text" class="word-input" data-correct="البِرَكُ" placeholder="→">
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="check-all">تحقق من جميع الإجابات</button>
+        </div>
+
+        <div class="reading-comprehension">
+            <div class="section-header">
+                <img src="https://img.icons8.com/cute-clipart/64/000000/reading.png" alt="أَسْتَثْمِرُ إِسْتِراتيجِيَّةَ الْفَهْمِ الْقِرائِيِّ" class="section-icon">
+                <h2>أَسْتَثْمِرُ إِسْتِراتيجِيَّةَ الْفَهْمِ الْقِرائِيِّ</h2>
+            </div>
+            
+            <p class="section-instruction">أَضَعُ عَلامَةَ (×) أَمامَ كُلِّ جَوابٍ صَحيحٍ مِنْ نَصِّ «الصَّديقُ الْجَديدُ».</p>
+
+            <div class="questions-container">
+                <div class="question-group">
+                    <h3 class="question-title">باغَتَ ياسينَ مُرادًا بِرَكْلَةِ كُرَةٍ أَصابَتْ:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">أ. بَطْنَ مُرادٍ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b" data-correct="true">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ب. وَجْهَ مُرادٍ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ت. رِجْلَ مُرادٍ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ج. يَدَ مُرادٍ.</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question-group">
+                    <h3 class="question-title">طَلَبَ ياسينُ مِنْ مُرادٍ أَنْ يَبْتَعِدَ لِأَنَّ:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">أ. مُرادًا تَراجَعَ إِلى الْخَلْفِ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ب. ياسينَ يَعْتَبِرُ مُرادًا طِفْلًا غَريبًا.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c" data-correct="true">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ت. مُرادًا يُراقِبُ في صَمْتٍ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span class="radio-custom"></span>
+                            <span class="option-text">ج. مُرادًا طِفْلٌ مِسْكينٌ.</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+
+            <button class="check-answers">تحقق من الإجابات</button>
+        </div>
+
+        <script>
+            document.querySelectorAll('.check-answer').forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerBox = button.closest('.answer-box');
+                    const input = answerBox.querySelector('.answer-input');
+                    const feedback = answerBox.querySelector('.feedback');
+                    const correctAnswer = button.dataset.correct;
+                    
+                    // تنظيف الإجابة من الفراغات الزائدة
+                    const userAnswer = input.value.trim();
+                    
+                    if (userAnswer.length === 0) {
+                        feedback.textContent = 'الرجاء إدخال إجابة';
+                        feedback.className = 'feedback incorrect';
+                        return;
+                    }
+
+                    // مقارنة الإجابة
+                    if (userAnswer === correctAnswer) {
+                        feedback.textContent = 'إجابة صحيحة! أحسنت!';
+                        feedback.className = 'feedback correct';
+                        input.style.borderColor = '#28a745';
+                    } else {
+                        feedback.textContent = 'حاول مرة أخرى';
+                        feedback.className = 'feedback incorrect';
+                        input.style.borderColor = '#dc3545';
+                    }
+                });
+            });
+
+            document.querySelector('.check-all').addEventListener('click', () => {
+                document.querySelectorAll('.word-input').forEach(input => {
+                    const feedback = input.nextElementSibling;
+                    const correctAnswer = input.dataset.correct;
+                    const userAnswer = input.value.trim();
+                    
+                    if (userAnswer.length === 0) {
+                        feedback.textContent = 'الرجاء إدخال إجابة';
+                        feedback.className = 'feedback incorrect';
+                        input.style.borderColor = '#dc3545';
+                        return;
+                    }
+
+                    if (userAnswer === correctAnswer) {
+                        feedback.textContent = 'صحيح!';
+                        feedback.className = 'feedback correct';
+                        input.style.borderColor = '#28a745';
+                    } else {
+                        feedback.textContent = 'حاول مرة أخرى';
+                        feedback.className = 'feedback incorrect';
+                        input.style.borderColor = '#dc3545';
+                    }
+                });
+            });
+
+            document.querySelector('.check-answers').addEventListener('click', () => {
+                let allCorrect = true;
+                document.querySelectorAll('.question-group').forEach(group => {
+                    const selectedOption = group.querySelector('input[type="radio"]:checked');
+                    const feedback = group.querySelector('.feedback');
+                    
+                    if (!selectedOption) {
+                        feedback.textContent = 'الرجاء اختيار إجابة';
+                        feedback.className = 'feedback incorrect';
+                        allCorrect = false;
+                        return;
+                    }
+
+                    const isCorrect = selectedOption.hasAttribute('data-correct');
+                    
+                    if (isCorrect) {
+                        feedback.textContent = 'إجابة صحيحة! أحسنت!';
+                        feedback.className = 'feedback correct';
+                    } else {
+                        feedback.textContent = 'حاول مرة أخرى';
+                        feedback.className = 'feedback incorrect';
+                        allCorrect = false;
+                    }
+                });
+
+                if (allCorrect) {
+                    // يمكن إضافة تأثير إضافي عند الإجابة على جميع الأسئلة بشكل صحيح
+                    document.querySelector('.reading-comprehension').style.animation = 'success-pulse 1s ease';
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

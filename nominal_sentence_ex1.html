@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 1 - الجملة الاسمية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: clamp(15px, 4vw, 30px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 800px;
+            width: 95%;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .title {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: clamp(20px, 4vw, 30px);
+            padding-bottom: 15px;
+            border-bottom: 3px solid #fda085;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            word-wrap: break-word;
+        }
+
+        .exercise-container {
+            margin-bottom: clamp(20px, 4vw, 30px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .sentence {
+            background: linear-gradient(to right, #ffffff, #f8f9fa);
+            padding: clamp(15px, 3vw, 20px);
+            border-radius: 15px;
+            margin-bottom: clamp(15px, 3vw, 20px);
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+
+        .sentence:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            font-weight: 700;
+            color: #34495e;
+            margin-bottom: 1.5rem;
+            word-wrap: break-word;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 i {
+            color: #fda085;
+        }
+
+        .sentence p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: clamp(15px, 3vw, 20px);
+            width: 100%;
+        }
+
+        .form-label {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            border-color: #fda085;
+            box-shadow: 0 0 0 3px rgba(253, 160, 133, 0.2);
+            outline: none;
+        }
+
+        .check-btn {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .check-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(255, 71, 87, 0.15);
+            color: #721c24;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .sentence {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">تمرين 1 - الجملة الاسمية</h1>
+        
+        <div class="exercise-container">
+            <h3><i class="fas fa-pencil-alt"></i> السؤال الأول</h3>
+            <div class="sentence">
+                <p>حدد المبتدأ والخبر في الجملة التالية:</p>
+                <p class="fw-bold">الكتابُ مفيدٌ</p>
+            </div>
+            <div class="input-group">
+                <label class="form-label">المبتدأ:</label>
+                <input type="text" class="form-control" id="answer1a">
+            </div>
+            <div class="input-group">
+                <label class="form-label">الخبر:</label>
+                <input type="text" class="form-control" id="answer1b">
+            </div>
+            <button class="check-btn" onclick="checkAnswer(1)">تحقق من الإجابة</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="exercise-container">
+            <h3><i class="fas fa-pencil-alt"></i> السؤال الثاني</h3>
+            <div class="sentence">
+                <p>حدد المبتدأ والخبر في الجملة التالية:</p>
+                <p class="fw-bold">المعلمُ نشيطٌ</p>
+            </div>
+            <div class="input-group">
+                <label class="form-label">المبتدأ:</label>
+                <input type="text" class="form-control" id="answer2a">
+            </div>
+            <div class="input-group">
+                <label class="form-label">الخبر:</label>
+                <input type="text" class="form-control" id="answer2b">
+            </div>
+            <button class="check-btn" onclick="checkAnswer(2)">تحقق من الإجابة</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <a href="nominal_sentence_exercises.html" class="back-btn">
+            <i class="fas fa-arrow-right ml-2"></i>
+            العودة للتمارين
+        </a>
+    </div>
+
+    <script>
+        function checkAnswer(questionNum) {
+            const answer1 = document.getElementById(`answer${questionNum}a`).value.trim();
+            const answer2 = document.getElementById(`answer${questionNum}b`).value.trim();
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            
+            let isCorrect = false;
+            
+            if (questionNum === 1) {
+                isCorrect = answer1 === "الكتابُ" && answer2 === "مفيدٌ";
+            } else if (questionNum === 2) {
+                isCorrect = answer1 === "المعلمُ" && answer2 === "نشيطٌ";
+            }
+            
+            feedback.style.display = "block";
+            if (isCorrect) {
+                feedback.className = "feedback correct";
+                feedback.innerHTML = "أحسنت! إجابتك صحيحة";
+            } else {
+                feedback.className = "feedback incorrect";
+                feedback.innerHTML = "حاول مرة أخرى";
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الكتابة السريعة - تصريف الفعل المضارع</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #ffecd2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .typing-card {
+            background: linear-gradient(145deg, #f0f7ff 0%, #e6f3ff 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .timer {
+            font-size: 2rem;
+            color: #e17055;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+        
+        .score-display {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 1rem 0;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .input-group {
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #fab1a0;
+            color: #d63031;
+            animation: celebrationPulse 1s ease;
+        }
+        
+        .feedback.incorrect {
+            background-color: #ff7675;
+            color: #c0392b;
+        }
+        
+        .progress {
+            height: 10px;
+            margin: 1rem 0;
+        }
+        
+        @keyframes celebrationPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+        
+        .floating-text {
+            position: absolute;
+            color: #e17055;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        
+        .font-control {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .btn-primary {
+            background-color: #e17055;
+            border-color: #e17055;
+        }
+        
+        .btn-primary:hover {
+            background-color: #d63031;
+            border-color: #d63031;
+        }
+    </style>
+</head>
+<body>
+    <div class="font-control">
+        <button class="btn btn-sm btn-primary" onclick="changeFontSize(1)">+</button>
+        <button class="btn btn-sm btn-primary" onclick="changeFontSize(-1)">-</button>
+    </div>
+
+    <div class="container game-container">
+        <h1 class="text-center mb-4">لعبة الكتابة السريعة - تصريف الفعل المضارع</h1>
+        
+        <div class="score-display">
+            النقاط: <span id="score">0</span>
+        </div>
+        
+        <div class="typing-card">
+            <div class="timer" id="timer">60</div>
+            <div class="progress">
+                <div class="progress-bar bg-warning" id="time-bar" role="progressbar" style="width: 100%"></div>
+            </div>
+            
+            <h3>اكتب تصريف الفعل المضارع بسرعة</h3>
+            <h4 id="verb-display" class="mb-3"></h4>
+            <h4 id="pronoun-display" class="mb-4"></h4>
+            
+            <div class="input-group mb-3">
+                <input type="text" id="answer-input" class="form-control text-center" placeholder="اكتب الإجابة هنا">
+            </div>
+        </div>
+        
+        <div id="feedback" class="feedback"></div>
+        
+        <div class="text-center">
+            <button onclick="startGame()" class="btn btn-primary btn-lg">ابدأ اللعبة</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let baseFontSize = 16;
+        let timeLeft = 60;
+        let timerInterval;
+        let currentQuestion;
+        let isGameActive = false;
+        
+        const questions = [
+            { verb: 'كَتَبَ', pronoun: 'أنا', answer: 'أَكْتُبُ' },
+            { verb: 'قَرَأَ', pronoun: 'هو', answer: 'يَقْرَأُ' },
+            { verb: 'ذَهَبَ', pronoun: 'هي', answer: 'تَذْهَبُ' },
+            { verb: 'أَكَلَ', pronoun: 'نحن', answer: 'نَأْكُلُ' },
+            { verb: 'شَرِبَ', pronoun: 'أنتَ', answer: 'تَشْرَبُ' },
+            { verb: 'لَعِبَ', pronoun: 'أنتِ', answer: 'تَلْعَبِينَ' },
+            { verb: 'سَمِعَ', pronoun: 'هم', answer: 'يَسْمَعُونَ' },
+            { verb: 'فَتَحَ', pronoun: 'هن', answer: 'يَفْتَحْنَ' }
+        ];
+        
+        function changeFontSize(delta) {
+            baseFontSize = Math.max(12, Math.min(24, baseFontSize + delta));
+            document.body.style.fontSize = baseFontSize + 'px';
+        }
+        
+        function createFloatingText(text, x, y) {
+            const floatingText = document.createElement('div');
+            floatingText.className = 'floating-text';
+            floatingText.textContent = text;
+            floatingText.style.left = x + 'px';
+            floatingText.style.top = y + 'px';
+            document.body.appendChild(floatingText);
+            setTimeout(() => floatingText.remove(), 1500);
+        }
+        
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer');
+            const timeBar = document.getElementById('time-bar');
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                timeBar.style.width = (timeLeft / 60 * 100) + '%';
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+        
+        function startGame() {
+            score = 0;
+            timeLeft = 60;
+            isGameActive = true;
+            document.getElementById('score').textContent = score;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('feedback').style.display = 'none';
+            
+            startTimer();
+            nextQuestion();
+        }
+        
+        function endGame() {
+            clearInterval(timerInterval);
+            isGameActive = false;
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = `انتهت اللعبة! نقاطك النهائية: ${score}`;
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+        }
+        
+        function nextQuestion() {
+            if (!isGameActive) return;
+            
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            document.getElementById('verb-display').textContent = currentQuestion.verb;
+            document.getElementById('pronoun-display').textContent = currentQuestion.pronoun;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        document.getElementById('answer-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && isGameActive) {
+                const userAnswer = this.value.trim();
+                const feedback = document.getElementById('feedback');
+                
+                if (userAnswer === currentQuestion.answer) {
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+                    
+                    feedback.textContent = 'أحسنت! إجابة صحيحة';
+                    feedback.className = 'feedback correct';
+                    
+                    const rect = this.getBoundingClientRect();
+                    createFloatingText('+10', rect.left, rect.top);
+                    
+                    nextQuestion();
+                } else {
+                    feedback.textContent = `حاول مرة أخرى. الإجابة الصحيحة هي: ${currentQuestion.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+                
+                feedback.style.display = 'block';
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

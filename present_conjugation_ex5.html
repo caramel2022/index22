@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة بناء الجمل - تصريف الفعل المضارع</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #fdcb6e 50%, #ff7675 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .sentence-builder {
+            background: linear-gradient(145deg, #f0f7ff 0%, #e6f3ff 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .word-item {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 2px solid #fdcb6e;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .word-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);
+        }
+        
+        .sentence-area {
+            min-height: 100px;
+            border: 2px dashed #fdcb6e;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .selected-word {
+            background-color: #fdcb6e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 0.25rem;
+            cursor: pointer;
+        }
+        
+        .score-display {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 1rem 0;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #a8e6cf;
+            color: #1a472a;
+            animation: celebrationPulse 1s ease;
+        }
+        
+        .feedback.incorrect {
+            background-color: #ff7675;
+            color: #c0392b;
+        }
+        
+        @keyframes celebrationPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+        
+        .floating-text {
+            position: absolute;
+            color: #fdcb6e;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        
+        .font-control {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .btn-primary {
+            background-color: #fdcb6e;
+            border-color: #fdcb6e;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #f0b14a;
+            border-color: #f0b14a;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+            background-color: #5b4bc4;
+        }
+    </style>
+</head>
+<body>
+    <a href="present_tense_conjugation_exercises.html" class="back-btn">↩</a>
+    <div class="font-control">
+        <button class="btn btn-sm btn-primary" onclick="changeFontSize(1)">+</button>
+        <button class="btn btn-sm btn-primary" onclick="changeFontSize(-1)">-</button>
+    </div>
+
+    <div class="container game-container">
+        <h1 class="text-center mb-4">لعبة بناء الجمل - تصريف الفعل المضارع</h1>
+        
+        <div class="score-display">
+            النقاط: <span id="score">0</span>
+        </div>
+        
+        <div class="sentence-builder">
+            <h3>كوّن جملة صحيحة باستخدام الكلمات التالية</h3>
+            <div class="sentence-area" id="sentence-area">
+                <div class="placeholder">اسحب الكلمات هنا لتكوين الجملة</div>
+            </div>
+            
+            <div class="word-bank" id="word-bank"></div>
+            
+            <button onclick="checkSentence()" class="btn btn-primary btn-lg mt-3">تحقق من الجملة</button>
+        </div>
+        
+        <div id="feedback" class="feedback"></div>
+        
+        <div class="text-center">
+            <button onclick="nextSentence()" class="btn btn-primary btn-lg">جملة جديدة</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let baseFontSize = 16;
+        let currentSentence;
+        
+        const sentences = [
+            {
+                words: ['أنا', 'أكتبُ', 'الدرسَ'],
+                correct: 'أنا أكتبُ الدرسَ'
+            },
+            {
+                words: ['هو', 'يقرأُ', 'القرآنَ'],
+                correct: 'هو يقرأُ القرآنَ'
+            },
+            {
+                words: ['هي', 'تذهبُ', 'إلى', 'المدرسةِ'],
+                correct: 'هي تذهبُ إلى المدرسةِ'
+            },
+            {
+                words: ['نحن', 'نلعبُ', 'في', 'الحديقةِ'],
+                correct: 'نحن نلعبُ في الحديقةِ'
+            }
+        ];
+        
+        function changeFontSize(delta) {
+            baseFontSize = Math.max(12, Math.min(24, baseFontSize + delta));
+            document.body.style.fontSize = baseFontSize + 'px';
+        }
+        
+        function createFloatingText(text, x, y) {
+            const floatingText = document.createElement('div');
+            floatingText.className = 'floating-text';
+            floatingText.textContent = text;
+            floatingText.style.left = x + 'px';
+            floatingText.style.top = y + 'px';
+            document.body.appendChild(floatingText);
+            setTimeout(() => floatingText.remove(), 1500);
+        }
+        
+        function shuffle(array) {
+            return [...array].sort(() => Math.random() - 0.5);
+        }
+        
+        function createWordItem(word) {
+            const wordItem = document.createElement('div');
+            wordItem.className = 'word-item';
+            wordItem.textContent = word;
+            wordItem.draggable = true;
+            
+            wordItem.addEventListener('dragstart', e => {
+                e.dataTransfer.setData('text/plain', word);
+                wordItem.style.opacity = '0.5';
+            });
+            
+            wordItem.addEventListener('dragend', () => {
+                wordItem.style.opacity = '1';
+            });
+            
+            return wordItem;
+        }
+        
+        function nextSentence() {
+            currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+            
+            const wordBank = document.getElementById('word-bank');
+            const sentenceArea = document.getElementById('sentence-area');
+            
+            wordBank.innerHTML = '';
+            sentenceArea.innerHTML = '<div class="placeholder">اسحب الكلمات هنا لتكوين الجملة</div>';
+            
+            shuffle(currentSentence.words).forEach(word => {
+                wordBank.appendChild(createWordItem(word));
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        function checkSentence() {
+            const sentenceArea = document.getElementById('sentence-area');
+            const selectedWords = Array.from(sentenceArea.children)
+                .filter(el => el.classList.contains('selected-word'))
+                .map(el => el.textContent);
+            
+            const userSentence = selectedWords.join(' ');
+            const feedback = document.getElementById('feedback');
+            
+            if (userSentence === currentSentence.correct) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                
+                feedback.textContent = 'أحسنت! جملة صحيحة';
+                feedback.className = 'feedback correct';
+                
+                const rect = sentenceArea.getBoundingClientRect();
+                createFloatingText('+10', rect.left + rect.width / 2, rect.top);
+                
+                setTimeout(nextSentence, 2000);
+            } else {
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+        }
+        
+        // Setup drag and drop
+        const sentenceArea = document.getElementById('sentence-area');
+        
+        sentenceArea.addEventListener('dragover', e => {
+            e.preventDefault();
+            e.currentTarget.style.borderStyle = 'solid';
+        });
+        
+        sentenceArea.addEventListener('dragleave', e => {
+            e.currentTarget.style.borderStyle = 'dashed';
+        });
+        
+        sentenceArea.addEventListener('drop', e => {
+            e.preventDefault();
+            const word = e.dataTransfer.getData('text/plain');
+            
+            if (sentenceArea.querySelector('.placeholder')) {
+                sentenceArea.innerHTML = '';
+            }
+            
+            const wordElement = document.createElement('div');
+            wordElement.className = 'selected-word';
+            wordElement.textContent = word;
+            wordElement.onclick = () => {
+                wordElement.remove();
+                if (sentenceArea.children.length === 0) {
+                    sentenceArea.innerHTML = '<div class="placeholder">اسحب الكلمات هنا لتكوين الجملة</div>';
+                }
+            };
+            
+            sentenceArea.appendChild(wordElement);
+            e.currentTarget.style.borderStyle = 'dashed';
+        });
+        
+        // Start the game
+        nextSentence();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

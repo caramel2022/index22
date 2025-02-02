@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>الحفلة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            background-color: #f8f5f1;
+            color: #2c3e50;
+            line-height: 2;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .poem {
+            margin: 20px auto;
+            font-size: 28px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #34495e;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px double #bdc3c7;
+        }
+
+        .poem-text {
+            text-align: center;
+            padding: 20px 40px;
+            background-color: #fcfcfc;
+            border-radius: 10px;
+            margin: 20px 0;
+            line-height: 2.5;
+        }
+
+        .separator {
+            text-align: center;
+            margin: 25px 0;
+            color: #95a5a6;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            display: inline-block;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #95a5a6, transparent);
+            margin: 0 15px;
+            vertical-align: middle;
+        }
+
+        .author {
+            font-size: 20px;
+            color: #7f8c8d;
+            text-align: left;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .btn-return {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            font-size: 22px;
+        }
+
+        .btn-return:hover {
+            background-color: #2980b9;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .exercise-section {
+            width: 100%;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f7f9fc;
+            border-radius: 10px;
+        }
+
+        .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #2c3e50;
+        }
+
+        .exercise-title img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .exercise-table th, .exercise-table td {
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            text-align: right;
+            font-size: 22px;
+        }
+
+        .exercise-table th {
+            background-color: #f4f6f9;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .exercise-table input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 22px;
+            text-align: right;
+        }
+
+        .exercise-table input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .check-answer {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 22px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .check-answer:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .question h4 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .question-section {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .question-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .answer-area {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 20px;
+            min-height: 100px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+
+        .answer-area:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .poem {
+                font-size: 20px;
+            }
+            .title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="poem">
+            <div class="title">الحَفْلَةُ</div>
+            
+            <div class="poem-text">
+                بِجِواري يَجْلِسُ تِلْميذٌ<br>
+                وَيُحَدِّثُني عَنْ بَلَدِهِ<br>
+                هُوَ مِنْ أَصْلٍ صَحْراوِيٍّ<br>
+                يَبْدو هذا في لِبْسِهِ<br>
+                هُوَ كَالنَّخْلَةِ<br>
+                حُلْوُ الطَّلَّةِ<br>
+                لَبِسَ الدِّشْداشَةَ في الحَفْلَةِ
+            </div>
+            
+            <div class="separator">✽</div>
+            
+            <div class="poem-text">
+                وَأَنا ابْنُ أَمازيغَ الأَطْلَسِ<br>
+                هَلْ تَسْمَعُ عَنْ جارِ الأَمْسِ؟<br>
+                وَانْظُرْ زَيّي، ماذا أَلْبَسُ؟<br>
+                جِلْباباً أَبْيَضَ فَأَنا رو<br>
+                وَقَميصٌ حَضَرْتُ بِالْقَفْطانِ<br>
+                نَزْهو في أَجْمَلِ أَلْوانِ<br>
+                وَلَقَدْ نَقَشْتُ في الكَفَّيْنِ<br>
+                حِنّاءَ نَزْهو في اليَدَيْنِ
+            </div>
+            
+            <div class="separator">✽</div>
+            
+            <div class="poem-text">
+                هَيّا نَبْدَأُ... بِالْقُرْآنِ<br>
+                يا سَعْدُ اقْرَأْ... بِاطْمِئْنانِ<br>
+                لِيُبارِكَ خالِقُنا اللهُ<br>
+                وَيُنْعِمَ بِما نَخْشاهُ
+            </div>
+            
+            <div class="author">محمد عريج</div>
+        </div>
+        
+        <a href="reading_activities.html" class="btn-return">العودة إلى الأنشطة القرائية</a>
+        
+        <div class="exercise-section">
+            <div class="exercise-title">
+                <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/book-reader.svg" alt="أفهم وأتذوق">
+                <h3>أَفْهَمُ وَأَتَذَوَّقُ</h3>
+            </div>
+            
+            <div class="question">
+                <h4>ما الأَبْياتُ الَّتي تُعَبِّرُ عَنِ المَعاني الآتِيَةِ؟</h4>
+                
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>مَعاني الأَبْياتِ</th>
+                            <th>الأَبْياتُ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>يَلْبَسُ المَغارِبَةُ في حَفَلاتِهِمْ جَلابيبَ بِلَوْنِ الثَّلْجِ.</td>
+                            <td><input type="text" class="answer-input" data-correct="جِلْباباً أَبْيَضَ كَالبَرَدِ"></td>
+                        </tr>
+                        <tr>
+                            <td>تَزَيَّنَتِ الفَتاةُ بِالحِنّاءِ.</td>
+                            <td><input type="text" class="answer-input" data-correct="وَلَقَدْ نَقَشْتُ في الكَفَّيْنِ حِنّاءَ نَزْهو في اليَدَيْنِ"></td>
+                        </tr>
+                        <tr>
+                            <td>اِسْتَهَلَّ الأَطْفالُ الحَفْلَ بِالقُرْآنِ.</td>
+                            <td><input type="text" class="answer-input" data-correct="هَيّا نَبْدَأُ بِالْقُرْآنِ"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <button class="check-answer" onclick="checkAnswers()">تحقق من الإجابات</button>
+            </div>
+        </div>
+        
+        <div class="exercise-section">
+            <div class="question-section">
+                <div class="question-item">
+                    <div class="question-text">2- ما الْمَلابِسُ التَّقْليدِيَّةُ الَّتي ذُكِرَتْ في الْقَصيدَةِ؟</div>
+                    <textarea class="answer-area" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-text">3- أَيْنَ يُقامُ الْحَفْلُ؟ ما الَّذي يَدُلُّ عَلى ذلِكَ؟</div>
+                    <textarea class="answer-area" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-text">4- كَيْفَ اسْتَعَدَّتْ مُنى لِلْحَفْلِ؟</div>
+                    <textarea class="answer-area" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-text">5- لَوْ كُنْتَ في هذِهِ الْحَفْلَةِ، ماذا كُنْتَ سَتَلْبَسُ؟</div>
+                    <textarea class="answer-area" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+            </div>
+
+            <button class="check-answer" onclick="saveAnswers()">حفظ الإجابات</button>
+        </div>
+
+        <script>
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.answer-input');
+            inputs.forEach(input => {
+                const correctAnswer = input.dataset.correct;
+                if (input.value.trim() === correctAnswer) {
+                    input.style.backgroundColor = '#d4edda';
+                    input.style.borderColor = '#28a745';
+                } else {
+                    input.style.backgroundColor = '#f8d7da';
+                    input.style.borderColor = '#dc3545';
+                }
+            });
+        }
+
+        function saveAnswers() {
+            const answers = document.querySelectorAll('.answer-area');
+            answers.forEach(answer => {
+                if (answer.value.trim() !== '') {
+                    answer.style.backgroundColor = '#d4edda';
+                    answer.style.borderColor = '#28a745';
+                }
+            });
+            alert('تم حفظ إجاباتك بنجاح!');
+        }
+        </script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

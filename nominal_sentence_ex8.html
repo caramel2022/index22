@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 8 - الجملة الاسمية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a8a4e0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: clamp(20px, 5vw, 40px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 95%;
+            margin: 20px auto;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            color: #6c5ce7;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #a8a4e0;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+        }
+
+        .exercise-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #e6e4ff;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.1);
+        }
+
+        .sentence {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #2d3436;
+            padding: 15px;
+            background: #f8f7ff;
+            border-radius: 12px;
+            border: 2px solid #e6e4ff;
+        }
+
+        .correction-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #6c5ce7;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .correction-input:focus {
+            outline: none;
+            border-color: #a8a4e0;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: rgba(46, 213, 115, 0.15);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.3);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(255, 71, 87, 0.15);
+            color: #ff4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-check {
+            background: linear-gradient(45deg, #6c5ce7, #a8a4e0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-back {
+            background: linear-gradient(45deg, #a8a4e0, #6c5ce7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 164, 224, 0.3);
+            color: white;
+        }
+
+        .hint {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .show-hint {
+            color: #6c5ce7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .show-hint:hover {
+            text-decoration: underline;
+        }
+
+        .error-highlight {
+            color: #ff4757;
+            text-decoration: underline wavy #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">تمرين 8 - الجملة الاسمية</h1>
+        
+        <div class="exercise-box">
+            <h3>صحح الأخطاء في الجمل الاسمية التالية:</h3>
+            
+            <div class="sentence">
+                1. <span class="error-highlight">المعلمةَ نشيطةٌ</span>
+            </div>
+            <input type="text" class="correction-input" id="answer1" placeholder="اكتب الجملة الصحيحة">
+            <a class="show-hint" onclick="toggleHint(1)">أظهر التلميح</a>
+            <div class="hint" id="hint1">تذكر أن المبتدأ يجب أن يكون مرفوعاً</div>
+            <button class="btn btn-check" onclick="checkAnswer(1)">تحقق</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="sentence">
+                2. <span class="error-highlight">القلمُ طويلاً</span>
+            </div>
+            <input type="text" class="correction-input" id="answer2" placeholder="اكتب الجملة الصحيحة">
+            <a class="show-hint" onclick="toggleHint(2)">أظهر التلميح</a>
+            <div class="hint" id="hint2">تذكر أن الخبر يجب أن يكون مرفوعاً</div>
+            <button class="btn btn-check" onclick="checkAnswer(2)">تحقق</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="sentence">
+                3. <span class="error-highlight">كتابٌ جديدُ</span>
+            </div>
+            <input type="text" class="correction-input" id="answer3" placeholder="اكتب الجملة الصحيحة">
+            <a class="show-hint" onclick="toggleHint(3)">أظهر التلميح</a>
+            <div class="hint" id="hint3">تذكر أن المبتدأ يجب أن يكون معرفاً</div>
+            <button class="btn btn-check" onclick="checkAnswer(3)">تحقق</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <a href="nominal_sentence_exercises.html" class="btn-back">العودة للتمارين</a>
+    </div>
+
+    <script>
+        function toggleHint(num) {
+            const hint = document.getElementById(`hint${num}`);
+            hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function checkAnswer(num) {
+            const answer = document.getElementById(`answer${num}`).value.trim();
+            const feedback = document.getElementById(`feedback${num}`);
+            
+            let correct = false;
+            let message = '';
+            
+            switch(num) {
+                case 1:
+                    correct = answer === "المعلمةُ نشيطةٌ";
+                    message = correct ? 
+                        "أحسنت! لقد صححت الخطأ في المبتدأ" : 
+                        "حاول مرة أخرى. تذكر أن المبتدأ يجب أن يكون مرفوعاً";
+                    break;
+                case 2:
+                    correct = answer === "القلمُ طويلٌ";
+                    message = correct ? 
+                        "ممتاز! لقد صححت الخطأ في الخبر" : 
+                        "حاول مرة أخرى. تذكر أن الخبر يجب أن يكون مرفوعاً";
+                    break;
+                case 3:
+                    correct = answer === "الكتابُ جديدٌ";
+                    message = correct ? 
+                        "رائع! لقد صححت الخطأ في تعريف المبتدأ" : 
+                        "حاول مرة أخرى. تذكر أن المبتدأ يجب أن يكون معرفاً";
+                    break;
+            }
+            
+            feedback.textContent = message;
+            feedback.className = `feedback ${correct ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>أَساسُ المَحَبَّةِ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+            background-color: #f5f5f5;
+            margin: 40px;
+            line-height: 2;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 36px;
+            margin: 30px 0;
+            color: #16a085;
+        }
+        .text {
+            font-size: 32px;
+            color: #2c3e50;
+            text-align: justify;
+            margin-bottom: 40px;
+        }
+        p {
+            margin-bottom: 25px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .back-button:hover {
+            background-color: #34495e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: white;
+        }
+        .exercise-section {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        .exercise-title {
+            color: #16a085;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .exercise-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+        .exercise-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 20px;
+            font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+        }
+        .answer-input:focus {
+            outline: none;
+            border-color: #16a085;
+        }
+        .check-button {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .check-button:hover {
+            background-color: #1abc9c;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 20px;
+            display: none;
+        }
+        .correct {
+            color: #27ae60;
+        }
+        .incorrect {
+            color: #e74c3c;
+        }
+        .vocabulary-section {
+            background-color: #edf7f5;
+        }
+        .vocabulary-grid {
+            display: grid;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .vocabulary-item {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .vocab-label {
+            font-size: 28px;
+            color: #16a085;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .vocab-pair {
+            display: grid;
+            gap: 20px;
+        }
+        .word-item {
+            display: grid;
+            gap: 10px;
+        }
+        .word-item label {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .vocab-input {
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 20px;
+            font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+            transition: all 0.3s ease;
+        }
+        .vocab-input:focus {
+            outline: none;
+            border-color: #16a085;
+            box-shadow: 0 0 5px rgba(22, 160, 133, 0.2);
+        }
+        .check-all-button {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 30px auto 0;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .check-all-button:hover {
+            background-color: #1abc9c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        h3 {
+            font-size: 26px;
+            color: #34495e;
+            margin: 20px 0;
+            text-align: right;
+        }
+        .multiple-choice-section {
+            background-color: #e8f6f3;
+            margin-top: 40px;
+        }
+        .multiple-choice-container {
+            display: grid;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .choice-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .choice-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .choice-item.selected {
+            border-color: #16a085;
+            background-color: #f1f9f7;
+        }
+        .choice-number {
+            background-color: #16a085;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .choice-text {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .choice-item.correct.selected {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        .choice-item.incorrect.selected {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        .feedback-message {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .check-answer-button {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .check-answer-button:hover {
+            background-color: #1abc9c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .open-questions-section {
+            background-color: #f0f8ff;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .open-question-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .question-item {
+            display: flex;
+            gap: 20px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question-number {
+            background-color: #4a90e2;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .question-content {
+            flex-grow: 1;
+        }
+        .question-text {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .answer-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            resize: vertical;
+            font-family: inherit;
+            direction: rtl;
+        }
+        .answer-textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+        }
+        .ordering-section {
+            background-color: #fff3e0;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .ordering-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: move;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        .event-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .event-item.dragging {
+            opacity: 0.5;
+            background-color: #f8f9fa;
+        }
+        .order-number {
+            background-color: #ff9800;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .event-text {
+            font-size: 20px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .check-order-button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .check-order-button:hover {
+            background-color: #f57c00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .order-feedback {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>أَساسُ المَحَبَّةِ</h1>
+        <div class="text">
+            <p>أَلْقَتِ الشَّمْسُ الدَّافِئَةُ أَنْوارَها الذَّهَبِيَّةَ عَلى الأَرْضِ، وَتَمايَحَتِ الأَزْهارُ عَلى إيقاعِ النَّسيمِ.</p>
+            
+            <p>بَيْنَما أَبْرَزَتِ الحُقولُ أَلْواناً زاهِيَةً، ناثِرَةً أَريجَها الزَّكِيَّ في الهَواءِ، كانَتِ الأُخْتانِ لا تَزالانِ تَجوبانِ المَزْرَعَةَ، فَرِحَتَيْنِ بِأَوَّلِ أَيّامِ عُطْلَتِهِما في القَرْيَةِ. قَفَزَتْ ريمٌ في فَرَحٍ، وَهِيَ تُشيرُ بِيَدِها إِلى الأَسْطَبْلِ قائِلَةً:</p>
+            
+            <p>- انْظُري يا عَبيرُ، أَخيراً سَأَتَمَكَّنُ مِنْ رُؤْيَةِ الخُيولِ عَنْ قُرْبٍ! أَجْنِحَتُها غَيْرُ مُبالِيَةٍ:</p>
+            
+            <p>- لَنْ أُرافِقَكِ إِلى هُناكَ، فَأَنا أُفَضِّلُ قَضاءَ الوَقْتِ في مُشاهَدَةِ الفَراشاتِ وَالْتِقاطِ الأَزْهارِ.</p>
+            
+            <p>عَقَدَتْ ريمٌ حاجِبَيْها في غَضَبٍ، ثُمَّ صاحَتْ:</p>
+            
+            <p>- أَلَمْ نَتَعاهَدْ أَمامَ الصَّباحِ أَلّا نَفْتَرِقَ؟</p>
+            
+            <p>هَزَّتْ عَبيرُ كَتِفَيْها وَقالَتْ:</p>
+            
+            <p>- تَعالَيْ يا إِذَنْ نَجْمَعُ الأَزْهارَ وَنُلاعِبُ الفَراشاتِ.</p>
+            
+            <p>- وَلِمَ لا تَذْهَبي مَعي إِلى الأَسْطَبْلِ؟</p>
+            
+            <p>هَكَذا نَشَأَ الخِلافُ بَيْنَ الأُخْتَيْنِ، وَتَشَبَّثَتْ كُلٌّ مِنْهُما بِرَغْبَتِها، وَلَمْ تَرْضَ أَيٌّ مِنْهُما التَّنازُلَ لِصالِحِ الأُخْرى. وَظَلَّتا تَتَشاجَرانِ حَتّى تَناهى صُراخُهُما إِلى العَمَّةِ فاطِمَةَ، وَكانَتْ تَرْعى خِرافاً في الجِوارِ. وَحينَ عَلِمَتْ بِسَبَبِ النِّزاعِ، تَدَخَّلَتْ قائِلَةً:</p>
+            
+            <p>- هَوْناً عَلَيْكُما يا صَغيرَتَيَّ! فَالأَمْرُ لا يَحْتاجُ كُلَّ هَذِهِ الضَّوْضاءِ. ما رَأْيُكُما أَنْ تَزورا الأَسْطَبْلَ مَعاً، ثُمَّ نَذْهَبَ بَعْدَها إِلى الحَقْلِ لِالْتِقاطِ الأَزْهارِ وَرُؤْيَةِ الفَراشاتِ؟</p>
+            
+            <p>تَبادَلَتِ الأُخْتانِ نَظْرَةً صامِتَةً. ثُمَّ ابْتَسَمَتا أَخيراً، وَقَدْ بَدا أَنَّهُما أُعْجِبَتا بِاقْتِراحِ عَمَّتِهِما.</p>
+            
+            <p>وَتابَعَتِ العَمَّةُ فاطِمَةُ قائِلَةً:</p>
+            
+            <p>- لا تَجْعَلا الاخْتِلافَ في الرَّأْيِ سَبَباً لِخِصامِكُما. فَالتَّفاهُمُ وَالاحْتِرامُ أَساسُ المَحَبَّةِ.</p>
+            
+            <p>شَكَرَتِ الأُخْتانِ عَمَّتَهُما عَلى النَّصيحَةِ، ثُمَّ تَماسَكَتا بِالْيَدَيْنِ مِنْ جَديدٍ، وَانْطَلَقَتا راكِضَتَيْنِ صَوْبَ الأَسْطَبْلِ.</p>
+        </div>
+
+        <div class="exercise-section vocabulary-section">
+            <h2>أَسْتَثْمِرُ مُعْجَمَ النَّصِّ</h2>
+            <h3>أَسْتَخْرِجُ مِنَ النَّصِّ:</h3>
+            
+            <div class="vocabulary-grid">
+                <div class="vocabulary-item">
+                    <div class="vocab-label">ضِدّ ≠</div>
+                    <div class="vocab-pair">
+                        <div class="word-item">
+                            <label>بِاهْتِمامٍ ≠</label>
+                            <input type="text" class="vocab-input" data-correct="بإهمال">
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="word-item">
+                            <label>جَهِلَتْ ≠</label>
+                            <input type="text" class="vocab-input" data-correct="علمت">
+                            <div class="feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vocabulary-item">
+                    <div class="vocab-label">مُرادِف =</div>
+                    <div class="vocab-pair">
+                        <div class="word-item">
+                            <label>اِبْتَسَمَتْ =</label>
+                            <input type="text" class="vocab-input" data-correct="ضحكت">
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="word-item">
+                            <label>خِلافٌ =</label>
+                            <input type="text" class="vocab-input" data-correct="نزاع">
+                            <div class="feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vocabulary-item">
+                    <div class="vocab-label">جَمْع</div>
+                    <div class="vocab-pair">
+                        <div class="word-item">
+                            <label>زَهْرَة:</label>
+                            <input type="text" class="vocab-input" data-correct="أزهار">
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="word-item">
+                            <label>خَروف:</label>
+                            <input type="text" class="vocab-input" data-correct="خراف">
+                            <div class="feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="check-all-button" onclick="checkAllVocab()">تحقق من جميع الإجابات</button>
+        </div>
+
+        <div class="exercise-section">
+            <h2>اِقْرَأْ وَافْهَمْ</h2>
+            <div class="exercise-item">
+                <div>١- أَيْنَ كانَتِ الأُخْتانِ تَقْضِيانِ عُطْلَتَهُما؟</div>
+                <input type="text" class="answer-input" placeholder="اكتب إجابتك هنا...">
+                <button class="check-button" onclick="checkAnswer(this, 'في القرية')">تحقق من الإجابة</button>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="exercise-item">
+                <div>٢- ماذا أَرادَتْ ريمٌ أَنْ تُشاهِدَ؟</div>
+                <input type="text" class="answer-input" placeholder="اكتب إجابتك هنا...">
+                <button class="check-button" onclick="checkAnswer(this, 'الخيول')">تحقق من الإجابة</button>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="exercise-item">
+                <div>٣- ماذا أَرادَتْ عَبيرُ أَنْ تَفْعَلَ؟</div>
+                <input type="text" class="answer-input" placeholder="اكتب إجابتك هنا...">
+                <button class="check-button" onclick="checkAnswer(this, 'مشاهدة الفراشات والتقاط الأزهار')">تحقق من الإجابة</button>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="exercise-item">
+                <div>٤- ما الحَلُّ الَّذي اقْتَرَحَتْهُ العَمَّةُ فاطِمَةُ؟</div>
+                <input type="text" class="answer-input" placeholder="اكتب إجابتك هنا...">
+                <button class="check-button" onclick="checkAnswer(this, 'أن تزورا الأسطبل معاً ثم الذهاب إلى الحقل')">تحقق من الإجابة</button>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="exercise-section multiple-choice-section">
+            <h2>لِماذا نَشَأَ الخِلافُ بَيْنَ ريمَ وَعَبيرَ؟</h2>
+            
+            <div class="multiple-choice-container">
+                <div class="choice-item" onclick="selectChoice(this, 0)">
+                    <div class="choice-number">١</div>
+                    <div class="choice-text">لِأَنَّهُما تَلْعَبانِ في المَزْرَعَةِ.</div>
+                </div>
+                
+                <div class="choice-item" onclick="selectChoice(this, 1)">
+                    <div class="choice-number">٢</div>
+                    <div class="choice-text">لِأَنَّهُما عاهَدَتا أُمَّهُما عَلى ذلِكَ.</div>
+                </div>
+                
+                <div class="choice-item correct" onclick="selectChoice(this, 2)">
+                    <div class="choice-number">٣</div>
+                    <div class="choice-text">لِأَنَّ كُلّاً مِنْهُما تَشَبَّثَتْ بِرَغْبَتِها.</div>
+                </div>
+                
+                <div class="choice-item" onclick="selectChoice(this, 3)">
+                    <div class="choice-number">٤</div>
+                    <div class="choice-text">لِأَنَّهُما اُخْتانِ.</div>
+                </div>
+            </div>
+
+            <div class="feedback-message"></div>
+            <button class="check-answer-button" onclick="checkMultipleChoice()">تحقق من الإجابة</button>
+        </div>
+
+        <div class="exercise-section multiple-choice-section">
+            <h2>كَيْفَ رَدَّتْ عَبيرُ عَلى اقْتِراحِ ريمَ؟</h2>
+            
+            <div class="multiple-choice-container">
+                <div class="choice-item" onclick="selectChoice2(this, 0)">
+                    <div class="choice-number">أ</div>
+                    <div class="choice-text">وافَقَتْ مُباشَرَةً.</div>
+                </div>
+                
+                <div class="choice-item correct" onclick="selectChoice2(this, 1)">
+                    <div class="choice-number">ب</div>
+                    <div class="choice-text">اِعْتَذَرَتْ عَنِ الذَّهابِ لِأَنَّها تُفَضِّلُ مُشاهَدَةَ الفَراشاتِ.</div>
+                </div>
+                
+                <div class="choice-item" onclick="selectChoice2(this, 2)">
+                    <div class="choice-number">ج</div>
+                    <div class="choice-text">اِقْتَرَحَتِ البَقاءَ في المَزْرَعَةِ.</div>
+                </div>
+                
+                <div class="choice-item" onclick="selectChoice2(this, 3)">
+                    <div class="choice-number">د</div>
+                    <div class="choice-text">قَفَزَتْ في فَرَحٍ.</div>
+                </div>
+            </div>
+
+            <div class="feedback-message"></div>
+            <button class="check-answer-button" onclick="checkMultipleChoice2()">تحقق من الإجابة</button>
+        </div>
+
+        <div class="exercise-section open-questions-section">
+            <h2>أَسْئِلَة مَفْتوحَة</h2>
+            
+            <div class="open-question-container">
+                <div class="question-item">
+                    <div class="question-number">٥</div>
+                    <div class="question-content">
+                        <div class="question-text">في أَيِّ فَصْلٍ وَقَعَتْ أَحْداثُ القِصَّةِ؟</div>
+                        <textarea class="answer-textarea" placeholder="اكتب إجابتك هنا..." rows="3"></textarea>
+                        <button class="check-button" onclick="checkOpenAnswer(this, 'في فصل الربيع')">تحقق من الإجابة</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">٦</div>
+                    <div class="question-content">
+                        <div class="question-text">كَيْفَ رَدَّتِ الأُخْتانِ عَلى اقْتِراحِ العَمَّةِ؟</div>
+                        <textarea class="answer-textarea" placeholder="اكتب إجابتك هنا..." rows="3"></textarea>
+                        <button class="check-button" onclick="checkOpenAnswer(this, 'شكرتا عمتهما على النصيحة وتماسكتا باليدين وانطلقتا راكضتين نحو الأسطبل')">تحقق من الإجابة</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">٧</div>
+                    <div class="question-content">
+                        <div class="question-text">ما الدَّرْسُ الَّذي تَعَلَّمَتْهُ الأُخْتانِ مِمّا وَقَعَ؟</div>
+                        <textarea class="answer-textarea" placeholder="اكتب إجابتك هنا..." rows="3"></textarea>
+                        <button class="check-button" onclick="checkOpenAnswer(this, 'تعلمتا أن يحترما رغبات بعضهما البعض وأن يتعاونا')">تحقق من الإجابة</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section ordering-section">
+            <h2>رَتِّبِ الأَحْداثَ الآتِيَةَ (مِنْ ١ إِلى ٥) حَسَبَ وُرودِها في النَّصِّ:</h2>
+            
+            <div class="ordering-container">
+                <div class="event-item" draggable="true" data-order="4">
+                    <div class="order-number">...</div>
+                    <div class="event-text">اِقْتَرَحَتِ العَمَّةُ عَلى الأُخْتَيْنِ أَنْ تَزورا الأَصْطَبْلَ مَعاً، ثُمَّ تَذْهَبا بَعْدَها لِرُؤْيَةِ الفَراشاتِ</div>
+                </div>
+                
+                <div class="event-item" draggable="true" data-order="2">
+                    <div class="order-number">...</div>
+                    <div class="event-text">اِقْتَرَحَتْ عَبيرُ عَلى ريمَ جَمْعَ الأَزْهارِ وَمُلاحَقَةِ الفَراشاتِ</div>
+                </div>
+                
+                <div class="event-item" draggable="true" data-order="5">
+                    <div class="order-number">...</div>
+                    <div class="event-text">فَرِحَتِ الأُخْتانِ بِالعُطْلَةِ وَقامَتا بِزيارَةِ المَزْرَعَةِ</div>
+                </div>
+                
+                <div class="event-item" draggable="true" data-order="1">
+                    <div class="order-number">...</div>
+                    <div class="event-text">اِقْتَرَحَتْ ريمُ عَلى عَبيرَ رُؤْيَةَ الخُيولِ</div>
+                </div>
+                
+                <div class="event-item" draggable="true" data-order="3">
+                    <div class="order-number">...</div>
+                    <div class="event-text">وَقَعَ خِلافٌ بَيْنَ الأُخْتَيْنِ لِأَنَّهُما تَشَبَّثَتا بِرَغْبَتِهِما، وَلَمْ تَرْضَ أَيٌّ مِنْهُما التَّنازُلَ لِصالِحِ الأُخْرى</div>
+                </div>
+            </div>
+
+            <button class="check-order-button" onclick="checkOrder()">تحقق من الترتيب</button>
+            <div class="order-feedback"></div>
+        </div>
+
+        <script>
+            function checkAnswer(button, correctAnswer) {
+                const inputElement = button.previousElementSibling;
+                const feedbackElement = button.nextElementSibling;
+                const userAnswer = inputElement.value.trim();
+                
+                feedbackElement.style.display = 'block';
+                
+                if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                    feedbackElement.textContent = 'أحسنت! إجابة صحيحة';
+                    feedbackElement.className = 'feedback correct';
+                    inputElement.style.borderColor = '#27ae60';
+                } else {
+                    feedbackElement.textContent = 'حاول مرة أخرى';
+                    feedbackElement.className = 'feedback incorrect';
+                    inputElement.style.borderColor = '#e74c3c';
+                }
+            }
+
+            function checkAllVocab() {
+                const inputs = document.querySelectorAll('.vocab-input');
+                inputs.forEach(input => {
+                    const correctAnswer = input.dataset.correct;
+                    const userAnswer = input.value.trim();
+                    const feedbackElement = input.nextElementSibling;
+                    
+                    feedbackElement.style.display = 'block';
+                    
+                    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                        input.style.borderColor = '#27ae60';
+                        feedbackElement.textContent = '✓';
+                        feedbackElement.className = 'feedback correct';
+                    } else {
+                        input.style.borderColor = '#e74c3c';
+                        feedbackElement.textContent = '✗';
+                        feedbackElement.className = 'feedback incorrect';
+                    }
+                });
+            }
+
+            let selectedChoice = null;
+
+            function selectChoice(element, index) {
+                // Remove previous selection
+                const choices = document.querySelectorAll('.multiple-choice-section:nth-child(3) .choice-item');
+                choices.forEach(choice => {
+                    choice.classList.remove('selected');
+                    choice.classList.remove('correct');
+                    choice.classList.remove('incorrect');
+                });
+                
+                // Select new choice
+                element.classList.add('selected');
+                selectedChoice = index;
+            }
+
+            function checkMultipleChoice() {
+                if (selectedChoice === null) {
+                    return;
+                }
+
+                const choices = document.querySelectorAll('.multiple-choice-section:nth-child(3) .choice-item');
+                const feedbackMessage = document.querySelector('.multiple-choice-section:nth-child(3) .feedback-message');
+                
+                // Clear previous feedback
+                choices.forEach(choice => {
+                    choice.classList.remove('correct');
+                    choice.classList.remove('incorrect');
+                });
+
+                // Show feedback
+                feedbackMessage.style.opacity = '1';
+                
+                if (selectedChoice === 2) { // Index of correct answer
+                    choices[selectedChoice].classList.add('correct');
+                    feedbackMessage.textContent = 'أحسنت! إجابة صحيحة';
+                    feedbackMessage.style.color = '#28a745';
+                } else {
+                    choices[selectedChoice].classList.add('incorrect');
+                    feedbackMessage.textContent = 'حاول مرة أخرى';
+                    feedbackMessage.style.color = '#dc3545';
+                }
+            }
+
+            let selectedChoice2 = null;
+
+            function selectChoice2(element, index) {
+                // Remove previous selection
+                const choices = document.querySelectorAll('.multiple-choice-section:nth-child(4) .choice-item');
+                choices.forEach(choice => {
+                    choice.classList.remove('selected');
+                    choice.classList.remove('correct');
+                    choice.classList.remove('incorrect');
+                });
+                
+                // Select new choice
+                element.classList.add('selected');
+                selectedChoice2 = index;
+            }
+
+            function checkMultipleChoice2() {
+                if (selectedChoice2 === null) {
+                    return;
+                }
+
+                const choices = document.querySelectorAll('.multiple-choice-section:nth-child(4) .choice-item');
+                const feedbackMessage = document.querySelector('.multiple-choice-section:nth-child(4) .feedback-message');
+                
+                // Clear previous feedback
+                choices.forEach(choice => {
+                    choice.classList.remove('correct');
+                    choice.classList.remove('incorrect');
+                });
+
+                // Show feedback
+                feedbackMessage.style.opacity = '1';
+                
+                if (selectedChoice2 === 1) { // Index of correct answer
+                    choices[selectedChoice2].classList.add('correct');
+                    feedbackMessage.textContent = 'أحسنت! إجابة صحيحة';
+                    feedbackMessage.style.color = '#28a745';
+                } else {
+                    choices[selectedChoice2].classList.add('incorrect');
+                    feedbackMessage.textContent = 'حاول مرة أخرى';
+                    feedbackMessage.style.color = '#dc3545';
+                }
+            }
+
+            function checkOpenAnswer(button, correctAnswer) {
+                const textarea = button.previousElementSibling;
+                const feedbackElement = button.nextElementSibling;
+                const userAnswer = textarea.value.trim();
+                
+                feedbackElement.style.display = 'block';
+                
+                // Simple check if the answer contains key words/phrases
+                const userWords = userAnswer.toLowerCase().split(' ');
+                const correctWords = correctAnswer.toLowerCase().split(' ');
+                
+                let matchCount = 0;
+                correctWords.forEach(word => {
+                    if (userWords.some(userWord => userWord.includes(word) || word.includes(userWord))) {
+                        matchCount++;
+                    }
+                });
+                
+                const matchPercentage = (matchCount / correctWords.length) * 100;
+                
+                if (matchPercentage >= 60) {
+                    textarea.style.borderColor = '#27ae60';
+                    feedbackElement.textContent = 'أحسنت! إجابة صحيحة';
+                    feedbackElement.className = 'feedback correct';
+                } else {
+                    textarea.style.borderColor = '#e74c3c';
+                    feedbackElement.textContent = 'حاول مرة أخرى';
+                    feedbackElement.className = 'feedback incorrect';
+                }
+            }
+
+            // Drag and Drop functionality
+            const orderingContainer = document.querySelector('.ordering-container');
+            const eventItems = document.querySelectorAll('.event-item');
+
+            eventItems.forEach(item => {
+                item.addEventListener('dragstart', () => {
+                    item.classList.add('dragging');
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                    updateOrderNumbers();
+                });
+            });
+
+            orderingContainer.addEventListener('dragover', e => {
+                e.preventDefault();
+                const draggingItem = document.querySelector('.dragging');
+                const siblings = [...orderingContainer.querySelectorAll('.event-item:not(.dragging)')];
+                
+                const nextSibling = siblings.find(sibling => {
+                    const box = sibling.getBoundingClientRect();
+                    const offset = e.clientY - box.top - box.height / 2;
+                    return offset < 0;
+                });
+                
+                orderingContainer.insertBefore(draggingItem, nextSibling);
+            });
+
+            function updateOrderNumbers() {
+                const items = document.querySelectorAll('.event-item');
+                items.forEach((item, index) => {
+                    const orderNumber = item.querySelector('.order-number');
+                    orderNumber.textContent = index + 1;
+                });
+            }
+
+            // Initial order numbers
+            updateOrderNumbers();
+
+            function checkOrder() {
+                const items = document.querySelectorAll('.event-item');
+                const feedbackElement = document.querySelector('.order-feedback');
+                let isCorrect = true;
+                
+                items.forEach((item, index) => {
+                    const correctOrder = parseInt(item.dataset.order);
+                    const currentOrder = index + 1;
+                    
+                    if (currentOrder !== correctOrder) {
+                        isCorrect = false;
+                    }
+                    
+                    // Visual feedback
+                    item.style.borderColor = currentOrder === correctOrder ? '#27ae60' : '#e74c3c';
+                });
+                
+                feedbackElement.style.opacity = '1';
+                if (isCorrect) {
+                    feedbackElement.textContent = 'أحسنت! الترتيب صحيح';
+                    feedbackElement.style.color = '#27ae60';
+                } else {
+                    feedbackElement.textContent = 'حاول مرة أخرى';
+                    feedbackElement.style.color = '#e74c3c';
+                }
+            }
+        </script>
+
+        <div class="button-container">
+            <a href="reading_activities.html" class="back-button">العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+</body>
+</html>

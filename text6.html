@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>رَحْلَةٌ لا تُنْسَى (الجُزْءُ ١)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', 'Traditional Arabic', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            line-height: 2;
+            font-size: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .title {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: bold;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background-color: #3498db;
+        }
+        .text-content {
+            font-size: 24px;
+            color: #34495e;
+            text-align: justify;
+            margin: 25px 0;
+        }
+        .text-content p {
+            margin-bottom: 20px;
+        }
+        .exercise {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-size: 22px;
+        }
+        .exercise h3 {
+            color: #2c3e50;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .text-source {
+            font-size: 18px;
+            color: #666;
+            text-align: left;
+            margin-top: 30px;
+        }
+        .blanks {
+            border-bottom: 2px solid #666;
+            display: inline-block;
+            width: 150px;
+            margin: 0 10px;
+        }
+        .learn-together {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .learn-together img {
+            width: 40px;
+            height: 40px;
+        }
+        .steps {
+            list-style: none;
+            padding: 0;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+            padding-right: 35px;
+        }
+        .steps li::before {
+            content: "✓";
+            position: absolute;
+            right: 10px;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .table-container {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .practice-section {
+            background: #edf7ed;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .practice-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .solo-work-section, .dictionary-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 24px;
+        }
+
+        .section-title h2 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .task-instruction {
+            color: #34495e;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .next-step {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .word-analysis {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .word-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .label {
+            color: #3498db;
+            font-weight: bold;
+            min-width: 60px;
+        }
+
+        .word-box {
+            background: #f7f9fc;
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .dots {
+            flex: 1;
+            border-bottom: 2px dotted #bdc3c7;
+            height: 1px;
+            margin: 0 10px;
+        }
+
+        .word-item {
+            position: relative;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .answer-input {
+            flex: 1;
+            padding: 8px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 16px;
+            text-align: right;
+            direction: rtl;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .feedback-icon span {
+            display: none;
+        }
+
+        .feedback-icon .correct {
+            color: #27ae60;
+        }
+
+        .feedback-icon .incorrect {
+            color: #e74c3c;
+        }
+
+        .word-item.correct .answer-input {
+            border-color: #27ae60;
+            background-color: #f0fff4;
+        }
+
+        .word-item.incorrect .answer-input {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+
+        .word-item.correct .feedback-icon .correct {
+            display: inline;
+        }
+
+        .word-item.incorrect .feedback-icon .incorrect {
+            display: inline;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:not(.secondary) {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .action-button.secondary {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            color: #2c3e50;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        .word-item.incorrect .answer-input {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .inline-input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px;
+            border-radius: 6px;
+        }
+
+        .inline-answer-input {
+            width: 120px;
+            padding: 5px 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 4px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 16px;
+            text-align: right;
+            direction: rtl;
+            transition: all 0.3s ease;
+        }
+
+        .inline-answer-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .answer-cell {
+            padding: 10px !important;
+        }
+
+        .answer-cell.correct .inline-input-group {
+            background-color: #f0fff4;
+        }
+
+        .answer-cell.incorrect .inline-input-group {
+            background-color: #fff5f5;
+        }
+
+        .answer-cell.correct .inline-answer-input {
+            border-color: #27ae60;
+        }
+
+        .answer-cell.incorrect .inline-answer-input {
+            border-color: #e74c3c;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .textarea-answer {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            font-size: 16px;
+            resize: vertical;
+            direction: rtl;
+            transition: all 0.3s ease;
+        }
+
+        .textarea-answer:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .answer-cell {
+            position: relative;
+            padding: 15px !important;
+        }
+
+        .answer-cell .feedback-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .answer-cell.correct .textarea-answer {
+            border-color: #27ae60;
+            background-color: #f0fff4;
+        }
+
+        .answer-cell.incorrect .textarea-answer {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .practice-section .buttons-container {
+            margin-top: 20px;
+        }
+
+        .invest-text-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-block {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .question-block h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #edf2f7;
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+        }
+
+        .radio-custom::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #3498db;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.2s ease;
+        }
+
+        .option input[type="radio"]:checked + .radio-custom::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .instruction {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">رَحْلَةٌ لا تُنْسَى (الجُزْءُ ١)</h1>
+        
+        <div class="exercise">
+            <h3>أَسْتَعِدُّ لِفَهْمِ النَّصِّ</h3>
+            <p>أَضَعُ كُلَّ كَلِمَةٍ أَمَامَ المَعْنَى المُنَاسِبِ لَهَا: رَبَتَتْ عَلَى كَتِفِي - أَلَحَّ - تَبَاشِيرُ - أَخَّاذٌ</p>
+            <p>أَحَسَّ وَتَرَدَّدَ فِي الطَّلَبِ: <span class="blanks"></span></p>
+            <p>عَلامَاتُ بِدَايَةٍ سَعِيدَةٍ: <span class="blanks"></span></p>
+        </div>
+
+        <div class="text-content">
+            <p>هَا قَدْ انْقَضَتِ السَّنَةُ الدِّرَاسِيَّةُ، وَبَدَأَتْ ثُلُوجُ تَبَاشِيرِ الصَّيْفِ، بِشَمْسِهِ النَّشِيطَةِ، وَدِفْئِهِ الأَخَّاذِ. تُرَى إِلَى أَيْنَ سَيَأْخُذُنَا سَفَرُ هَذِهِ العُطْلَةِ! لَطَالَمَا كُنْتُ أُمَنِّي نَفْسِي بِالسَّفَرِ إِلَى مُدُنٍ لَمْ يَسْبِقْ أَنْ زُرْتُهَا. وَكُلَّمَا أَلْحَحْتُ عَلَى أُمِّي فِي السُّؤَالِ، أَجَابَتْنِي بَاسِمَةً:</p>
+            
+            <p>- صَبْرًا يَا مَرْيَمُ!</p>
+            
+            <p>ذَاتَ صَبَاحٍ مُشْرِقٍ، اسْتَيْقَظْتُ عَلَى صَخَبٍ غَيْرِ مُعْتَادٍ فِي المَنْزِلِ. كَانَتْ أُمِّي تَحْزِمُ الحَقَائِبَ فِي حَيَوِيَّةٍ وَنَشَاطٍ، بَيْنَمَا أَبِي يَرْكُنُ سَيَّارَتَهُ قُرْبَ البَابِ وَقَدْ فُتِحَ غِطَاؤُهَا الأَمَامِيُّ، يَقِيسُ زَيْتَ المُحَرِّكِ وَيُرَاقِبُ أَسْلاكًا مُتَشَابِكَةً. قَالَتْ أُمِّي مُسْتَبْشِرَةً:</p>
+            
+            <p>- هَيَّا يَا مَرْيَمُ، لَقَدْ حَانَ مَوْعِدُ السَّفَرِ!</p>
+            
+            <p>خَفَقَ قَلْبِي الصَّغِيرُ انْتِصَارًا، فَتَنَاوَلْتُ فُطُورِي عَلَى عَجَلٍ. ثُمَّ رُحْتُ أُسَاعِدُ أُمِّي فِي إِعْدَادِ الأَمْتِعَةِ، وَتَرْتِيبِهَا، دَاخِلَ صُنْدُوقِ السَّيَّارَةِ.</p>
+            
+            <p>سَأَلَتْ أُمِّي مُتَبَسِّمَةً:</p>
+            <p>- أَيْنَ سَتَقْضِي عُطْلَتَكِ هَذِهِ المَرَّةَ يَا أُمِّي؟</p>
+            
+            <p>صَمَتَتْ بُرْهَةً، ثُمَّ رَبَتَتْ عَلَى كَتِفِي مُبْتَسِمَةً:</p>
+            <p>- سَتَكْتَشِفِينَ ذَلِكَ بِنَفْسِكِ!</p>
+            
+            <p>وَمَا هِيَ إِلَّا لَحَظَاتٌ، حَتَّى انْطَلَقَتْ رِحْلَتُنَا أَخِيرًا، وَأَنَا أَرْقُبُ مِنْ خَلْفِي مَعَالِمَ المَدِينَةِ، وَهِيَ تَخْتَفِي شَيْئًا فَشَيْئًا.</p>
+        </div>
+        
+        <div class="text-source">
+            <p>عَبْد السَّمِيع بَصَّاصَة (بِتَصَرُّف)</p>
+        </div>
+        
+        <div class="learn-together">
+            <span>🎓</span>
+            <h2>نَتَعَلَّمُ جَمِيعاً</h2>
+        </div>
+
+        <div class="section">
+            <ul class="steps">
+                <li>تُسَاعِدُنِي اسْتِرَاتِيجِيَّةُ الكَلِمَاتِ المَفَاتِيحِ عَلَى اسْتِنْتَاجِ مَعْلُومَاتٍ غَيْرِ صَرِيحَةٍ فِي نَصٍّ.</li>
+                <li>أَحَدِّدُ الكَلِمَاتِ المَفَاتِيحَ فِي السُّؤَالِ.</li>
+                <li>أَقُومُ بِالقِرَاءَةِ المَسْحِيَّةِ لأَبْحَثَ عَنْ مُؤَشِّرَاتٍ مَذْكُورَةٍ فِي النَّصِّ تَدُلُّ عَلَى الكَلِمَاتِ المَفَاتِيحِ.</li>
+                <li>أَسْتَنْتِجُ المَعْلُومَاتِ بِمُقَارَنَةِ المُؤَشِّرَاتِ بِمَعَارِفِي السَّابِقَةِ.</li>
+            </ul>
+        </div>
+
+        <div class="practice-section">
+            <div class="practice-title">
+                <span>✏️</span>
+                <h2>أَتَدَرَّبُ مَعَ زُمَلائِي</h2>
+            </div>
+
+            <p>أَبْحَثُ عَنْ مُؤَشِّرَاتٍ فِي النَّصِّ القِرَائِيِّ «رِحْلَةٌ لا تُنْسَى» تَدُلُّ عَلَى الكَلِمَاتِ المَفَاتِيحِ المَطْلُوبَةِ.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المَعْلُومَات</th>
+                            <th>المُؤَشِّرَاتُ الَّتِي تَدُلُّ عَلَيْهَا فِي النَّصِّ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>اسْتِعْدَادُ الأُسْرَةِ لِلسَّفَرِ.</td>
+                            <td class="answer-cell">
+                                <textarea class="textarea-answer" data-correct="كَانَتْ أُمِّي تَحْزِمُ الحَقَائِبَ... أَبِي يُوقِفُ سَيَّارَتَهُ قُرْبَ البَابِ" placeholder="اكتب المؤشرات هنا..."></textarea>
+                                <div class="feedback-icon">
+                                    <span class="correct">✓</span>
+                                    <span class="incorrect">✗</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>حُلْمٌ مَرْيَمَ بِالسَّفَرِ.</td>
+                            <td class="answer-cell">
+                                <textarea class="textarea-answer" data-correct="كُنْتُ أَحْلُمُ دَائِماً بِالسَّفَرِ إِلَى مَدِينَةٍ جَمِيلَةٍ" placeholder="اكتب المؤشرات هنا..."></textarea>
+                                <div class="feedback-icon">
+                                    <span class="correct">✓</span>
+                                    <span class="incorrect">✗</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>إِجَادَاتُ مَرْيَمَ عَلَى المَنْظَرِ كُلَّ صَيْفٍ.</td>
+                            <td class="answer-cell">
+                                <textarea class="textarea-answer" data-correct="أَسْتَمْتِعُ بِمُشَاهَدَةِ المَنَاظِرِ الخَلَّابَةِ كُلَّ صَيْفٍ" placeholder="اكتب المؤشرات هنا..."></textarea>
+                                <div class="feedback-icon">
+                                    <span class="correct">✓</span>
+                                    <span class="incorrect">✗</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="buttons-container">
+                <button id="checkPracticeAnswers" class="action-button">تحقق من الإجابات</button>
+                <button id="showPracticeAnswers" class="action-button secondary">عرض الإجابات الصحيحة</button>
+                <button id="resetPracticeAnswers" class="action-button secondary">إعادة المحاولة</button>
+            </div>
+        </div>
+
+        <div class="solo-work-section">
+            <div class="section-title">
+                <span class="icon">👤</span>
+                <h2>أُنْجِزُ بِمُفْرَدِي</h2>
+            </div>
+
+            <div class="task-container">
+                <p class="task-instruction">أَسْفَلَ نَصَّ الكَلِمَاتِ المَفَاتِيحِ فِي المُؤَشِّرَاتِ، ثُمَّ أَسْتَنْتِجُ مَا تَدُلُّ عَلَيْهِ.</p>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>مُؤَشِّرَاتٌ مِنَ النَّصِّ</th>
+                                <th>مَا أَسْتَنْتِجُهُ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>بَدَأَتْ لَوَائِحُ الصَّيْفِ، بِشَمْسِهِ السَّاطِعَةِ، وَدِفْئِهِ الأَخَّاذِ.</td>
+                                <td class="answer-cell">
+                                    <div class="inline-input-group">
+                                        <span>حُلُولُ</span>
+                                        <input type="text" class="inline-answer-input" data-correct="فَصْلِ" placeholder="...">
+                                        <span>الصَّيْفِ</span>
+                                        <div class="feedback-icon">
+                                            <span class="correct">✓</span>
+                                            <span class="incorrect">✗</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تَنَاوَلْتُ فُطُورِي عَلَى عَجَلٍ.</td>
+                                <td class="answer-cell">
+                                    <div class="inline-input-group">
+                                        <span>وَقْتُ</span>
+                                        <input type="text" class="inline-answer-input" data-correct="الصَّبَاحِ" placeholder="...">
+                                        <div class="feedback-icon">
+                                            <span class="correct">✓</span>
+                                            <span class="incorrect">✗</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>يَقَعُ غِطَاءُ السَّيَّارَةِ الأَمَامِيُّ.</td>
+                                <td class="answer-cell">
+                                    <div class="inline-input-group">
+                                        <span>ضَرُورَةُ</span>
+                                        <input type="text" class="inline-answer-input" data-correct="الفَحْصِ" placeholder="...">
+                                        <span>قَبْلَ السَّفَرِ</span>
+                                        <div class="feedback-icon">
+                                            <span class="correct">✓</span>
+                                            <span class="incorrect">✗</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="buttons-container">
+                    <button id="checkTableAnswers" class="action-button">تحقق من الإجابات</button>
+                    <button id="showTableAnswers" class="action-button secondary">عرض الإجابات الصحيحة</button>
+                    <button id="resetTableAnswers" class="action-button secondary">إعادة المحاولة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dictionary-section">
+            <div class="section-title">
+                <span class="icon">📚</span>
+                <h2>أَسْتَثْمِرُ مُعْجَمَ النَّصِّ</h2>
+            </div>
+
+            <div class="task-container">
+                <p class="task-instruction">أَبْحَثُ فِي النَّصِّ عَنْ:</p>
+                
+                <div class="word-analysis">
+                    <div class="word-item">
+                        <span class="label">ضِدّ:</span>
+                        <div class="word-box">هُدُوءٌ</div>
+                        <input type="text" class="answer-input" data-correct="ضَجِيجٌ" placeholder="اكتب الإجابة هنا...">
+                        <div class="feedback-icon">
+                            <span class="correct">✓</span>
+                            <span class="incorrect">✗</span>
+                        </div>
+                    </div>
+                    <div class="word-item">
+                        <span class="label">مُرَادِف:</span>
+                        <div class="word-box">انْتَهَتْ</div>
+                        <input type="text" class="answer-input" data-correct="فَرَغَتْ" placeholder="اكتب الإجابة هنا...">
+                        <div class="feedback-icon">
+                            <span class="correct">✓</span>
+                            <span class="incorrect">✗</span>
+                        </div>
+                    </div>
+                    <div class="word-item">
+                        <span class="label">جَمْع:</span>
+                        <div class="word-box">مُعَلِّمَة</div>
+                        <input type="text" class="answer-input" data-correct="مُعَلِّمَات" placeholder="اكتب الإجابة هنا...">
+                        <div class="feedback-icon">
+                            <span class="correct">✓</span>
+                            <span class="incorrect">✗</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons-container">
+                    <button id="checkAnswers" class="action-button">تحقق من الإجابات</button>
+                    <button id="showAnswers" class="action-button secondary">عرض الإجابات الصحيحة</button>
+                    <button id="resetAnswers" class="action-button secondary">إعادة المحاولة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="invest-text-section">
+            <div class="section-title">
+                <span class="icon">📖</span>
+                <h2>أَسْتَثْمِرُ النَّصَّ</h2>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <p class="instruction">أَضَعُ عَلامَةً أَمَامَ الجَوَابِ الصَّحِيحِ.</p>
+                    
+                    <div class="question-block">
+                        <h3>مَتَى سَافَرَتْ أُسْرَةُ مَرْيَمَ؟</h3>
+                        <div class="options-container">
+                            <label class="option">
+                                <input type="radio" name="question1" value="a" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">أ. فِي عُطْلَةِ الرَّبِيعِ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question1" value="b" data-correct="true">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ب. فِي عُطْلَةِ مُنْتَصَفِ السَّنَةِ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question1" value="c" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ت. فِي عُطْلَةِ نِهَايَةِ السَّنَةِ الهِجْرِيَّةِ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question1" value="d" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ج. فِي عُطْلَةِ نِهَايَةِ السَّنَةِ المِيلادِيَّةِ.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <h3>عَلَى مَاذَا يَدُلُّ رَدُّ الأُمِّ «صَبْراً يَا مَرْيَمُ»؟</h3>
+                        <div class="options-container">
+                            <label class="option">
+                                <input type="radio" name="question2" value="a" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">أ. الأُمُّ لا تُرِيدُ السَّفَرَ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question2" value="b" data-correct="true">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ب. الأُمُّ تُخَطِّطُ لِمُفَاجَأَةٍ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question2" value="c" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ت. الأُمُّ غَيْرُ مُهْتَمَّةٍ بِرَغْبَةِ مَرْيَمَ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="question2" value="d" data-correct="false">
+                                <span class="radio-custom"></span>
+                                <span class="option-text">ج. الأُمُّ تُرِيدُ تَأْجِيلَ السَّفَرِ.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons-container">
+                    <button id="checkQuizAnswers" class="action-button">تحقق من الإجابات</button>
+                    <button id="resetQuizAnswers" class="action-button secondary">إعادة المحاولة</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const checkAnswersBtn = document.getElementById('checkAnswers');
+                const showAnswersBtn = document.getElementById('showAnswers');
+                const resetAnswersBtn = document.getElementById('resetAnswers');
+                const inputs = document.querySelectorAll('.answer-input');
+
+                function checkAnswers() {
+                    let allCorrect = true;
+                    inputs.forEach(input => {
+                        const wordItem = input.closest('.word-item');
+                        const correctAnswer = input.dataset.correct;
+                        const isCorrect = input.value.trim() === correctAnswer;
+                        
+                        wordItem.classList.remove('correct', 'incorrect');
+                        wordItem.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        
+                        if (!isCorrect) allCorrect = false;
+                    });
+
+                    if (allCorrect) {
+                        showCongratulations();
+                    }
+                }
+
+                function showAnswers() {
+                    inputs.forEach(input => {
+                        input.value = input.dataset.correct;
+                        const wordItem = input.closest('.word-item');
+                        wordItem.classList.remove('incorrect');
+                        wordItem.classList.add('correct');
+                    });
+                }
+
+                function resetAnswers() {
+                    inputs.forEach(input => {
+                        input.value = '';
+                        const wordItem = input.closest('.word-item');
+                        wordItem.classList.remove('correct', 'incorrect');
+                    });
+                }
+
+                function showCongratulations() {
+                    const congratsDiv = document.createElement('div');
+                    congratsDiv.className = 'congrats-message';
+                    congratsDiv.innerHTML = '🎉 أحسنت! جميع إجاباتك صحيحة';
+                    congratsDiv.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: #27ae60;
+                        color: white;
+                        padding: 20px 40px;
+                        border-radius: 10px;
+                        font-size: 20px;
+                        animation: fadeIn 0.5s ease-out;
+                        z-index: 1000;
+                    `;
+                    document.body.appendChild(congratsDiv);
+                    setTimeout(() => congratsDiv.remove(), 3000);
+                }
+
+                checkAnswersBtn.addEventListener('click', checkAnswers);
+                showAnswersBtn.addEventListener('click', showAnswers);
+                resetAnswersBtn.addEventListener('click', resetAnswers);
+
+                // Enable Enter key to check answers
+                inputs.forEach(input => {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            checkAnswers();
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get table-specific elements
+                const checkTableAnswersBtn = document.getElementById('checkTableAnswers');
+                const showTableAnswersBtn = document.getElementById('showTableAnswers');
+                const resetTableAnswersBtn = document.getElementById('resetTableAnswers');
+                const tableInputs = document.querySelectorAll('.inline-answer-input');
+
+                function checkTableAnswers() {
+                    let allCorrect = true;
+                    tableInputs.forEach(input => {
+                        const answerCell = input.closest('.answer-cell');
+                        const correctAnswer = input.dataset.correct;
+                        const isCorrect = input.value.trim() === correctAnswer;
+                        
+                        answerCell.classList.remove('correct', 'incorrect');
+                        answerCell.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        
+                        if (!isCorrect) allCorrect = false;
+                    });
+
+                    if (allCorrect) {
+                        showCongratulations('أحسنت! لقد أكملت جميع الفراغات بشكل صحيح');
+                    }
+                }
+
+                function showTableAnswers() {
+                    tableInputs.forEach(input => {
+                        input.value = input.dataset.correct;
+                        const answerCell = input.closest('.answer-cell');
+                        answerCell.classList.remove('incorrect');
+                        answerCell.classList.add('correct');
+                    });
+                }
+
+                function resetTableAnswers() {
+                    tableInputs.forEach(input => {
+                        input.value = '';
+                        const answerCell = input.closest('.answer-cell');
+                        answerCell.classList.remove('correct', 'incorrect');
+                    });
+                }
+
+                checkTableAnswersBtn.addEventListener('click', checkTableAnswers);
+                showTableAnswersBtn.addEventListener('click', showTableAnswers);
+                resetTableAnswersBtn.addEventListener('click', resetTableAnswers);
+
+                // Enable Enter key to check answers
+                tableInputs.forEach(input => {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            checkTableAnswers();
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const checkPracticeAnswersBtn = document.getElementById('checkPracticeAnswers');
+                const showPracticeAnswersBtn = document.getElementById('showPracticeAnswers');
+                const resetPracticeAnswersBtn = document.getElementById('resetPracticeAnswers');
+                const practiceInputs = document.querySelectorAll('.textarea-answer');
+
+                function checkPracticeAnswers() {
+                    let allCorrect = true;
+                    practiceInputs.forEach(input => {
+                        const answerCell = input.closest('.answer-cell');
+                        const correctAnswer = input.dataset.correct;
+                        // More flexible matching for Arabic text
+                        const isCorrect = compareArabicAnswers(input.value.trim(), correctAnswer);
+                        
+                        answerCell.classList.remove('correct', 'incorrect');
+                        answerCell.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        
+                        if (!isCorrect) allCorrect = false;
+                    });
+
+                    if (allCorrect) {
+                        showCongratulations('أحسنت! لقد وجدت جميع المؤشرات الصحيحة');
+                    }
+                }
+
+                function compareArabicAnswers(userAnswer, correctAnswer) {
+                    // Normalize Arabic text by removing extra spaces and diacritics
+                    const normalize = (text) => {
+                        return text.replace(/\s+/g, ' ')
+                                 .replace(/[ًٌٍَُِّْ]/g, '')
+                                 .trim()
+                                 .toLowerCase();
+                    };
+                    return normalize(userAnswer) === normalize(correctAnswer);
+                }
+
+                function showPracticeAnswers() {
+                    practiceInputs.forEach(input => {
+                        input.value = input.dataset.correct;
+                        const answerCell = input.closest('.answer-cell');
+                        answerCell.classList.remove('incorrect');
+                        answerCell.classList.add('correct');
+                    });
+                }
+
+                function resetPracticeAnswers() {
+                    practiceInputs.forEach(input => {
+                        input.value = '';
+                        const answerCell = input.closest('.answer-cell');
+                        answerCell.classList.remove('correct', 'incorrect');
+                    });
+                }
+
+                checkPracticeAnswersBtn.addEventListener('click', checkPracticeAnswers);
+                showPracticeAnswersBtn.addEventListener('click', showPracticeAnswers);
+                resetPracticeAnswersBtn.addEventListener('click', resetPracticeAnswers);
+
+                // Auto-resize textareas as user types
+                practiceInputs.forEach(textarea => {
+                    textarea.addEventListener('input', function() {
+                        this.style.height = 'auto';
+                        this.style.height = (this.scrollHeight) + 'px';
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const checkQuizBtn = document.getElementById('checkQuizAnswers');
+                const resetQuizBtn = document.getElementById('resetQuizAnswers');
+                const allOptions = document.querySelectorAll('.option');
+
+                function checkQuizAnswers() {
+                    let allCorrect = true;
+                    allOptions.forEach(option => {
+                        const radio = option.querySelector('input[type="radio"]');
+                        const isChecked = radio.checked;
+                        const isCorrect = radio.dataset.correct === "true";
+                        
+                        option.classList.remove('correct', 'incorrect');
+                        
+                        if (isChecked) {
+                            option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                            if (!isCorrect) allCorrect = false;
+                        }
+                    });
+
+                    if (allCorrect && document.querySelectorAll('input[type="radio"]:checked').length === 2) {
+                        showCongratulations('أحسنت! جميع إجاباتك صحيحة');
+                    }
+                }
+
+                function resetQuizAnswers() {
+                    allOptions.forEach(option => {
+                        option.classList.remove('correct', 'incorrect');
+                        option.querySelector('input[type="radio"]').checked = false;
+                    });
+                }
+
+                checkQuizBtn.addEventListener('click', checkQuizAnswers);
+                resetQuizBtn.addEventListener('click', resetQuizAnswers);
+            });
+        </script>
+    </div>
+</body>
+</html>

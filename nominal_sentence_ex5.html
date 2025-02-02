@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 5 - الجملة الاسمية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: clamp(20px, 5vw, 40px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 95%;
+            margin: 20px auto;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            color: #218c74;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #43e97b;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+        }
+
+        .exercise-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #e8faf3;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 233, 123, 0.1);
+        }
+
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #218c74;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f0faf6;
+            border-radius: 12px;
+        }
+
+        .word {
+            background: #ffffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 2px solid #43e97b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .word:hover {
+            background: #e8faf3;
+            transform: translateY(-2px);
+        }
+
+        .sentence-builder {
+            min-height: 60px;
+            border: 2px dashed #43e97b;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: rgba(67, 233, 123, 0.15);
+            color: #218c74;
+            border: 1px solid rgba(67, 233, 123, 0.3);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(245, 101, 101, 0.15);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .btn-check {
+            background: linear-gradient(45deg, #43e97b, #38f9d7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 233, 123, 0.3);
+        }
+
+        .btn-back {
+            background: linear-gradient(45deg, #218c74, #43e97b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 140, 116, 0.3);
+            color: white;
+        }
+
+        .btn-reset {
+            background: #f0faf6;
+            color: #218c74;
+            border: 2px solid #43e97b;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background: #e8faf3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">تمرين 5 - الجملة الاسمية</h1>
+        
+        <div class="exercise-box">
+            <h3>كوّن جملة اسمية صحيحة من الكلمات التالية:</h3>
+            
+            <div class="word-bank" id="wordBank1">
+                <span class="word" onclick="addWord(1, this)">الكتابُ</span>
+                <span class="word" onclick="addWord(1, this)">مفيدٌ</span>
+                <span class="word" onclick="addWord(1, this)">في</span>
+                <span class="word" onclick="addWord(1, this)">المكتبةِ</span>
+            </div>
+            <div class="sentence-builder" id="sentence1"></div>
+            <button class="btn-reset" onclick="resetExercise(1)">إعادة المحاولة</button>
+            <button class="btn btn-check" onclick="checkAnswer(1)">تحقق</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>كوّن جملة اسمية صحيحة من الكلمات التالية:</h3>
+            
+            <div class="word-bank" id="wordBank2">
+                <span class="word" onclick="addWord(2, this)">المعلمُ</span>
+                <span class="word" onclick="addWord(2, this)">حكيمٌ</span>
+                <span class="word" onclick="addWord(2, this)">في</span>
+                <span class="word" onclick="addWord(2, this)">الفصلِ</span>
+            </div>
+            <div class="sentence-builder" id="sentence2"></div>
+            <button class="btn-reset" onclick="resetExercise(2)">إعادة المحاولة</button>
+            <button class="btn btn-check" onclick="checkAnswer(2)">تحقق</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>كوّن جملة اسمية صحيحة من الكلمات التالية:</h3>
+            
+            <div class="word-bank" id="wordBank3">
+                <span class="word" onclick="addWord(3, this)">الحديقةُ</span>
+                <span class="word" onclick="addWord(3, this)">خضراءُ</span>
+                <span class="word" onclick="addWord(3, this)">في</span>
+                <span class="word" onclick="addWord(3, this)">الربيعِ</span>
+            </div>
+            <div class="sentence-builder" id="sentence3"></div>
+            <button class="btn-reset" onclick="resetExercise(3)">إعادة المحاولة</button>
+            <button class="btn btn-check" onclick="checkAnswer(3)">تحقق</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <a href="nominal_sentence_exercises.html" class="btn-back">العودة للتمارين</a>
+    </div>
+
+    <script>
+        function addWord(questionNum, element) {
+            if (!element.classList.contains('used')) {
+                const sentenceBuilder = document.getElementById(`sentence${questionNum}`);
+                const wordClone = element.cloneNode(true);
+                wordClone.onclick = function() { this.remove(); };
+                sentenceBuilder.appendChild(wordClone);
+                element.classList.add('used');
+            }
+        }
+
+        function resetExercise(questionNum) {
+            const wordBank = document.getElementById(`wordBank${questionNum}`);
+            const sentenceBuilder = document.getElementById(`sentence${questionNum}`);
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            
+            // Clear sentence builder
+            sentenceBuilder.innerHTML = '';
+            
+            // Reset word bank
+            const words = wordBank.getElementsByClassName('word');
+            Array.from(words).forEach(word => {
+                word.classList.remove('used');
+            });
+            
+            // Clear feedback
+            feedback.style.display = 'none';
+        }
+
+        function checkAnswer(questionNum) {
+            const sentenceBuilder = document.getElementById(`sentence${questionNum}`);
+            const words = Array.from(sentenceBuilder.children).map(child => child.innerText);
+            const sentence = words.join(' ');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            
+            let correct = false;
+            let message = '';
+            
+            switch(questionNum) {
+                case 1:
+                    correct = sentence === 'الكتابُ مفيدٌ';
+                    message = correct ? "أحسنت! جملة اسمية صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تتكون من مبتدأ وخبر";
+                    break;
+                case 2:
+                    correct = sentence === 'المعلمُ حكيمٌ';
+                    message = correct ? "ممتاز! جملة اسمية صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تتكون من مبتدأ وخبر";
+                    break;
+                case 3:
+                    correct = sentence === 'الحديقةُ خضراءُ';
+                    message = correct ? "رائع! جملة اسمية صحيحة" : "حاول مرة أخرى. تذكر أن الجملة الاسمية تتكون من مبتدأ وخبر";
+                    break;
+            }
+            
+            feedback.textContent = message;
+            feedback.className = `feedback ${correct ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

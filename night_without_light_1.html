@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لَيْلَةٌ بِلا نُورٍ</title>
+    <style>
+        @font-face {
+            font-family: 'BoutrosNew';
+            src: url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.eot');
+            src: url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.eot?#iefix') format('embedded-opentype'),
+                url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.woff2') format('woff2'),
+                url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.woff') format('woff'),
+                url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.ttf') format('truetype'),
+                url('https://db.onlinewebfonts.com/t/ce283cd6eee163f95ad8c30e0fb1225f.svg#BoutrosNew') format('svg');
+        }
+
+        body {
+            font-family: 'BoutrosNew', Arial, sans-serif;
+            line-height: 2;
+            margin: 0;
+            padding: 20px;
+            text-align: right;
+            background-color: #f5f6fa;
+            color: #2c3e50;
+            font-weight: 600;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            font-family: 'BoutrosNew', Arial, sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .reading-workshop {
+            background-color: #f1f8ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            border-right: 5px solid #3498db;
+        }
+
+        .reading-workshop h2 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+            font-family: 'BoutrosNew', Arial, sans-serif;
+        }
+
+        .reading-workshop p {
+            font-size: 1.3rem;
+            margin: 10px 0;
+            color: #34495e;
+            font-weight: 700;
+        }
+
+        .story-text {
+            margin: 30px 0;
+            font-size: 1.4rem;
+            line-height: 2;
+            font-weight: 600;
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+            letter-spacing: 0.3px;
+            text-shadow: 0.2px 0.2px 0.2px rgba(0,0,0,0.1);
+        }
+
+        .story-text p:first-letter {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #2980b9;
+        }
+
+        .author {
+            text-align: left;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed #ecf0f1;
+            font-weight: 700;
+        }
+
+        /* تحسين مظهر النص عند التحديد */
+        ::selection {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* إضافة تأثير عند تحويم المؤشر على النص */
+        .story-text p:hover {
+            transform: scale(1.01);
+            transition: transform 0.2s ease;
+        }
+
+        .exercise-section {
+            margin-top: 40px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .strategy-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .strategy-header h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .exercise-instruction {
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-right: 4px solid #3498db;
+        }
+
+        .exercise-instruction p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .questions-container {
+            display: grid;
+            gap: 30px;
+        }
+
+        .question {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question:nth-child(1) {
+            background-color: #e8f4f8;
+            border-right: 4px solid #2196F3;
+        }
+
+        .question:nth-child(2) {
+            background-color: #fff0f3;
+            border-right: 4px solid #FF4081;
+        }
+
+        .question:nth-child(3) {
+            background-color: #f3e5f5;
+            border-right: 4px solid #9c27b0;
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .question:nth-child(1) h3 {
+            color: #1565C0;
+        }
+
+        .question:nth-child(2) h3 {
+            color: #C2185B;
+        }
+
+        .question:nth-child(3) h3 {
+            color: #6a1b9a;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .option span {
+            font-size: 1.2rem;
+            color: #34495e;
+        }
+
+        .question:nth-child(1) .option:hover {
+            background-color: #e3f2fd;
+        }
+
+        .question:nth-child(2) .option:hover {
+            background-color: #fce4ec;
+        }
+
+        .question:nth-child(3) .option:hover {
+            background-color: #f3e5f5;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.hide {
+            animation: fadeOut 0.5s ease-out;
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .input-question {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'BoutrosNew', Arial, sans-serif;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            direction: rtl;
+            transition: all 0.3s ease;
+        }
+
+        .input-question:focus {
+            outline: none;
+            border-color: #9c27b0;
+            box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.1);
+        }
+
+        .answer-text {
+            background-color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            color: #34495e;
+            font-size: 1.1rem;
+        }
+
+        .answer-text u {
+            text-decoration: underline;
+            text-decoration-color: #9c27b0;
+            text-decoration-thickness: 2px;
+            padding-bottom: 2px;
+        }
+
+        .check-button {
+            background-color: #9c27b0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'BoutrosNew', Arial, sans-serif;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .check-button:hover {
+            background-color: #7b1fa2;
+        }
+
+        .order-exercise {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .sentence-item {
+            background-color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .order-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .order-radio {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .order-radio input[type="radio"] {
+            margin: 0;
+        }
+
+        .order-check-button {
+            background-color: #9c27b0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+
+        .order-check-button:hover {
+            background-color: #7b1fa2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reading-workshop">
+            <h2>وَرْشَةُ الْقِرَاءَةِ</h2>
+            <p>يَضَعُ الْمُعَلِّمُ التَّلامِيذَ فِيهَا: يَضْحَكُ - حَسْرَةٌ - عَتَبٌ - مُذْهِلٌ</p>
+            <p>يُعَبِّرُ عَنْ كَلامِهِ: ...</p>
+            <p>حُزْنٌ وَنَدَمٌ عَلَى شَيْءٍ فَاتَ: ...</p>
+            <p>مُثِيرٌ لِلدَّهْشَةِ وَالتَّعَجُّبِ: ...</p>
+        </div>
+
+        <div class="story-text">
+            <h1>لَيْلَةٌ بِلا نُورٍ</h1>
+            
+            <p>كَانَ الْبَيْتُ يَضِجُّ بِصَخَبِ الْأَطْفَالِ. فَهَؤُلاءِ مُنَى تُلاحِقُ دُمْيَتَهَا الصَّغِيرَةَ، وَذَاكَ أَكْرَمُ يُدَاعِبُ
+            أَرْنَبَهُ الْإِلِكْتُرُونِيَّ. أَمَّا سَارَةُ، فَكَانَتْ مُنْشَغِلَةً بِمُشَاهَدَةِ مُسَلْسَلِهَا الْمُفَضَّلِ. فَجْأَةً، انْقَطَعَ
+            التَّيَّارُ، وَسَادَ الظَّلامُ، وَاخْتَفَتْ مَعَهُ كُلُّ حَرَكَةٍ.</p>
+
+            <p>صَاحَتْ سَارَةُ فِي رُعْبٍ: "لَقَدِ انْقَطَعَ التَّيَّارُ الْكَهْرَبَائِيُّ!" وَعَقَّبَ أَكْرَمُ مُتَذَمِّراً بِالْحَسْرَةِ، يَبْدُو
+            أَنَّنِي سَأَخْسَرُ الْجَوْلَةَ!</p>
+
+            <p>بَيْنَمَا صَرَخَتْ مُنَى فِي ذُعْرٍ: "يَا إِلَهِي، إِنَّنِي أَخَافُ الظَّلامَ!"</p>
+
+            <p>وَفِي أَحَدِ أَرْكَانِ الْمَنْزِلِ، كَانَتِ الْجَدَّةُ تَجْلِسُ وَحِيدَةً كَعَادَتِهَا، تُمَرِّرُ الْمِسْبَحَةَ بَيْنَ أَصَابِعِهَا
+            فِي خُشُوعٍ. وَحِينَ سَمِعَتْ هُتَافَاتِ أَحْفَادِهَا الْقَلِقِينَ، قَامَتْ مِنْ مَكَانِهَا فِي تَثَاقُلٍ، مُتَّجِهَةً
+            صَوْبَ الْمَطْبَخِ. وَمَا هِيَ إِلَّا هُنَيْهَةٌ، حَتَّى كَانَتِ الْجَدَّةُ قَدْ أَشْعَلَتْ شَمْعَةً صَغِيرَةً، أَضَاءَتْ بِهَا
+            الْمَنْزِلَ.</p>
+
+            <p>تَحَلَّقَ الْأَحْفَادُ حَوْلَ جَدَّتِهِمْ، وَهُمْ يُتَابِعُونَ لَهِيبَ الشَّمْعَةِ فِي فُضُولٍ.</p>
+
+            <p>قَالَتِ الْجَدَّةُ: زَمَناً نَعُودُ لِلنُّورِ، سَأَحْكِي لَكُمْ قِصَّةً مُلْهِمَةً. كَانَ مَا كَانَ، فِي قَدِيمِ الزَّمَانِ...
+            وَأَخَذَ الصِّغَارُ يُصْغُونَ إِلَى حِكَايَةِ جَدَّتِهِمْ فِي اهْتِمَامٍ، مَأْخُوذِينَ بِصَوْتِهَا الْعَذْبِ، وَهُمْ
+            يُتَابِعُونَ أَحْدَاثَ الْقِصَّةِ الْمُدْهِشَةِ، مُتَنَبِّهِينَ بِنَوَايَاهَا الْمُبَاشِرَةِ. فَجْأَةً، عَادَ الضَّوْءُ، وَمَلَأَ النُّورُ
+            أَصْقَاعَ الْمَنْزِلِ. وَشَعَرَ الصِّغَارُ كَمَا لَوْ أَنَّهُمْ أَفَاقُوا مِنْ حُلْمٍ لَذِيذٍ.</p>
+
+            <p>صَاحَتْ مُنَى مُتَسَائِلَةً: هَلْ نُطْفِئُ النُّورَ حَتَّى تُكْمِلِي الْقِصَّةَ يَا جَدَّتِي؟</p>
+
+            <p>أَضَافَتْ سَارَةُ: أَجَلْ، فَأَنَا لا أُرِيدُ أَنْ أَعْرِفَ نِهَايَةَ الْقِصَّةِ.</p>
+
+            <p>ابْتَسَمَتِ الْجَدَّةُ قَائِلَةً: لَقَدْ تَأَخَّرَ الْوَقْتُ يَا صِغَارِي،
+            وَحَانَ مَوْعِدُ النَّوْمِ، لَكِنْ مِنَ الْيَوْمِ، أَعِدُكُمْ بِحِكَايَةٍ
+            شَيِّقَةٍ كُلَّ لَيْلَةٍ.</p>
+
+            <p>عَانَقَ الْأَحْفَادُ جَدَّتَهُمْ فِي سُرُورٍ، وَهُمْ
+            يَنْظُرُونَهَا بِالْقُبَلِ.</p>
+
+            <p>وَقَالَ أَكْرَمُ: وَنَحْنُ أَيْضاً، لَنْ تَشْغَلَنَا أَلْعَابُنَا،
+            مَرَّةً أُخْرى، عَنْ مُجَالَسَتِكِ يَا جَدَّتَنَا الْحَنُونُ.</p>
+
+            <p class="author">عَبْدُ السَّمِيعِ بِصَابْرِي</p>
+        </div>
+    </div>
+
+    <div class="container exercise-section">
+        <div class="exercise">
+            <div class="strategy-header">
+                <img src="strategy-icon.png" alt="استراتيجية الفهم" class="strategy-icon">
+                <h2>أُوَظِّفُ إِسْتِراتِيجِيَّةَ الْفَهْمِ</h2>
+            </div>
+            
+            <div class="exercise-instruction">
+                <p>أَضَعُ عَلامَةَ (×) أَمامَ كُلِّ جَوابٍ صَحيحٍ ثُمَّ أُحيطُ مِنَ النَّصِّ الْعِبارَةَ الَّتي تُؤَكِّدُ جَوابي.</p>
+            </div>
+
+            <div class="questions-container">
+                <div class="question">
+                    <h3>لِماذا عَمَّ الْهُدوءُ الْمَنْزِلَ؟</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="question1" value="a">
+                            <span>أ. لِأَنَّ مُنى تُلاعِبُ دُمْيَتَها الصَّغيرَةَ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="b">
+                            <span>ب. لِأَنَّ النُّورَ انْقَطَعَ فَجْأَةً.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="c">
+                            <span>ت. لِأَنَّ أَكْرَمَ يَلْعَبُ لِوَحْدِهِ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="d">
+                            <span>ج. لِأَنَّ سارَةَ مُنْشَغِلَةٌ.</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <div class="question">
+                    <h3>لِماذا أَحَسَّ أَكْرَمُ بِالْحَسْرَةِ؟</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="question2" value="a">
+                            <span>أ. لِأَنَّ مُنى تَصْرُخُ في ذُعْرٍ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question2" value="b">
+                            <span>ب. لِأَنَّ الْجَدَّةَ تَجْلِسُ وَحيدَةً.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question2" value="c">
+                            <span>ت. لِأَنَّهُ خَسِرَ في لُعْبَتِهِ.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question2" value="d">
+                            <span>ج. لِأَنَّهُ خافَ أَنْ يَخْسَرَ الْجَوْلَةَ.</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <div class="question">
+                    <h3>أَطْرَحُ أَسْئِلَةً تُناسِبُ الْإِجاباتِ</h3>
+                    <div class="question-items">
+                        <div class="question-item">
+                            <div class="answer-text">تَجْلِسُ الْجَدَّةُ في <u>رُكْنِ الْبَيْتِ</u>.</div>
+                            <input type="text" class="input-question" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." data-answer="أين تجلس الجدة؟">
+                            <button class="check-button" onclick="checkQuestion(this)">تَحَقَّقْ</button>
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="question-item">
+                            <div class="answer-text">أَشْعَلَتِ <u>الْجَدَّةُ</u> شَمْعَةً صَغيرَةً.</div>
+                            <input type="text" class="input-question" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." 
+                                data-answer="من أشعل شمعة صغيرة؟">
+                            <button class="check-button" onclick="checkQuestion(this)">تَحَقَّقْ</button>
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="question-item">
+                            <div class="answer-text">حَكَتِ الْجَدَّةُ <u>قِصَّةً شَيِّقَةً</u>.</div>
+                            <input type="text" class="input-question" placeholder="اكتب سؤالاً يناسب هذه الإجابة..." 
+                                data-answer="ماذا حكت الجدة؟">
+                            <button class="check-button" onclick="checkQuestion(this)">تَحَقَّقْ</button>
+                            <div class="feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fourth Exercise: Sentence Ordering -->
+                <div class="order-exercise">
+                    <h3>أَرَتِّبُ الْأَحْداثَ الْآتِيَةَ (مِنْ 1 إِلى 5) حَسَبَ وُرودِها في النَّصِّ.</h3>
+                    
+                    <div class="sentence-item">
+                        <div class="sentence-text">حَكَتِ الْجَدَّةُ قِصَّةً مُمْتِعَةً لِلْأَطْفالِ، فَأَحَسُّوا بِالْأَمانِ.</div>
+                        <div class="order-options">
+                            <label class="order-radio"><input type="radio" name="sentence1" value="1">1</label>
+                            <label class="order-radio"><input type="radio" name="sentence1" value="2">2</label>
+                            <label class="order-radio"><input type="radio" name="sentence1" value="3">3</label>
+                            <label class="order-radio"><input type="radio" name="sentence1" value="4">4</label>
+                            <label class="order-radio"><input type="radio" name="sentence1" value="5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="sentence-item">
+                        <div class="sentence-text">أَحَسَّ الْأَطْفالُ بِالْخَوْفِ وَالذُّعْرِ.</div>
+                        <div class="order-options">
+                            <label class="order-radio"><input type="radio" name="sentence2" value="1">1</label>
+                            <label class="order-radio"><input type="radio" name="sentence2" value="2">2</label>
+                            <label class="order-radio"><input type="radio" name="sentence2" value="3">3</label>
+                            <label class="order-radio"><input type="radio" name="sentence2" value="4">4</label>
+                            <label class="order-radio"><input type="radio" name="sentence2" value="5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="sentence-item">
+                        <div class="sentence-text">أَنارَتِ الْجَدَّةُ الْمَنْزِلَ بِضَوْءِ الشَّمْعَةِ.</div>
+                        <div class="order-options">
+                            <label class="order-radio"><input type="radio" name="sentence3" value="1">1</label>
+                            <label class="order-radio"><input type="radio" name="sentence3" value="2">2</label>
+                            <label class="order-radio"><input type="radio" name="sentence3" value="3">3</label>
+                            <label class="order-radio"><input type="radio" name="sentence3" value="4">4</label>
+                            <label class="order-radio"><input type="radio" name="sentence3" value="5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="sentence-item">
+                        <div class="sentence-text">اِنْقَطَعَ النُّورُ فَجْأَةً.</div>
+                        <div class="order-options">
+                            <label class="order-radio"><input type="radio" name="sentence4" value="1">1</label>
+                            <label class="order-radio"><input type="radio" name="sentence4" value="2">2</label>
+                            <label class="order-radio"><input type="radio" name="sentence4" value="3">3</label>
+                            <label class="order-radio"><input type="radio" name="sentence4" value="4">4</label>
+                            <label class="order-radio"><input type="radio" name="sentence4" value="5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="sentence-item">
+                        <div class="sentence-text">اِنْشَغَلَ الْأَطْفالُ بِاللَّعِبِ وَمُشاهَدَةِ التِّلْفازِ.</div>
+                        <div class="order-options">
+                            <label class="order-radio"><input type="radio" name="sentence5" value="1">1</label>
+                            <label class="order-radio"><input type="radio" name="sentence5" value="2">2</label>
+                            <label class="order-radio"><input type="radio" name="sentence5" value="3">3</label>
+                            <label class="order-radio"><input type="radio" name="sentence5" value="4">4</label>
+                            <label class="order-radio"><input type="radio" name="sentence5" value="5">5</label>
+                        </div>
+                    </div>
+
+                    <button class="order-check-button" onclick="checkSentenceOrder()">تَحَقَّقْ</button>
+                    <div class="feedback" id="orderFeedback"></div>
+                </div>
+
+                <script>
+                    const encouragingMessages = [
+                        "أَحْسَنْتَ! إِجابَةٌ صَحيحَةٌ",
+                        "مُمْتازٌ! أَنْتَ قارِئٌ ماهِرٌ",
+                        "رائِعٌ! واصِلْ التَّقَدُّمَ"
+                    ];
+
+                    const incorrectMessages = [
+                        "حاوِلْ مَرَّةً أُخْرى!",
+                        "فَكِّرْ جَيِّداً وَأَعِدِ الْمُحاوَلَةَ",
+                        "لا بَأْسَ، يُمْكِنُكَ الْمُحاوَلَةَ مَرَّةً أُخْرى"
+                    ];
+
+                    let feedbackTimers = {
+                        feedback1: null,
+                        feedback2: null
+                    };
+
+                    function getRandomMessage(messages) {
+                        return messages[Math.floor(Math.random() * messages.length)];
+                    }
+
+                    function hideFeedback(feedbackElement, selectedOption) {
+                        feedbackElement.classList.add('hide');
+                        setTimeout(() => {
+                            feedbackElement.classList.remove('show', 'hide', 'success', 'error');
+                            if (selectedOption) {
+                                selectedOption.parentElement.classList.remove('incorrect');
+                            }
+                        }, 500);
+                    }
+
+                    function checkQuestion(button) {
+                        const questionItem = button.parentElement;
+                        const input = questionItem.querySelector('.input-question');
+                        const feedback = questionItem.querySelector('.feedback');
+                        const userQuestion = input.value.trim();
+                        const correctQuestion = input.dataset.answer;
+                        const alternateAnswers = input.dataset.alternateAnswers ? JSON.parse(input.dataset.alternateAnswers) : [];
+
+                        // Clear any existing timer
+                        if (feedback.timer) {
+                            clearTimeout(feedback.timer);
+                        }
+
+                        if (userQuestion === correctQuestion || alternateAnswers.includes(userQuestion)) {
+                            feedback.textContent = getRandomMessage(encouragingMessages);
+                            feedback.className = 'feedback success show';
+                            input.style.borderColor = '#28a745';
+                            
+                            feedback.timer = setTimeout(() => {
+                                feedback.classList.remove('show');
+                                input.style.borderColor = '#e0e0e0';
+                            }, 5000);
+                        } else if (userQuestion) {
+                            feedback.textContent = getRandomMessage(incorrectMessages);
+                            feedback.className = 'feedback error show';
+                            input.style.borderColor = '#dc3545';
+
+                            feedback.timer = setTimeout(() => {
+                                feedback.classList.remove('show');
+                                input.style.borderColor = '#e0e0e0';
+                            }, 3000);
+                        }
+                    }
+
+                    // Original event listeners for multiple choice questions
+                    document.querySelectorAll('input[name="question1"]').forEach(radio => {
+                        radio.addEventListener('change', () => checkAnswer(1, 'b'));
+                    });
+
+                    document.querySelectorAll('input[name="question2"]').forEach(radio => {
+                        radio.addEventListener('change', () => checkAnswer(2, 'd'));
+                    });
+
+                    // Add new function for checking sentence order
+                    function checkSentenceOrder() {
+                        const correctOrder = {
+                            sentence5: "1", // اِنْشَغَلَ الْأَطْفالُ
+                            sentence4: "2", // اِنْقَطَعَ النُّورُ
+                            sentence2: "3", // أَحَسَّ الْأَطْفالُ
+                            sentence3: "4", // أَنارَتِ الْجَدَّةُ
+                            sentence1: "5"  // حَكَتِ الْجَدَّةُ
+                        };
+
+                        let isCorrect = true;
+                        for (let sentence in correctOrder) {
+                            const selectedOption = document.querySelector(`input[name="${sentence}"]:checked`);
+                            if (!selectedOption || selectedOption.value !== correctOrder[sentence]) {
+                                isCorrect = false;
+                                break;
+                            }
+                        }
+
+                        const feedback = document.getElementById('orderFeedback');
+                        
+                        if (isCorrect) {
+                            feedback.textContent = getRandomMessage(encouragingMessages);
+                            feedback.className = 'feedback success show';
+                            setTimeout(() => feedback.classList.remove('show'), 5000);
+                        } else {
+                            feedback.textContent = getRandomMessage(incorrectMessages);
+                            feedback.className = 'feedback error show';
+                            setTimeout(() => feedback.classList.remove('show'), 3000);
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

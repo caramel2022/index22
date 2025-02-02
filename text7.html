@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>رحلة لا تنسى - التمارين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&family=Lateef&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        .story-container {
+            background-color: white;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 900px;
+        }
+
+        .story-title {
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: 700;
+        }
+
+        .story-content {
+            font-family: 'Amiri', serif;
+            font-size: 1.3em;
+            line-height: 2;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .exercises-container {
+            background: linear-gradient(45deg, #e6e9f0 0%, #eef1f5 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .exercise {
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .exercise h2 {
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+
+        .exercise h3 {
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            color: #34495e;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-weight: 500;
+        }
+
+        .matching-exercise {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            background-color: rgba(255,255,255,0.7);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .matching-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        .matching-column:first-child::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, 
+                transparent 0%,
+                rgba(100,181,246,0.5) 20%,
+                rgba(100,181,246,0.5) 80%,
+                transparent 100%
+            );
+        }
+
+        .matching-column-title {
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(100,181,246,0.3);
+        }
+
+        .matching-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(100,181,246,0.3);
+            cursor: move;
+            transition: all 0.3s ease;
+            position: relative;
+            text-align: center;
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .matching-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #64b5f6;
+        }
+
+        .matching-item.dragging {
+            opacity: 0.5;
+            border-style: dashed;
+        }
+
+        .matching-item::before {
+            content: "↔";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64b5f6;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .matching-item:hover::before {
+            opacity: 1;
+        }
+
+        .table-exercise {
+            font-size: 1.2em;
+        }
+
+        .table-exercise th {
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            padding: 18px;
+        }
+
+        .table-exercise td {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            padding: 15px;
+            font-size: 1.2em;
+        }
+
+        #conclusions p {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            line-height: 1.8;
+            margin: 20px 0 12px 0;
+        }
+
+        input[type="text"] {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.2em;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        input[type="text"]::placeholder {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1em;
+            color: #999;
+        }
+
+        /* Exercise 1 - Dictionary */
+        .exercise:nth-child(1) {
+            background: linear-gradient(135deg, #fff 0%, #e8f5e9 100%);
+            border: 2px solid #81c784;
+        }
+
+        /* Exercise 2 - Matching */
+        .exercise:nth-child(2) {
+            background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+            border: 2px solid #64b5f6;
+        }
+
+        /* Exercise 3 - Cities */
+        .exercise:nth-child(3) {
+            background: linear-gradient(135deg, #fff 0%, #fff3e0 100%);
+            border: 2px solid #ffb74d;
+        }
+
+        /* Exercise 4 - Conclusions */
+        .exercise:nth-child(4) {
+            background: linear-gradient(135deg, #fff 0%, #f3e5f5 100%);
+            border: 2px solid #ba68c8;
+        }
+
+        .exercise:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Custom styles for each exercise type */
+        #exercise1, #exercise2 {
+            background-color: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .exercise:nth-child(1) input[type="text"]:focus {
+            border-color: #81c784;
+            box-shadow: 0 0 0 3px rgba(129,199,132,0.3);
+        }
+
+        .exercise:nth-child(2) input[type="text"]:focus {
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(100,181,246,0.3);
+        }
+
+        .exercise:nth-child(3) input[type="text"]:focus {
+            border-color: #ffb74d;
+            box-shadow: 0 0 0 3px rgba(255,183,77,0.3);
+        }
+
+        .exercise:nth-child(4) input[type="text"]:focus {
+            border-color: #ba68c8;
+            box-shadow: 0 0 0 3px rgba(186,104,200,0.3);
+        }
+
+        .cities-exercise {
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .city-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255,183,77,0.3);
+        }
+
+        .city-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .city-header {
+            background: linear-gradient(45deg, #ffb74d 0%, #ffd54f 100%);
+            color: white;
+            padding: 15px 20px;
+            font-family: 'Reem Kufi', 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .city-header::before {
+            content: "🏛️";
+            font-size: 1.2em;
+        }
+
+        .city-content {
+            padding: 15px 20px;
+        }
+
+        .city-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(255,183,77,0.3);
+            border-radius: 8px;
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            background-color: rgba(255,255,255,0.9);
+        }
+
+        .city-input:focus {
+            outline: none;
+            border-color: #ffb74d;
+            box-shadow: 0 0 0 3px rgba(255,183,77,0.2);
+        }
+
+        .city-input::placeholder {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .city-input.correct {
+            border-color: #4CAF50;
+            background-color: rgba(76,175,80,0.1);
+        }
+
+        .city-input.incorrect {
+            border-color: #f44336;
+            background-color: rgba(244,67,54,0.1);
+        }
+
+        .city-hint {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #666;
+            display: none;
+        }
+
+        .city-input:focus + .city-hint {
+            display: block;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 3px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: inherit;
+            filter: brightness(95%);
+        }
+
+        .question-card:nth-child(1) {
+            border-color: rgba(156, 39, 176, 0.3);
+            background: linear-gradient(135deg, #fff5fe 0%, #f3e5f5 100%);
+        }
+
+        .question-card:nth-child(2) {
+            border-color: rgba(33, 150, 243, 0.3);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .question-card:nth-child(3) {
+            border-color: rgba(76, 175, 80, 0.3);
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .question-card:nth-child(4) {
+            border-color: rgba(255, 152, 0, 0.3);
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+
+        .question-card:nth-child(5) {
+            border-color: rgba(233, 30, 99, 0.3);
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .question-text {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .question-text::before {
+            content: '❓';
+            position: absolute;
+            right: -10px;
+            top: 0;
+            font-size: 1.2em;
+            opacity: 0.7;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            background-color: rgba(255,255,255,0.9);
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: currentColor;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+
+        .events-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255, 152, 0, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+
+        .event-item:active {
+            cursor: grabbing;
+        }
+
+        .event-item:hover {
+            transform: translateX(-8px);
+            border-color: rgba(255, 152, 0, 0.6);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .event-number {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff9800 0%, #ffa726 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(255, 152, 0, 0.3);
+        }
+
+        .event-text {
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            font-size: 1.1em;
+            color: #2c3e50;
+            flex-grow: 1;
+        }
+
+        .event-item.dragging {
+            opacity: 0.5;
+            background: rgba(255,255,255,0.8);
+        }
+
+        .exercise h2 {
+            color: #2c3e50;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .exercise h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(156, 39, 176, 0.7) 0%, 
+                rgba(33, 150, 243, 0.7) 25%, 
+                rgba(76, 175, 80, 0.7) 50%, 
+                rgba(255, 152, 0, 0.7) 75%, 
+                rgba(233, 30, 99, 0.7) 100%
+            );
+            border-radius: 3px;
+        }
+
+        .verify-button {
+            padding: 5px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #b8e0d2, #95baa7);
+            color: #2c3e50;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .verify-button:hover {
+            background: linear-gradient(145deg, #95baa7, #b8e0d2);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .verify-button.correct {
+            background: linear-gradient(145deg, #a8e6cf, #8bc4a9);
+            color: #1e4d2b;
+        }
+
+        .verify-button.incorrect {
+            background: linear-gradient(145deg, #ffd3d3, #ffb1b1);
+            color: #8b0000;
+        }
+
+        .result-message {
+            font-size: 14px;
+            margin-top: 5px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result-message.show {
+            opacity: 1;
+        }
+
+        .result-message.correct {
+            background-color: rgba(168, 230, 207, 0.2);
+            color: #1e4d2b;
+        }
+
+        .result-message.incorrect {
+            background-color: rgba(255, 211, 211, 0.2);
+            color: #8b0000;
+        }
+
+        .ideas-container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .ideas-list {
+            flex: 1;
+            padding: 15px;
+            background: rgba(184, 224, 210, 0.1);
+            border-radius: 15px;
+            min-height: 200px;
+        }
+
+        .idea-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: move;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .idea-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .ideas-order {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .order-slot {
+            background: rgba(184, 224, 210, 0.2);
+            border: 2px dashed #95baa7;
+            border-radius: 8px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 5px 40px;
+        }
+
+        .slot-number {
+            position: absolute;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+            background: #95baa7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .order-slot .idea-item {
+            width: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <h1 class="story-title">رحلة لا تنسى (الجزء 2)</h1>
+        <div class="story-content">
+            <p>
+            أَخَذَتِ السَّيَّارَةُ تَشُقُّ بِنَا الطُّرُقَ المُلْتَوِيَةَ بَيْنَ الغَابَاتِ الكَثِيفَةِ، صَاعِدَةً بَيْنَ الجِبَالِ تَارَةً، وَمُنْحَدِرَةً عَبْرَ السُّفُوحِ تَارَةً أُخْرَى. وَقَدْ سَحَرَتْنِي المَنَاظِرُ الطَّبِيعِيَّةُ بِجَمَالِهَا الفَتَّانِ. وَكَثِيرًا مَا كُنَّا نَتَوَقَّفُ لِنَلْتَقِطَ صُوَرًا لِلذِّكْرَى فِي بَعْضِ المَنَاطِقِ، مِثْلَ شَلَّالاتِ "أَوْزُودْ"، وَنَهْرِ "أُمِّ الرَّبِيعِ"، وَغَابَةِ "الأَرْزِ".
+            </p>
+
+            <p>
+            وَخِلالَ رِحْلَتِنَا، قَضَيْنَا أَيَّامًا رَائِعَةً بَيْنَ أَسْوَارِ بَعْضِ المُدُنِ العَرِيقَةِ. وَسَرَّنِي التَّجَوُّلُ فِي أَزِقَّتِهَا الضَّيِّقَةِ، وَأَنَا أُطَالِعُ مَآثِرَهَا القَدِيمَةَ. وَفِي مَرَّاكِشَ، وَقَفْتُ مُنْدَهِشَةً أَمَامَ رَوْعَةِ مِعْمَارِ مَسْجِدِ "الكُتُبِيَّةِ"، بِأَبْوَابِهِ المُزَخْرَفَةِ، وَأَبْوَابِهِ الخَشَبِيَّةِ العَتِيقَةِ.
+            </p>
+
+            <p>
+            وَفِي "فَاسَ"، اصْطَحَبَنَا وَالِدِي فِي جَوْلَةٍ إِلَى "جَامِعِ القَرَوِيِّينَ". تَنَقَّلْنَا بَيْنَ سَاحَاتِهِ الفَسِيحَةِ، وَشَرِبْنَا مِنْ مِيَاهِ نَوَافِيرِهِ المَعْدِنِيَّةِ. وَحِينَ بَلَغْنَا "الرِّبَاطَ"، عَرَّجْنَا عَلَى صَوْمَعَةِ "حَسَّانَ" الأَثَرِيَّةِ، وَضَرِيحِ مُحَمَّدٍ الخَامِسِ.
+            </p>
+
+            <p>
+            كَانَتْ "طَنْجَةُ" آخِرَ مَحَطَّةٍ فِي رِحْلَتِنَا، حَيْثُ أَمْضَيْنَا أَيَّامًا مَعَ أَقَارِبِنَا فِي حَفَاوَةٍ وَفَرَحٍ. وَقَدْ أَسْعَدَنِي كَثِيرًا أَنْ أَلْتَقِيَ آنِسَةَ عَمَّتِي "سَلْمَى"، الَّتِي طَالَمَا تَوَاصَلْتُ مَعَهَا عَبْرَ الهَاتِفِ.
+            </p>
+
+            <p>
+            وَكُنَّا كُلَّمَا اشْتَدَّ القَيْظُ، حَمَلْنَا مَؤُونَتَنَا وَمِظَلَّاتِنَا، ثُمَّ نَزَلْنَا إِلَى الشَّاطِئِ، نَغْمُرُ سَاقَيْنَا بِمِيَاهِ بَحْرِهِ البَارِدَةِ، أَوْ نَبْنِي قُصُورًا بِرِمَالِهِ الذَّهَبِيَّةِ. وَفِي كُلِّ لَيْلَةٍ، كُنَّا عَلَى مَوْعِدٍ مَعَ عَائِلَتَيْ بَهِيجٍ، نَتَنَاوَلُ خِلالَهُ أَشْهَى الأَقْرَاصِ، وَأَعْذَبَ الذِّكْرَيَاتِ.
+            </p>
+        </div>
+    </div>
+
+    <div class="exercises-container">
+        <div class="exercise">
+            <div id="exercise1">
+                <h3>1. أستخرج من النص مرادفين لـ "القديمة":</h3>
+                <input type="text" id="synonym1" placeholder="المرادف الأول">
+                <input type="text" id="synonym2" placeholder="المرادف الثاني">
+                <button class="verify-button" onclick="verifySynonyms()">تحقق من الإجابة</button>
+                <div class="result-message" id="synonyms-result"></div>
+            </div>
+
+            <div id="exercise2">
+                <h3>2. أستخرج من النص كلمتين متضادتين:</h3>
+                <input type="text" id="antonym1" placeholder="الكلمة الأولى">
+                <input type="text" id="antonym2" placeholder="الكلمة الثانية">
+                <button class="verify-button" onclick="verifyAntonyms()">تحقق من الإجابة</button>
+                <div class="result-message" id="antonyms-result"></div>
+            </div>
+        </div>
+
+        <div class="exercise cities-exercise">
+            <h3>أحدد الأماكن التي زارتها مريم في كل مدينة:</h3>
+            <div class="city-cards">
+                <div class="city-card">
+                    <div class="city-header">الرباط</div>
+                    <input type="text" class="city-input" placeholder="المكان الذي زارته">
+                    <div class="city-hint">تلميح: معلم تاريخي مهم في العاصمة</div>
+                    <button class="verify-button" onclick="verifyCity('الرباط', this)">تحقق من الإجابة</button>
+                    <div class="result-message"></div>
+                </div>
+                
+                <div class="city-card">
+                    <div class="city-header">فاس</div>
+                    <input type="text" class="city-input" placeholder="المكان الذي زارته">
+                    <div class="city-hint">تلميح: مؤسسة تعليمية عريقة</div>
+                    <button class="verify-button" onclick="verifyCity('فاس', this)">تحقق من الإجابة</button>
+                    <div class="result-message"></div>
+                </div>
+                
+                <div class="city-card">
+                    <div class="city-header">طنجة</div>
+                    <input type="text" class="city-input" placeholder="المكان الذي زارته">
+                    <div class="city-hint">تلميح: مكان للاستجمام على البحر</div>
+                    <button class="verify-button" onclick="verifyCity('طنجة', this)">تحقق من الإجابة</button>
+                    <div class="result-message"></div>
+                </div>
+                
+                <div class="city-card">
+                    <div class="city-header">مراكش</div>
+                    <input type="text" class="city-input" placeholder="المكان الذي زارته">
+                    <div class="city-hint">تلميح: مسجد مشهور بمئذنته</div>
+                    <button class="verify-button" onclick="verifyCity('مراكش', this)">تحقق من الإجابة</button>
+                    <div class="result-message"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h2>أستثمر النص</h2>
+            
+            <div class="question-card">
+                <div class="question-text">كيف كان الجو في مدينة طنجة خلال فصل الصيف؟</div>
+                <input type="text" class="question-input" id="weather-question">
+                <button class="verify-button" onclick="verifyAnswer('weather-question')">تحقق من الإجابة</button>
+                <div class="result-message" id="weather-question-result"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">هل أعجبت مريم بمسجد الكتبية؟ استخرج العبارة التي تؤكد جوابي.</div>
+                <input type="text" class="question-input" id="mosque-question">
+                <button class="verify-button" onclick="verifyAnswer('mosque-question')">تحقق من الإجابة</button>
+                <div class="result-message" id="mosque-question-result"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">كيف استضافت العائلة أسرة مريم في مدينة طنجة؟</div>
+                <input type="text" class="question-input" id="family-question">
+                <button class="verify-button" onclick="verifyAnswer('family-question')">تحقق من الإجابة</button>
+                <div class="result-message" id="family-question-result"></div>
+            </div>
+
+            <div class="exercise">
+                <h3>أرتب الأفكار حسب ورودها في النص:</h3>
+                <div class="ideas-container">
+                    <div class="ideas-list" id="ideasSource">
+                        <div class="idea-item" draggable="true" ondragstart="drag(event)" id="idea4">
+                            تجول مريم في مدن المغرب.
+                        </div>
+                        <div class="idea-item" draggable="true" ondragstart="drag(event)" id="idea1">
+                            وصف المدن المغربية.
+                        </div>
+                        <div class="idea-item" draggable="true" ondragstart="drag(event)" id="idea3">
+                            وصف المعالم التاريخية.
+                        </div>
+                        <div class="idea-item" draggable="true" ondragstart="drag(event)" id="idea2">
+                            وصف الطقس في المدن المغربية.
+                        </div>
+                    </div>
+                    <div class="ideas-order">
+                        <div class="order-slot" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="slot-number">1</div>
+                        </div>
+                        <div class="order-slot" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="slot-number">2</div>
+                        </div>
+                        <div class="order-slot" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="slot-number">3</div>
+                        </div>
+                        <div class="order-slot" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="slot-number">4</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="verify-button" onclick="verifyIdeasOrder()">تحقق من الإجابة</button>
+                <div class="result-message" id="ideas-result"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">كانت مريم تمني نفسها بالسفر إلى مدن لم يسبق أن زارتها. وأنت، بماذا تمني نفسك؟</div>
+                <input type="text" class="question-input" id="self-question">
+                <button class="verify-button" onclick="verifyAnswer('self-question')">تحقق من الإجابة</button>
+                <div class="result-message" id="self-question-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            const dropTarget = ev.target.closest('.order-slot');
+            
+            if (!dropTarget || dropTarget.querySelector('.idea-item')) {
+                return;
+            }
+            
+            dropTarget.appendChild(draggedElement);
+        }
+
+        function verifySynonyms() {
+            const synonym1 = document.getElementById('synonym1').value.trim();
+            const synonym2 = document.getElementById('synonym2').value.trim();
+            const validSynonyms = ['العتيقة', 'العريقة'];
+            
+            const isCorrect = validSynonyms.includes(synonym1) && validSynonyms.includes(synonym2);
+            
+            const resultMessage = document.getElementById('synonyms-result');
+            const verifyButton = document.querySelector('#synonym1').parentElement.querySelector('.verify-button');
+            
+            verifyButton.classList.remove('correct', 'incorrect');
+            verifyButton.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            resultMessage.classList.remove('correct', 'incorrect', 'show');
+            resultMessage.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                resultMessage.innerHTML = 'أحسنت! إجابة صحيحة';
+            } else {
+                resultMessage.innerHTML = 'حاول مرة أخرى';
+            }
+            
+            resultMessage.classList.add('show');
+            setTimeout(() => resultMessage.classList.remove('show'), 3000);
+        }
+
+        function verifyAntonyms() {
+            const antonym1 = document.getElementById('antonym1').value.trim();
+            const antonym2 = document.getElementById('antonym2').value.trim();
+            const validAntonymPairs = [
+                ['صاعدة', 'منحدرة'],
+                ['منحدرة', 'صاعدة'],
+                ['البارد', 'الدافئ'],
+                ['الدافئ', 'البارد']
+            ];
+            
+            const isCorrect = validAntonymPairs.some(pair => 
+                (pair[0] === antonym1 && pair[1] === antonym2) || 
+                (pair[0] === antonym2 && pair[1] === antonym1)
+            );
+            
+            const resultMessage = document.getElementById('antonyms-result');
+            const verifyButton = document.querySelector('#antonym1').parentElement.querySelector('.verify-button');
+            
+            verifyButton.classList.remove('correct', 'incorrect');
+            verifyButton.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            resultMessage.classList.remove('correct', 'incorrect', 'show');
+            resultMessage.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                resultMessage.innerHTML = 'أحسنت! إجابة صحيحة';
+            } else {
+                resultMessage.innerHTML = 'حاول مرة أخرى';
+            }
+            
+            resultMessage.classList.add('show');
+            setTimeout(() => resultMessage.classList.remove('show'), 3000);
+        }
+
+        function verifyCity(city, button) {
+            const input = button.parentElement.querySelector('.city-input');
+            const answer = input.value.trim();
+            const resultMessage = button.parentElement.querySelector('.result-message');
+            
+            const cityAnswers = {
+                'الرباط': ['صومعة حسان', 'ضريح محمد الخامس'],
+                'فاس': ['جامع القرويين', 'القرويين'],
+                'طنجة': ['الشاطئ', 'البحر'],
+                'مراكش': ['مسجد الكتبية', 'الكتبية']
+            };
+            
+            const isCorrect = cityAnswers[city].some(validAnswer => 
+                answer.includes(validAnswer)
+            );
+            
+            button.classList.remove('correct', 'incorrect');
+            button.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            resultMessage.classList.remove('correct', 'incorrect', 'show');
+            resultMessage.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                resultMessage.innerHTML = 'أحسنت! إجابة صحيحة';
+            } else {
+                resultMessage.innerHTML = 'حاول مرة أخرى';
+            }
+            
+            resultMessage.classList.add('show');
+            setTimeout(() => resultMessage.classList.remove('show'), 3000);
+        }
+
+        function verifyIdeasOrder() {
+            const slots = document.querySelectorAll('.order-slot');
+            const correctOrder = ['idea1', 'idea2', 'idea3', 'idea4'];
+            let currentOrder = [];
+            
+            slots.forEach(slot => {
+                const idea = slot.querySelector('.idea-item');
+                if (idea) {
+                    currentOrder.push(idea.id);
+                }
+            });
+            
+            const isCorrect = currentOrder.length === 4 && 
+                            currentOrder.every((id, index) => id === correctOrder[index]);
+            
+            const resultMessage = document.getElementById('ideas-result');
+            const verifyButton = document.querySelector('.ideas-container').parentElement.querySelector('.verify-button');
+            
+            verifyButton.classList.remove('correct', 'incorrect');
+            verifyButton.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            resultMessage.classList.remove('correct', 'incorrect', 'show');
+            resultMessage.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                resultMessage.innerHTML = 'أحسنت! الترتيب صحيح';
+            } else {
+                if (currentOrder.length < 4) {
+                    resultMessage.innerHTML = 'يرجى ترتيب جميع الأفكار';
+                } else {
+                    resultMessage.innerHTML = 'حاول مرة أخرى';
+                }
+            }
+            
+            resultMessage.classList.add('show');
+            setTimeout(() => resultMessage.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

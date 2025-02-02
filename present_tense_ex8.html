@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 8 - الفعل المضارع</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+        .container {
+            padding: 30px;
+            max-width: 900px;
+        }
+        .exercise-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s;
+        }
+        .score-board {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s;
+        }
+        .score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4facfe;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s;
+            display: none;
+        }
+        .quiz-card.active {
+            display: block;
+        }
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #34495e;
+            font-weight: 600;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            padding: 15px;
+            border: 2px solid #4facfe;
+            border-radius: 10px;
+            background: white;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
+        }
+        .option-btn.correct {
+            background: #2ecc71;
+            color: white;
+            border-color: #27ae60;
+        }
+        .option-btn.incorrect {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+        .feedback-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 30px;
+        }
+        .next-btn, .finish-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        .next-btn:hover, .finish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+        .result-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .result-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .result-score {
+            font-size: 3rem;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+        .result-message {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+        .back-btn {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #4facfe;
+            position: absolute;
+            animation: confetti 5s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="exercise-title">تمرين 8 - الفعل المضارع</h1>
+        
+        <div class="score-board">
+            <div class="score">النقاط: <span id="current-score">0</span> من <span id="total-score">50</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+
+        <div class="result-card" id="result-card">
+            <h2 class="result-title">نتيجة الاختبار</h2>
+            <div class="result-score" id="final-score">0/50</div>
+            <div class="result-message" id="result-message"></div>
+            <button class="back-btn" onclick="window.location.href='present_tense_exercises.html'">العودة للتمارين</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "حدد الفعل المضارع الصحيح للجملة: '_____ الطالب دروسه بجد.'",
+                options: ["يذاكر", "ذاكر", "يذاكرون", "تذاكر"],
+                correct: 0,
+                points: 10
+            },
+            {
+                text: "اختر صيغة النفي الصحيحة للجملة: 'يلعب الولد في الحديقة'",
+                options: ["لا يلعب الولد في الحديقة", "ما يلعب الولد في الحديقة", "لم يلعب الولد في الحديقة", "ليس يلعب الولد في الحديقة"],
+                correct: 0,
+                points: 10
+            },
+            {
+                text: "حدد الجملة التي تحتوي على فعل مضارع صحيح:",
+                options: ["البنات يلعبن في الفناء", "البنات تلعب في الفناء", "البنات يلعبون في الفناء", "البنات لعبن في الفناء"],
+                correct: 0,
+                points: 10
+            },
+            {
+                text: "اختر الفعل المضارع المناسب: 'نحن _____ إلى المدرسة كل صباح.'",
+                options: ["نذهب", "يذهب", "تذهب", "يذهبون"],
+                correct: 0,
+                points: 10
+            },
+            {
+                text: "حدد الجملة التي تحتوي على استخدام صحيح للفعل المضارع:",
+                options: ["المعلمة تشرح الدرس", "المعلمة يشرح الدرس", "المعلمة تشرحون الدرس", "المعلمة شرحت الدرس"],
+                correct: 0,
+                points: 10
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let questionAnswered = false;
+
+        function initializeQuiz() {
+            displayQuestion();
+            updateScore();
+        }
+
+        function displayQuestion() {
+            const quizContainer = document.getElementById('quiz-container');
+            const question = questions[currentQuestion];
+            
+            const quizCard = document.createElement('div');
+            quizCard.className = 'quiz-card active';
+            
+            let optionsHTML = '<div class="options-grid">';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <button class="option-btn" onclick="selectAnswer(${index})">
+                        ${option}
+                    </button>`;
+            });
+            optionsHTML += '</div>';
+
+            quizCard.innerHTML = `
+                <div class="question-text">${question.text}</div>
+                ${optionsHTML}
+                <div class="feedback-text"></div>
+                <button class="next-btn" onclick="nextQuestion()">السؤال التالي</button>
+                <button class="finish-btn" onclick="showResults()">إنهاء الاختبار</button>
+            `;
+
+            quizContainer.innerHTML = '';
+            quizContainer.appendChild(quizCard);
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (questionAnswered) return;
+            
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option-btn');
+            const feedback = document.querySelector('.feedback-text');
+            const nextBtn = document.querySelector('.next-btn');
+            const finishBtn = document.querySelector('.finish-btn');
+            
+            questionAnswered = true;
+
+            if (selectedIndex === question.correct) {
+                options[selectedIndex].classList.add('correct');
+                feedback.innerHTML = 'إجابة صحيحة! أحسنت';
+                feedback.style.color = '#2ecc71';
+                score += question.points;
+                createConfetti();
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                feedback.innerHTML = 'إجابة خاطئة';
+                feedback.style.color = '#e74c3c';
+            }
+
+            updateScore();
+
+            if (currentQuestion < questions.length - 1) {
+                nextBtn.style.display = 'block';
+            } else {
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                questionAnswered = false;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('current-score').textContent = score;
+            document.getElementById('total-score').textContent = questions.length * 10;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.querySelector('.score-board').style.display = 'none';
+            
+            const resultCard = document.getElementById('result-card');
+            const finalScore = document.getElementById('final-score');
+            const resultMessage = document.getElementById('result-message');
+            
+            resultCard.style.display = 'block';
+            finalScore.textContent = `${score}/${questions.length * 10}`;
+            
+            if (score === questions.length * 10) {
+                resultMessage.textContent = 'ممتاز! لقد أجبت على جميع الأسئلة بشكل صحيح';
+                createConfetti();
+            } else if (score >= (questions.length * 10) * 0.7) {
+                resultMessage.textContent = 'جيد جداً! أحسنت المحاولة';
+            } else {
+                resultMessage.textContent = 'حاول مرة أخرى للحصول على نتيجة أفضل';
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Initialize the quiz when the page loads
+        initializeQuiz();
+        updateProgress();
+    </script>
+</body>
+</html>

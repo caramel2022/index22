@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>أغنية لبلادي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #9b59b6;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #555f66;
+            text-decoration: none;
+            color: white;
+        }
+        .content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .poem-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .poem {
+            font-size: 24px;
+            text-align: center;
+            color: #34495e;
+        }
+        .poem p {
+            margin: 20px 0;
+        }
+        .poet-name {
+            text-align: left;
+            font-size: 20px;
+            color: #7f8c8d;
+            margin-top: 30px;
+        }
+        .stars {
+            color: #95a5a6;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .exercises-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exercise-box {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-right: 5px solid #9b59b6;
+        }
+        .exercise-title {
+            color: #9b59b6;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .poetry-box {
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            font-size: 1.1rem;
+        }
+        .answer-box {
+            background-color: #fff;
+            border: 1px dashed #dee2e6;
+            border-radius: 8px;
+            min-height: 100px;
+        }
+        .table {
+            background-color: #fff;
+        }
+        .table th {
+            background-color: #9b59b6;
+            color: white;
+        }
+        .word-family {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .question {
+            color: #666;
+            font-weight: bold;
+        }
+        .input-word {
+            border: 2px dashed #9b59b6;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            text-align: center;
+            width: 150px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .check-btn {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .check-btn:hover {
+            background-color: #8e44ad;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .correct-antonym {
+            background-color: #d4edda;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .word-draggable {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            cursor: move;
+        }
+        .drop-zone {
+            min-height: 50px;
+            border: 2px dashed #ced4da;
+            border-radius: 4px;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        .retry-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: none;
+        }
+        .retry-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <a href="reading_activities.html" class="back-btn">العودة</a>
+    <div class="container">
+        <h1>أغنية لبلادي</h1>
+        <div class="content">
+            <div class="poem-container">
+                <h1>أغنية بلادي</h1>
+                <div class="poem">
+                    <p>خُذُوا لَوْحَةً وَعَلَيْهَا اكْتُبُوا</p>
+                    <p>بِلادِي بِلادِي هِيَ الْمَغْرِبُ</p>
+                    <div class="stars">********</div>
+
+                    <p>هَواءٌ نَقِيٌّ وَجَوٌّ بَدِيعُ</p>
+                    <p>وَغَيْمٌ يُسَافِرُ فَوْقَ الْجَمِيعِ</p>
+                    <p>فَتَخْضَرُّ أَشْجَارُهَا فِي الرَّبِيعِ</p>
+                    <p>وَتَزْهُو الْحُقُولُ وَتُقَشْقِشِبُ</p>
+                    <p>بِلادِي بِلادِي هِيَ الْمَغْرِبُ</p>
+                    <div class="stars">********</div>
+
+                    <p>وَفِي الصَّيْفِ تُشْرِقُ شَمْسٌ بَهِيَّةٌ</p>
+                    <p>وَتَخْتَطُّ شُطْآنُهَا الذَّهَبِيَّةُ</p>
+                    <p>وَتَمْنَعُ لِلْكُلِّ أَحْلَى هَدِيَّةٌ</p>
+                    <p>بِحَاراً عَلَى رَمْلِهَا تَلْعَبُ</p>
+                    <p>بِلادِي بِلادِي هِيَ الْمَغْرِبُ</p>
+                    <div class="stars">********</div>
+
+                    <p>وَفَصْلُ الْخَرِيفِ وَفَصْلُ الْمَطَرْ</p>
+                    <p>تَرَى كَيْفَ يَعْرِي وَيَكْسِي الشَّجَرْ</p>
+                    <p>وَتَبْقَى بِلادِي بِأَحْلَى الصُّوَرْ</p>
+                    <p>وَكُلُّ الْفُنُونِ بِهَا تَخْصِبُ</p>
+                    <div class="stars">********</div>
+
+                    <p>بِلادِي بِلادِي هِيَ الْمَغْرِبُ</p>
+                    <div class="stars">********</div>
+
+                    <p>بِلادِي هَوىً قَدْ جَرَى فِي دَمِي</p>
+                    <p>وَأُنْشُودَةٌ لَمْ تَغِبْ عَنْ فَمِي</p>
+                    <p>فَمَجْدٌ يَكُونُ لَهَا أَنْتَمِي</p>
+                    <p>وَإِنِّي إِلَى أَهْلِهَا أَنْتَسِبُ</p>
+                    <p>بِلادِي بِلادِي هِيَ الْمَغْرِبُ</p>
+                    
+                    <div class="poet-name">الشَّاعِرُ مُحَمَّد عَرِيج</div>
+                </div>
+            </div>
+
+            <!-- التمارين -->
+            <div class="exercises-container mt-5">
+                <h2 class="text-center mb-4">التمارين</h2>
+                
+                <!-- تمرين 1 -->
+                <div class="exercise-box mb-4">
+                    <h3 class="exercise-title">١. أكمل عائلة الكلمة التالية:</h3>
+                    <div class="family-word-box p-3">
+                        <div class="word-family text-center">
+                            <p>الكلمة الأساسية: <strong>غَرَبَ</strong></p>
+                            <div class="word-inputs mt-3">
+                                <input type="text" class="input-word" placeholder="الكلمة الأولى">
+                                <input type="text" class="input-word" placeholder="الكلمة الثانية">
+                                <input type="text" class="input-word" placeholder="الكلمة الثالثة">
+                            </div>
+                            <button class="check-btn mt-3" onclick="checkWordFamily(this)">تحقق من الإجابة</button>
+                            <div class="feedback" id="feedback-1"></div>
+                            <button class="retry-btn" onclick="retryExercise(this)">حاول مرة أخرى</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تمرين 2 -->
+                <div class="exercise-box mb-4">
+                    <h3 class="exercise-title">٢. أستثمر النص</h3>
+                    <p>ما الأبيات التي تعبر عن المعاني الآتية؟</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>معاني الأبيات</th>
+                                    <th>الأبيات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>بلاد المغرب غنية بغاباتها الخضراء.</td>
+                                    <td>
+                                        <div class="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>نفتخر بانتمائنا للمغرب.</td>
+                                    <td>
+                                        <div class="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>لعب الأطفال على رمال شواطئ المغرب.</td>
+                                    <td>
+                                        <div class="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="available-verses mt-3" id="verses-container">
+                            <div class="word-draggable" draggable="true" ondragstart="drag(event)">فَتَخْضَرُّ أَشْجَارُهَا فِي الرَّبِيعِ</div>
+                            <div class="word-draggable" draggable="true" ondragstart="drag(event)">بِلادِي بِلادِي هِيَ الْمَغْرِبُ</div>
+                            <div class="word-draggable" draggable="true" ondragstart="drag(event)">بِحَاراً عَلَى رَمْلِهَا تَلْعَبُ</div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="check-btn" onclick="checkDragDrop(this)">تحقق من الإجابات</button>
+                            <div class="feedback" id="feedback-2"></div>
+                            <button class="retry-btn" onclick="retryDragDrop(this)">حاول مرة أخرى</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تمرين 5 -->
+                <div class="exercise-box mb-4">
+                    <h3 class="exercise-title">٥. أقرأ البيتين قراءة معبرة، ثم أحط الكلمات المتضادة:</h3>
+                    <div class="poetry-box text-center p-3">
+                        <p>
+                            <span class="word" onclick="toggleHighlight(this)">وفصل</span> 
+                            <span class="word" onclick="toggleHighlight(this)">الخريف</span> 
+                            <span class="word" onclick="toggleHighlight(this)">وفصل</span> 
+                            <span class="word" onclick="toggleHighlight(this)">المطر</span>
+                        </p>
+                        <p>
+                            <span class="word" onclick="toggleHighlight(this)">ترى</span> 
+                            <span class="word" onclick="toggleHighlight(this)">كيف</span> 
+                            <span class="word" onclick="toggleHighlight(this)">يعري</span> 
+                            <span class="word" onclick="toggleHighlight(this)">ويكسو</span> 
+                            <span class="word" onclick="toggleHighlight(this)">الشجر</span>
+                        </p>
+                    </div>
+                    <button class="check-btn mt-3" onclick="checkAntonyms(this)">تحقق من الكلمات المتضادة</button>
+                    <div class="feedback" id="feedback-5"></div>
+                    <button class="retry-btn" onclick="retryExercise(this)">حاول مرة أخرى</button>
+                </div>
+
+                <!-- تمرين 6 -->
+                <div class="exercise-box mb-4">
+                    <h3 class="exercise-title">٦. أقرأ البيتين قراءة معبرة ثم أسطر تحت الكلمات التي تنتهي بنفس الصوت:</h3>
+                    <div class="poetry-box text-center p-3">
+                        <p>
+                            <span class="word" onclick="toggleHighlight(this)">وفي</span> 
+                            <span class="word" onclick="toggleHighlight(this)">الصيف</span> 
+                            <span class="word" onclick="toggleHighlight(this)">تشرق</span> 
+                            <span class="word" onclick="toggleHighlight(this)">شمس</span> 
+                            <span class="word" onclick="toggleHighlight(this)">بهية</span>
+                        </p>
+                        <p>
+                            <span class="word" onclick="toggleHighlight(this)">وتحفظ</span> 
+                            <span class="word" onclick="toggleHighlight(this)">شطآنها</span> 
+                            <span class="word" onclick="toggleHighlight(this)">الذهبية</span>
+                        </p>
+                    </div>
+                    <button class="check-btn mt-3" onclick="checkRhymingWords(this)">تحقق من الكلمات المتشابهة في الصوت</button>
+                    <div class="feedback" id="feedback-6"></div>
+                    <button class="retry-btn" onclick="retryExercise(this)">حاول مرة أخرى</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة مساعدة لعرض التغذية الراجعة
+        function showFeedback(feedbackElement, message, isCorrect, checkBtn, retryBtn) {
+            feedbackElement.textContent = message;
+            feedbackElement.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackElement.style.display = 'block';
+            checkBtn.style.display = 'none';
+
+            // إخفاء الرسالة بعد 3 ثوان
+            setTimeout(() => {
+                feedbackElement.style.display = 'none';
+                // إظهار زر المحاولة مرة أخرى فقط إذا كانت الإجابة خاطئة
+                if (!isCorrect) {
+                    retryBtn.style.display = 'block';
+                } else {
+                    checkBtn.style.display = 'block';
+                }
+            }, 3000);
+        }
+
+        // دالة إعادة المحاولة
+        function retryExercise(retryBtn) {
+            const exerciseBox = retryBtn.closest('.exercise-box');
+            const inputs = exerciseBox.querySelectorAll('.input-word');
+            const checkBtn = exerciseBox.querySelector('.check-btn');
+            const highlights = exerciseBox.querySelectorAll('.highlight, .correct-antonym, .selected');
+            
+            // إعادة تعيين الحقول
+            inputs.forEach(input => input.value = '');
+            highlights.forEach(el => {
+                el.classList.remove('highlight', 'correct-antonym', 'selected');
+            });
+            
+            // إعادة تعيين الأزرار
+            retryBtn.style.display = 'none';
+            checkBtn.style.display = 'block';
+        }
+
+        // دالة إعادة المحاولة للتمرين 2
+        function retryDragDrop(retryBtn) {
+            const exerciseBox = retryBtn.closest('.exercise-box');
+            const dropZones = exerciseBox.querySelectorAll('.drop-zone');
+            const checkBtn = exerciseBox.querySelector('.check-btn');
+            
+            // إعادة تعيين مناطق الإفلات
+            dropZones.forEach(zone => {
+                zone.textContent = '';
+                zone.style.backgroundColor = '#f8f9fa';
+                zone.style.color = 'inherit';
+            });
+            
+            // إعادة تعيين الأزرار
+            retryBtn.style.display = 'none';
+            checkBtn.style.display = 'block';
+        }
+
+        // تمرين 1: التحقق من عائلة الكلمات
+        function checkWordFamily(checkBtn) {
+            const exerciseBox = checkBtn.closest('.exercise-box');
+            const inputs = exerciseBox.querySelectorAll('.input-word');
+            const feedback = exerciseBox.querySelector('.feedback');
+            const retryBtn = exerciseBox.querySelector('.retry-btn');
+            const correctWords = ['مَغْرِب', 'غُرُوب', 'نَغْرِبُ'];
+            
+            let allCorrect = true;
+            inputs.forEach((input, index) => {
+                if (input.value.trim() !== correctWords[index]) {
+                    allCorrect = false;
+                }
+            });
+
+            showFeedback(
+                feedback,
+                allCorrect ? 'أحسنت! جميع الكلمات صحيحة من عائلة كلمة غرب' : 'حاول مرة أخرى. تذكر أن جميع الكلمات يجب أن تكون من نفس عائلة كلمة غرب',
+                allCorrect,
+                checkBtn,
+                retryBtn
+            );
+        }
+
+        // تمرين 5: تحديد الكلمات المتضادة
+        function checkAntonyms(checkBtn) {
+            const exerciseBox = checkBtn.closest('.exercise-box');
+            const selectedWords = exerciseBox.querySelectorAll('.word.selected');
+            const feedback = exerciseBox.querySelector('.feedback');
+            const retryBtn = exerciseBox.querySelector('.retry-btn');
+
+            if (selectedWords.length !== 2) {
+                showFeedback(feedback, 'الرجاء اختيار كلمتين متضادتين', false, checkBtn, retryBtn);
+                return;
+            }
+
+            const word1 = selectedWords[0].textContent.trim();
+            const word2 = selectedWords[1].textContent.trim();
+
+            // التحقق من أن الكلمتين متضادتان
+            const isCorrect = (word1 === 'يكسو' && word2 === 'يعري') || 
+                            (word1 === 'يعري' && word2 === 'يكسو');
+
+            if (isCorrect) {
+                // إضافة تأثير مرئي للكلمات الصحيحة
+                selectedWords.forEach(word => {
+                    word.classList.remove('selected');
+                    word.classList.add('correct-antonym');
+                });
+            }
+
+            showFeedback(
+                feedback,
+                isCorrect ? 'أحسنت' : 'حاول مرة أخرى',
+                isCorrect,
+                checkBtn,
+                retryBtn
+            );
+        }
+
+        // تمرين 6: تحديد الكلمات المتشابهة في الصوت
+        function checkRhymingWords(checkBtn) {
+            const exerciseBox = checkBtn.closest('.exercise-box');
+            const highlightedWords = exerciseBox.querySelectorAll('.highlight');
+            const feedback = exerciseBox.querySelector('.feedback');
+            const retryBtn = exerciseBox.querySelector('.retry-btn');
+            const correctWords = ['بهية', 'الذهبية'];
+            
+            const words = Array.from(highlightedWords).map(el => el.textContent.trim());
+            const isCorrect = words.length === 2 && 
+                correctWords.every(word => words.includes(word));
+
+            showFeedback(
+                feedback,
+                isCorrect ? 'أحسنت! الكلمتان "بهية" و"الذهبية" تنتهيان بنفس الصوت (ية)' : 'حاول مرة أخرى. ابحث عن كلمتين تنتهيان بنفس الصوت في البيتين',
+                isCorrect,
+                checkBtn,
+                retryBtn
+            );
+        }
+
+        // تمرين 2: التحقق من السحب والإفلات
+        function checkDragDrop(checkBtn) {
+            const exerciseBox = checkBtn.closest('.exercise-box');
+            const dropZones = exerciseBox.querySelectorAll('.drop-zone');
+            const feedback = exerciseBox.querySelector('.feedback');
+            const retryBtn = exerciseBox.querySelector('.retry-btn');
+            
+            let allCorrect = true;
+            dropZones.forEach(zone => {
+                const row = zone.closest('tr');
+                const meaning = row.cells[0].textContent;
+                const verse = zone.textContent;
+                if (!checkAnswer(meaning, verse)) {
+                    allCorrect = false;
+                }
+            });
+
+            showFeedback(
+                feedback,
+                allCorrect ? 'أحسنت! جميع الأبيات في مكانها الصحيح' : 'حاول مرة أخرى. تأكد من مطابقة كل بيت مع معناه الصحيح',
+                allCorrect,
+                checkBtn,
+                retryBtn
+            );
+        }
+
+        // وظائف السحب والإفلات كما هي...
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const dropZone = ev.target;
+            
+            if (dropZone.classList.contains('drop-zone')) {
+                // تفريغ المنطقة أولاً
+                dropZone.textContent = '';
+                dropZone.textContent = data;
+                
+                const row = dropZone.closest('tr');
+                const meaning = row.cells[0].textContent;
+                const isCorrect = checkAnswer(meaning, data);
+                
+                // إضافة تأثير بصري مؤقت
+                dropZone.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+                dropZone.style.color = isCorrect ? '#155724' : '#721c24';
+                
+                // إعادة اللون بعد ثانيتين
+                setTimeout(() => {
+                    if (!isCorrect) {  // فقط إذا كانت الإجابة خاطئة
+                        dropZone.style.backgroundColor = '#f8f9fa';
+                        dropZone.style.color = 'inherit';
+                    }
+                }, 2000);
+            }
+        }
+
+        // دالة التحقق من الإجابة
+        function checkAnswer(meaning, verse) {
+            const answers = {
+                'بلاد المغرب غنية بغاباتها الخضراء.': 'فَتَخْضَرُّ أَشْجَارُهَا فِي الرَّبِيعِ',
+                'نفتخر بانتمائنا للمغرب.': 'بِلادِي بِلادِي هِيَ الْمَغْرِبُ',
+                'لعب الأطفال على رمال شواطئ المغرب.': 'بِحَاراً عَلَى رَمْلِهَا تَلْعَبُ'
+            };
+            return answers[meaning] === verse;
+        }
+
+        function toggleHighlight(element) {
+            const highlighted = document.querySelectorAll('.highlight');
+            if (highlighted.length >= 2 && !element.classList.contains('highlight')) {
+                return;
+            }
+            element.classList.toggle('highlight');
+        }
+    </script>
+</body>
+</html>

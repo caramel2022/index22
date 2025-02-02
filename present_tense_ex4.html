@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 4 - الفعل المضارع</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+        .container {
+            padding: 30px;
+            max-width: 900px;
+        }
+        .exercise-title {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s;
+        }
+        .question {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s;
+        }
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .question p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .drag-container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .drag-source {
+            flex: 1;
+            padding: 15px;
+            background: rgba(238, 156, 167, 0.2);
+            border-radius: 10px;
+            min-height: 100px;
+        }
+        .drag-target {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 221, 225, 0.2);
+            border-radius: 10px;
+            min-height: 100px;
+        }
+        .draggable-word {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid #ee9ca7;
+            border-radius: 8px;
+            cursor: move;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .draggable-word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 156, 167, 0.3);
+        }
+        .submit-btn {
+            background: linear-gradient(45deg, #ee9ca7, #ffdde1);
+            color: #2c3e50;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 156, 167, 0.4);
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            display: none;
+            font-size: 1.1rem;
+            animation: fadeIn 0.3s;
+        }
+        .correct {
+            background: linear-gradient(45deg, #a8e6cf, #1abc9c);
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .incorrect {
+            background: linear-gradient(45deg, #ffaaa5, #e74c3c);
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .back-btn {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="exercise-title">تمرين 4 - الفعل المضارع</h1>
+        
+        <div class="question" id="q1">
+            <p>اسحب الأفعال المضارعة إلى المربع الأيمن:</p>
+            <div class="drag-container">
+                <div class="drag-source" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">كتب</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">يقرأ</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">ذهب</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">تكتب</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">لعب</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">يلعبون</span>
+                </div>
+                <div class="drag-target" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
+            <div class="feedback"></div>
+        </div>
+
+        <div class="question" id="q2">
+            <p>اسحب الأفعال المضارعة إلى المربع الأيمن:</p>
+            <div class="drag-container">
+                <div class="drag-source" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">سمع</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">تسمع</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">جلس</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">يجلس</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">نام</span>
+                    <span class="draggable-word" draggable="true" ondragstart="drag(event)">ينامون</span>
+                </div>
+                <div class="drag-target" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
+            <div class="feedback"></div>
+        </div>
+
+        <button class="submit-btn" onclick="checkAnswers()">تحقق من الإجابات</button>
+        <button class="back-btn" onclick="window.location.href='present_tense_exercises.html'">العودة للتمارين</button>
+    </div>
+
+    <script>
+        const presentVerbs = {
+            'q1': ['يقرأ', 'تكتب', 'يلعبون'],
+            'q2': ['تسمع', 'يجلس', 'ينامون']
+        };
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+            ev.target.classList.add('dragging');
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggableWord = document.createElement('span');
+            draggableWord.className = 'draggable-word';
+            draggableWord.draggable = true;
+            draggableWord.ondragstart = drag;
+            draggableWord.textContent = data;
+            
+            // Remove the original element
+            const draggingElement = document.querySelector('.dragging');
+            if (draggingElement) {
+                draggingElement.remove();
+            }
+            
+            ev.target.appendChild(draggableWord);
+        }
+
+        function checkAnswers() {
+            Object.keys(presentVerbs).forEach(questionId => {
+                const questionDiv = document.getElementById(questionId);
+                const targetDiv = questionDiv.querySelector('.drag-target');
+                const selectedWords = Array.from(targetDiv.querySelectorAll('.draggable-word'))
+                    .map(word => word.textContent);
+                const feedbackDiv = questionDiv.querySelector('.feedback');
+                
+                const correctWords = presentVerbs[questionId];
+                const isCorrect = selectedWords.length === correctWords.length &&
+                    selectedWords.every(word => correctWords.includes(word));
+                
+                if (selectedWords.length === 0) {
+                    feedbackDiv.textContent = 'الرجاء سحب بعض الكلمات إلى المربع';
+                    feedbackDiv.className = 'feedback incorrect';
+                } else if (isCorrect) {
+                    feedbackDiv.textContent = 'إجابة صحيحة! أحسنت';
+                    feedbackDiv.className = 'feedback correct';
+                } else {
+                    feedbackDiv.textContent = 'إجابة خاطئة. حاول مرة أخرى';
+                    feedbackDiv.className = 'feedback incorrect';
+                }
+                feedbackDiv.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>
