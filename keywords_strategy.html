@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكلمات المفاتيح</title>
+    <style>
+        @font-face {
+            font-family: 'Boutros';
+            src: url('https://db.onlinewebfonts.com/t/ce283a00f4ddf3779d96e9c867f4e275.woff2') format('woff2');
+        }
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #82b8f8;
+            --accent-color: #f0f7ff;
+            --text-color: #2c3e50;
+            --background-color: #ffffff;
+        }
+        body {
+            font-family: 'Boutros', Arial, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            background: var(--background-color);
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        .title {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            color: var(--text-color);
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background: var(--accent-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            border-right: 5px solid var(--primary-color);
+        }
+        .steps {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        .step {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+            padding-right: 50px;
+            transition: transform 0.3s ease;
+        }
+        .step:hover {
+            transform: translateX(-5px);
+        }
+        .step::before {
+            content: attr(data-number);
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .bulb-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            color: white;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">الكَلِماتُ المَفاتيحُ</h1>
+            <div class="subtitle">لِنَتَعَلَّمَ جَميعاً</div>
+        </div>
+
+        <div class="info-box">
+            <span class="bulb-icon">💡</span>
+            <p>تُساعِدُني إِسْتِراتيجِيَّةُ الكَلِماتِ المَفاتيحِ عَلى اسْتِخْراجِ مَعْلوماتٍ وارِدَةٍ في نَصٍّ.</p>
+        </div>
+
+        <h2>كَيْفَ أُوَظِّفُ إِسْتِراتيجِيَّةَ الكَلِماتِ المَفاتيحِ لاسْتِخْراجِ مَعْلوماتٍ؟</h2>
+
+        <ul class="steps">
+            <li class="step" data-number="١">
+                أُحَدِّدُ الكَلِماتِ المَفاتيحَ في السُّؤالِ.
+            </li>
+            <li class="step" data-number="٢">
+                أَقومُ بِالقِراءَةِ المَسْحِيَّةِ لأَجِدَ الكَلِماتِ المَفاتيحَ، وَأَضَعُ سَطْراً تَحْتَها.
+            </li>
+            <li class="step" data-number="٣">
+                أَتَحَقَّقُ مِنْ وُجودِ الإِجابَةِ ثُمَّ أَصوغُ الجَوابَ في جُمْلَةٍ تامَّةٍ.
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

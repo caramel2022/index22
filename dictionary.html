@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>معجمي السحري ✨</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --space-black: #0a0a1a;
+        }
+
+        body {
+            background: var(--space-black);
+            font-family: 'Rubik', 'Arial', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 4.5em;
+            margin: 40px 0;
+            position: relative;
+            color: transparent;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+            animation: titleGlow 2s infinite alternate;
+        }
+
+        .galaxy-bg {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(15, 15, 50, 0.8) 0%, 
+                rgba(10, 10, 30, 0.9) 100%);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 0 auto;
+            max-width: 1400px;
+            padding: 30px;
+            perspective: 1500px;
+        }
+
+        .unit {
+            padding: 30px;
+            width: 500px;
+            border-radius: 25px;
+            position: relative;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.5s, box-shadow 0.5s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .unit::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--neon-blue),
+                transparent 30%
+            );
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        .unit:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 243, 255, 0.2);
+        }
+
+        .unit-title {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding: 15px;
+            text-align: center;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .week {
+            background: rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            font-size: 1.6em;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .week:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: scale(1.03);
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .week::after {
+            content: '✨';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .week:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes rotateBorder {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 30px rgba(0, 243, 255, 0.5); }
+            to { text-shadow: 0 0 50px rgba(255, 0, 255, 0.8); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .unit {
+                width: 90%;
+                margin: 20px 0;
+            }
+            h1 {
+                font-size: 3em;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-bg"></div>
+    <h1>معجمي السحري</h1>
+    <div class="container">
+        <div class="unit">
+            <div class="unit-title">الوحدة1:من نحن؟</div>
+            <p class="week"><a href="dictioryu1S1.html">الأسبوع الأول</a></p>
+            <p class="week"><a href="dictioryu1S2.html">الأسبوع الثاني</a></p>
+            <p class="week"><a href="dictioryu1S3.html">الأسبوع الثالث</a></p>
+            <p class="week"><a href="dictioryu1S4.html">الأسبوع الرابع</a></p>
+            <p class="week"><a href="dictioryu1S5.html">الأسبوع الخامس</a></p>
+        </div>
+
+        <div class="unit">
+            <div class="unit-title">الوحدة 2</div>
+            <p class="week"><a href="dictioryu2S1.html">الأسبوع الأول</a></p>
+            <p class="week"><a href="dictioryu2S2.html">الأسبوع الثاني</a></p>
+            <p class="week"><a href="dictioryu2S3.html">الأسبوع الثالث</a></p>
+            <p class="week"><a href="dictioryu2S4.html">الأسبوع الرابع</a></p>
+            <p class="week"><a href="dictioryu2S5.html">الأسبوع الخامس</a></p>
+        </div>
+    </div>
+    <button id="week2Button">الأسبوع 2</button>
+    <button onclick="openWeek3()">الأسبوع 3</button>
+    <button onclick="openWeek4()">الأسبوع 4</button>
+    <button onclick="openWeek5()">الأسبوع 5</button>
+    <button onclick="openWeek6()">الأسبوع 6</button>
+    <button onclick="openWeek1Unit2()">الأسبوع 1 الوحدة 2</button>
+    <button onclick="openWeek2Unit2()">الأسبوع 2 الوحدة 2</button>
+    <button onclick="openWeek3Unit2()">الأسبوع 3 الوحدة 2</button>
+    <button onclick="openWeek4Unit2()">الأسبوع 4 الوحدة 2</button>
+    <button onclick="openWeek5Unit2()">الأسبوع 5 الوحدة 2</button>
+    <button onclick="openWeek6Unit2()">الأسبوع 6 الوحدة 2</button>
+    <script>
+        // إنشاء تأثير الجسيمات
+        function createParticles(e) {
+            const particles = document.createElement('div');
+            particles.className = 'particle';
+            
+            const size = Math.random() * 15 + 5;
+            particles.style.width = `${size}px`;
+            particles.style.height = `${size}px`;
+            
+            particles.style.left = `${e.clientX - size/2}px`;
+            particles.style.top = `${e.clientY - size/2}px`;
+            
+            document.body.appendChild(particles);
+            
+            setTimeout(() => {
+                particles.remove();
+            }, 2000);
+        }
+
+        document.addEventListener('mousemove', createParticles);
+
+        // تأثيرات عند النقر على الأسابيع
+        document.querySelectorAll('.week').forEach(week => {
+            week.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                this.style.background = 'radial-gradient(circle, rgba(255,255,255,0.2), transparent)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.03)';
+                }, 200);
+            });
+        });
+
+        document.getElementById('week2Button').addEventListener('click', function() {
+            window.open('معمي_الوحدة_1_الأسبوع_2.html', '_blank');
+        });
+
+        function openWeek3() {
+            window.open('معمي_الوحدة_1_الأسبوع_3.html', '_blank');
+        }
+
+        function openWeek4() {
+            window.open('معمي_الوحدة_1_الأسبوع_4.html', '_blank');
+        }
+
+        function openWeek5() {
+            window.open('معمي_الوحدة_1_الأسبوع_5.html', '_blank');
+        }
+
+        function openWeek6() {
+            window.open('معمي_الوحدة_1_الأسبوع_6.html', '_blank');
+        }
+
+        function openWeek1Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_1.html', '_blank');
+        }
+
+        function openWeek2Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_2.html', '_blank');
+        }
+
+        function openWeek3Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_3.html', '_blank');
+        }
+
+        function openWeek4Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_4.html', '_blank');
+        }
+
+        function openWeek5Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_5.html', '_blank');
+        }
+
+        function openWeek6Unit2() {
+            window.open('معمي_الوحدة_2_الأسبوع_6.html', '_blank');
+        }
+    </script>
+    <script>
+        document.querySelector('button[onclick="openWeek3()"]').addEventListener('click', function() {
+            console.log('تم الضغط على زر الأسبوع 3');
+        });
+    </script>
+</body>
+</html>

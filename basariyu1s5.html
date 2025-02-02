@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الكلمات البصرية</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; direction: rtl; margin: 0; padding: 0; }
+        .game-container { text-align: center; margin-top: 5%; }
+        h1 { font-size: 4vw; color: #333; }
+        p { font-size: 2.5vw; color: #555; }
+        .button { padding: 2% 5%; font-size: 2vw; margin: 1%; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .button:hover { background-color: #45a049; }
+        .input-field { width: 80%; padding: 2%; font-size: 2vw; margin-top: 2%; border: 1px solid #ccc; border-radius: 5px; }
+        .timer { font-size: 2.5vw; color: #d9534f; margin-top: 2%; }
+        .correct-sentences { margin-top: 3%; font-size: 2vw; color: #333; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 6vw; }
+            p { font-size: 4vw; }
+            .button { font-size: 4vw; }
+            .input-field { font-size: 4vw; }
+            .timer { font-size: 4vw; }
+            .correct-sentences { font-size: 4vw; }
+        }
+    </style>
+</head>
+<body>
+    <button class="button" id="backButton">العودة</button>
+    <div class="game-container">
+        <h1>لعبة الكلمات البصرية</h1>
+        <p>اضغط على الزر للحصول على كلمة بصرية:</p>
+        <button class="button" id="generateWord">احصل على كلمة</button>
+        <div id="visualWord" style="margin-top: 20px; font-size: 24px;"></div>
+        <input type="text" id="userSentence" class="input-field" placeholder="اكتب جملتك هنا..." />
+        <div class="timer" id="timerDisplay">60</div>
+        <button class="button" id="startTimer">ابدأ العداد</button>
+        <div class="correct-sentences" id="correctSentencesDisplay"></div>
+    </div>
+    <script>
+        const visuals = ['هذه', 'بينما', 'هو', 'ذلك', 'حين', 'ماذا لو', 'فيما'];
+        const button = document.getElementById('generateWord');
+        const display = document.getElementById('visualWord');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const startTimerButton = document.getElementById('startTimer');
+        const userSentenceInput = document.getElementById('userSentence');
+        const correctSentencesDisplay = document.getElementById('correctSentencesDisplay');
+        let timer;
+        let currentVisual;
+        let lastCorrectSentence = '';
+
+        button.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * visuals.length);
+            currentVisual = visuals[randomIndex];
+            display.innerText = currentVisual;
+            startTimer();
+        });
+
+        userSentenceInput.addEventListener('input', () => {
+            const userSentence = userSentenceInput.value;
+            if (userSentence.includes(currentVisual) && isMeaningful(userSentence)) {
+                lastCorrectSentence = userSentence;
+                updateCorrectSentencesDisplay();
+            }
+        });
+
+        function isMeaningful(sentence) {
+            return sentence.split(' ').length > 3;
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            let timeLeft = 60;
+            timerDisplay.innerText = timeLeft;
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('انتهى الوقت!');
+                }
+            }, 1000);
+        }
+
+        function updateCorrectSentencesDisplay() {
+            correctSentencesDisplay.innerHTML = '<h2>الجملة الصحيحة:</h2><p>' + lastCorrectSentence + '</p>';
+        }
+    </script>
+</body>
+</html>

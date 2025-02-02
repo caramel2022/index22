@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التاء المربوطة والتاء المبسوطة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: right;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .explanation {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .exercise {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .question {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .check-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .check-btn:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .wordwall-exercise {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .wordwall-exercise h3 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+        .wordwall-exercise iframe {
+            max-width: 100%;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>التاء المربوطة والتاء المبسوطة</h1>
+        
+        <div class="explanation">
+            <h3>شرح مختصر:</h3>
+            <p>
+                التاء المربوطة (ة) تستخدم في نهاية الكلمات، بينما التاء المبسوطة (ت) تستخدم في وسط وبداية الكلمات.
+            </p>
+        </div>
+
+        <div class="exercise">
+            <div class="question">
+                <p>اختر الشكل الصحيح للتاء في الكلمة التالية: "مدرس<span id="blank">_</span>"</p>
+                <select id="answer" class="answer-input">
+                    <option value="">اختر الإجابة</option>
+                    <option value="ة">التاء المربوطة (ة)</option>
+                    <option value="ت">التاء المبسوطة (ت)</option>
+                </select>
+                <button onclick="checkAnswer()" class="check-btn">تحقق</button>
+                <div id="result"></div>
+            </div>
+        </div>
+
+        <div class="wordwall-exercise">
+            <h3>تمرين إضافي من WordWall</h3>
+            <iframe style="max-width:100%" src="https://wordwall.net/fr/embed/108f26434a4b4f008b49328d810d28ea?themeId=46&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value;
+            const resultDiv = document.getElementById('result');
+
+            if (answer === 'ة') {
+                resultDiv.style.color = 'green';
+                resultDiv.textContent = 'إجابة صحيحة! كلمة "مدرسة" تنتهي بالتاء المربوطة.';
+            } else if (answer === '') {
+                resultDiv.style.color = 'orange';
+                resultDiv.textContent = 'يرجى اختيار إجابة.';
+            } else {
+                resultDiv.style.color = 'red';
+                resultDiv.textContent = 'للأسف، هذه الإجابة غير صحيحة. حاول مرة أخرى.';
+            }
+        }
+    </script>
+</body>
+</html>

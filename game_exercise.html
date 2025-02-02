@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة تفاعلية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .game-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+        .game-cell {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .game-cell:hover {
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>مرحبًا بكم في اللعبة!</h1>
+        <p>اضغط على الزر لبدء اللعبة.</p>
+        <button id="start-button">ابدأ اللعبة</button>
+        <div class="game-board" id="game-board">
+            <div class="game-cell" id="cell-1"></div>
+            <div class="game-cell" id="cell-2"></div>
+            <div class="game-cell" id="cell-3"></div>
+            <div class="game-cell" id="cell-4"></div>
+            <div class="game-cell" id="cell-5"></div>
+            <div class="game-cell" id="cell-6"></div>
+            <div class="game-cell" id="cell-7"></div>
+            <div class="game-cell" id="cell-8"></div>
+            <div class="game-cell" id="cell-9"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('start-button').addEventListener('click', function() {
+            alert('اللعبة بدأت!');
+            document.getElementById('game-board').style.display = 'grid';
+        });
+        document.querySelectorAll('.game-cell').forEach(cell => {
+            cell.addEventListener('click', function() {
+                alert('الخلايا clicked!');
+            });
+        });
+    </script>
+</body>
+</html>

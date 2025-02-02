@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --accent-color: #E74C3C;
+            --background-color: #ECF0F1;
+            --text-color: #2C3E50;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            color: white;
+            box-shadow: var(--card-shadow);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .unit-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .unit {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .unit:hover {
+            transform: translateY(-5px);
+        }
+
+        .unit-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .unit-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .week-button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .week-button:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .week-button i {
+            font-size: 1.2rem;
+        }
+
+        #homeButton {
+            background-color: #008CBA; /* Blue color similar to other buttons */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+        }
+        #homeButton:hover {
+            background-color: #007B9A; /* Darker blue on hover */
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .unit {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .weeks-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>الكلمات البصرية</h1>
+            <p>برنامج تعليمي تفاعلي للكلمات البصرية</p>
+        </header>
+
+        <div class="unit-container">
+            <div class="unit">
+                <h2 class="unit-title">الوحدة الأولى</h2>
+                <div class="unit-content">
+                    <p>محتوى قسم الوحدة الأولى يظهر هنا مع شرح تفصيلي للأهداف والمخرجات التعليمية.</p>
+                </div>
+                <div class="weeks-grid">
+                    <button class="week-button" id="week1Button">
+                        <i>📅</i>
+                        أسبوع 1
+                    </button>
+                    <script>
+                        document.getElementById('week1Button').addEventListener('click', function() {
+                            window.location.href = 'basariyu1s1.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week2Button">
+                        <i>📅</i>
+                        أسبوع 2
+                    </button>
+                    <script>
+                        document.getElementById('week2Button').addEventListener('click', function() {
+                            window.location.href = 'basariyu1s2.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week3Button">
+                        <i>📅</i>
+                        أسبوع 3
+                    </button>
+                    <script>
+                        document.getElementById('week3Button').addEventListener('click', function() {
+                            window.location.href = 'basariyu1s3.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week4Button">
+                        <i>📅</i>
+                        أسبوع 4
+                    </button>
+                    <script>
+                        document.getElementById('week4Button').addEventListener('click', function() {
+                            window.location.href = 'basariyu1s4.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week5Button">
+                        <i>📅</i>
+                        أسبوع 5
+                    </button>
+                    <script>
+                        document.getElementById('week5Button').addEventListener('click', function() {
+                            window.location.href = 'basariyu1s5.html';
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="unit">
+                <h2 class="unit-title">الوحدة الثانية</h2>
+                <div class="unit-content">
+                    <p>محتوى قسم الوحدة الثانية يظهر هنا مع شرح تفصيلي للأهداف والمخرجات التعليمية.</p>
+                </div>
+                <div class="weeks-grid">
+                    <button class="week-button" id="week1Button2">
+                        <i>📅</i>
+                        أسبوع 1 من الوحدة 2
+                    </button>
+                    <script>
+                        document.getElementById('week1Button2').addEventListener('click', function() {
+                            window.location.href = 'basariyu2s1.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week2Button2">
+                        <i>📅</i>
+                        أسبوع 2 من الوحدة 2
+                    </button>
+                    <script>
+                        document.getElementById('week2Button2').addEventListener('click', function() {
+                            window.location.href = 'basariyu2s2.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week3Button2">
+                        <i>📅</i>
+                        أسبوع 3 من الوحدة 2
+                    </button>
+                    <script>
+                        document.getElementById('week3Button2').addEventListener('click', function() {
+                            window.location.href = 'basariyu2s3.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week4Button2">
+                        <i>📅</i>
+                        أسبوع 4 من الوحدة 2
+                    </button>
+                    <script>
+                        document.getElementById('week4Button2').addEventListener('click', function() {
+                            window.location.href = 'basariyu2s4.html';
+                        });
+                    </script>
+                    <button class="week-button" id="week5Button2">
+                        <i>📅</i>
+                        أسبوع 5 من الوحدة 2
+                    </button>
+                    <script>
+                        document.getElementById('week5Button2').addEventListener('click', function() {
+                            window.location.href = 'basariyu2s5.html';
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <button id="homeButton">عودة إلى الصفحة الرئيسية</button>
+        <script>
+            document.getElementById('homeButton').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        </script>
+    </div>
+</body>
+</html>

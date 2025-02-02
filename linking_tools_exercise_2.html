@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين 2 - أدوات الربط</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+        }
+        .container {
+            padding: 30px;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .exercise-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .exercise-content:hover {
+            transform: translateY(-5px);
+        }
+        .question {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+        .answer-input {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        .check-btn {
+            width: 100%;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        .check-btn:hover {
+            background-color: #27ae60;
+            transform: scale(1.02);
+        }
+        .back-btn {
+            background-color: #7f8c8d;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #6c7a7d;
+            transform: scale(1.02);
+        }
+        .progress-container {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .hint-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .hint-btn:hover {
+            background-color: #d68910;
+        }
+        .hint-text {
+            display: none;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            color: #856404;
+        }
+        @keyframes celebration {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .celebrate {
+            animation: celebration 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title animate__animated animate__fadeInDown">تمرين أدوات الربط</h1>
+        
+        <div class="progress-container animate__animated animate__fadeIn">
+            <div class="score-display">النتيجة: <span id="score">0</span> من <span id="totalQuestions">5</span></div>
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div id="exerciseContainer" class="exercise-content animate__animated animate__fadeIn">
+            <!-- Questions will be loaded here dynamically -->
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12">
+                <button class="back-btn animate__animated animate__fadeIn" onclick="window.location.href='linking_tools_exercises.html'">
+                    <i class="fas fa-arrow-right ml-2"></i> العودة للتمارين
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "كانت الشمس مشرقة ... كان الجو بارداً.",
+                options: ["لكن", "و", "لذلك"],
+                correct: "لكن",
+                hint: "نحتاج أداة ربط تدل على التناقض بين الجملتين"
+            },
+            {
+                text: "درس الطالب بجد ... نجح في الامتحان.",
+                options: ["لكن", "ف", "أو"],
+                correct: "ف",
+                hint: "نحتاج أداة ربط تدل على النتيجة"
+            },
+            {
+                text: "سأذهب إلى المكتبة ... أشتري كتاباً.",
+                options: ["لكي", "لكن", "أم"],
+                correct: "لكي",
+                hint: "نحتاج أداة ربط تدل على الغرض"
+            },
+            {
+                text: "أحب القراءة ... الرياضة.",
+                options: ["و", "أو", "ثم"],
+                correct: "و",
+                hint: "نحتاج أداة ربط تجمع بين شيئين"
+            },
+            {
+                text: "ستنجح ... اجتهدت في دراستك.",
+                options: ["إذا", "أو", "بل"],
+                correct: "إذا",
+                hint: "نحتاج أداة ربط تدل على الشرط"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('exerciseContainer');
+            
+            container.innerHTML = `
+                <div class="question animate__animated animate__fadeIn">
+                    ${question.text}
+                </div>
+                <select class="form-select answer-input animate__animated animate__fadeIn" id="answer">
+                    <option value="">اختر الإجابة</option>
+                    ${question.options.map(option => `<option value="${option}">${option}</option>`).join('')}
+                </select>
+                <button class="hint-btn animate__animated animate__fadeIn" onclick="showHint()">
+                    <i class="fas fa-lightbulb"></i> تلميح
+                </button>
+                <div class="hint-text" id="hintText">${question.hint}</div>
+                <button class="check-btn animate__animated animate__fadeIn" onclick="checkAnswer()">
+                    <i class="fas fa-check"></i> تحقق من الإجابة
+                </button>
+                <div class="feedback" id="feedback"></div>
+            `;
+            
+            updateProgress();
+        }
+
+        function showHint() {
+            const hintText = document.getElementById('hintText');
+            hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value;
+            const feedback = document.getElementById('feedback');
+            const question = questions[currentQuestion];
+            
+            feedback.style.display = 'block';
+            
+            if (answer === question.correct) {
+                feedback.className = 'feedback correct animate__animated animate__bounceIn';
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> أحسنت! إجابة صحيحة';
+                score++;
+                document.getElementById('score').textContent = score;
+                document.getElementById('exerciseContainer').classList.add('celebrate');
+                
+                setTimeout(() => {
+                    document.getElementById('exerciseContainer').classList.remove('celebrate');
+                    nextQuestion();
+                }, 1500);
+            } else {
+                feedback.className = 'feedback incorrect animate__animated animate__shakeX';
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> حاول مرة أخرى';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function showFinalScore() {
+            const container = document.getElementById('exerciseContainer');
+            const percentage = (score / questions.length) * 100;
+            let message, icon;
+            
+            if (percentage === 100) {
+                message = "ممتاز! أحسنت العمل";
+                icon = "trophy";
+            } else if (percentage >= 80) {
+                message = "جيد جداً! استمر في التقدم";
+                icon = "star";
+            } else if (percentage >= 60) {
+                message = "جيد! حاول مرة أخرى للتحسين";
+                icon = "thumbs-up";
+            } else {
+                message = "استمر في المحاولة! يمكنك التحسن";
+                icon = "redo";
+            }
+            
+            container.innerHTML = `
+                <div class="text-center animate__animated animate__bounceIn">
+                    <i class="fas fa-${icon} fa-3x mb-3" style="color: #2ecc71;"></i>
+                    <h3>${message}</h3>
+                    <p class="score-display">النتيجة النهائية: ${score} من ${questions.length}</p>
+                    <button class="check-btn" onclick="resetExercise()">
+                        <i class="fas fa-redo"></i> إعادة التمرين
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetExercise() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('score').textContent = '0';
+            loadQuestion();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Start the exercise
+        document.getElementById('totalQuestions').textContent = questions.length;
+        loadQuestion();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

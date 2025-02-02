@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة شاملة للتاء المربوطة والمبسوطة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --card-background: #ffffff;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .review-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .review-header h1 {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .review-header::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .progress-section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .progress {
+            height: 1.5rem;
+            border-radius: 1rem;
+            background: #e9ecef;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.5s ease;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .question-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .question-type {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem 1rem;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 0 15px 0 15px;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .option-btn {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-btn:hover {
+            background: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+
+        .option-btn.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .option-btn.correct {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .option-btn.incorrect {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .answer-input {
+            display: inline-block;
+            width: 60px;
+            padding: 0.5rem;
+            margin: 0 0.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .check-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .reset-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hint {
+            color: #666;
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-right: 4px solid var(--secondary-color);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            animation: confetti 3s ease-in-out infinite;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="review-container">
+        <div class="review-header">
+            <h1>مراجعة شاملة للتاء المربوطة والمبسوطة</h1>
+            <p class="lead">اختبر معرفتك بجميع قواعد التاء المربوطة والمبسوطة</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+            <div class="score-display">
+                النتيجة: <span id="score">0</span> من <span id="total-questions">10</span>
+            </div>
+        </div>
+
+        <div id="questions-container">
+            <!-- Questions will be added here by JavaScript -->
+        </div>
+
+        <div class="control-buttons">
+            <button class="control-btn check-btn" onclick="checkAnswers()">
+                <i class="fas fa-check-circle"></i>
+                تحقق من الإجابات
+            </button>
+            <button class="control-btn reset-btn" onclick="resetExercise()">
+                <i class="fas fa-redo"></i>
+                إعادة المحاولة
+            </button>
+        </div>
+
+        <button class="back-btn" onclick="window.location.href='ta_exercises.html'">
+            <i class="fas fa-arrow-right"></i>
+            العودة للتمارين
+        </button>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        const questions = [
+            {
+                type: "اختيار متعدد",
+                text: "ما نوع التاء في كلمة 'مدرسة'؟",
+                options: ["تاء مربوطة", "تاء مبسوطة"],
+                correct: 0,
+                explanation: "كلمة 'مدرسة' تنتهي بتاء مربوطة لأنها اسم مؤنث يدل على مكان"
+            },
+            {
+                type: "إكمال",
+                text: "أكمل الجملة: ذهب___ البن___ إلى المكتب___",
+                answers: ["ت", "ت", "ة"],
+                hints: ["فعل ماضٍ", "التاء جزء أصلي من الكلمة", "اسم مكان مؤنث"],
+                explanations: [
+                    "الفعل 'ذهبت' ينتهي بتاء مبسوطة لأنها تاء الفاعل",
+                    "كلمة 'بنت' تنتهي بتاء مبسوطة لأنها جزء أصلي من الكلمة",
+                    "كلمة 'مكتبة' تنتهي بتاء مربوطة لأنها اسم مكان مؤنث"
+                ]
+            },
+            {
+                type: "اختيار متعدد",
+                text: "أي من الكلمات التالية تنتهي بتاء مبسوطة؟",
+                options: ["سيارة", "صوت", "شجرة"],
+                correct: 1,
+                explanation: "كلمة 'صوت' تنتهي بتاء مبسوطة لأنها جزء أصلي من الكلمة"
+            },
+            {
+                type: "إكمال",
+                text: "الحديق___ الجميل___ مليئ___ بالأشجار",
+                answers: ["ة", "ة", "ة"],
+                hints: ["اسم مؤنث", "صفة مؤنثة", "صفة مؤنثة"],
+                explanations: [
+                    "كلمة 'حديقة' تنتهي بتاء مربوطة لأنها اسم مؤنث",
+                    "كلمة 'جميلة' تنتهي بتاء مربوطة لأنها صفة مؤنثة",
+                    "كلمة 'مليئة' تنتهي بتاء مربوطة لأنها صفة مؤنثة"
+                ]
+            },
+            {
+                type: "اختيار متعدد",
+                text: "ما نوع التاء في كلمة 'بيت'؟",
+                options: ["تاء مربوطة", "تاء مبسوطة"],
+                correct: 1,
+                explanation: "كلمة 'بيت' تنتهي بتاء مبسوطة لأنها جزء أصلي من الكلمة"
+            }
+        ];
+
+        function createQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+
+                const typeLabel = document.createElement('div');
+                typeLabel.className = 'question-type';
+                typeLabel.textContent = q.type;
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.innerHTML = `<strong>السؤال ${index + 1}:</strong> ${q.text}`;
+
+                card.appendChild(typeLabel);
+                card.appendChild(questionText);
+
+                if (q.type === "اختيار متعدد") {
+                    const optionsContainer = document.createElement('div');
+                    optionsContainer.className = 'options-container';
+
+                    q.options.forEach((option, optIndex) => {
+                        const button = document.createElement('button');
+                        button.className = 'option-btn';
+                        button.innerHTML = `<i class="fas fa-circle"></i>${option}`;
+                        button.onclick = () => selectAnswer(index, optIndex);
+                        optionsContainer.appendChild(button);
+                    });
+
+                    card.appendChild(optionsContainer);
+                } else if (q.type === "إكمال") {
+                    const sentenceParts = q.text.split('___');
+                    let sentenceHTML = '<div class="sentence-text">';
+                    
+                    sentenceParts.forEach((part, partIndex) => {
+                        sentenceHTML += part;
+                        if (partIndex < sentenceParts.length - 1) {
+                            sentenceHTML += `<input type="text" class="answer-input" 
+                                maxlength="1" data-question="${index}" 
+                                data-position="${partIndex}">`;
+                        }
+                    });
+                    sentenceHTML += '</div>';
+
+                    const hintsList = document.createElement('div');
+                    hintsList.className = 'hint';
+                    hintsList.innerHTML = '<strong>تلميحات:</strong><br>' + 
+                        q.hints.map((hint, i) => `${i + 1}. ${hint}`).join('<br>');
+
+                    card.innerHTML += sentenceHTML;
+                    card.appendChild(hintsList);
+                }
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+                feedback.id = `feedback-${index}`;
+                card.appendChild(feedback);
+
+                container.appendChild(card);
+            });
+
+            // Add input validation
+            document.querySelectorAll('.answer-input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/[^ةت]/, '');
+                });
+            });
+        }
+
+        let selectedAnswers = {};
+
+        function selectAnswer(questionIndex, optionIndex) {
+            const card = document.querySelectorAll('.question-card')[questionIndex];
+            const options = card.querySelectorAll('.option-btn');
+            
+            options.forEach((opt, idx) => {
+                opt.classList.remove('selected');
+                if (idx === optionIndex) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            selectedAnswers[questionIndex] = optionIndex;
+        }
+
+        function createConfetti() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            celebration.innerHTML = '';
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 50%, 50%)`;
+                celebration.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                celebration.style.display = 'none';
+            }, 3000);
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = 0;
+
+            questions.forEach((q, index) => {
+                const card = document.querySelectorAll('.question-card')[index];
+                const feedback = document.getElementById(`feedback-${index}`);
+
+                if (q.type === "اختيار متعدد") {
+                    totalQuestions++;
+                    const options = card.querySelectorAll('.option-btn');
+                    
+                    options.forEach((opt, idx) => {
+                        opt.classList.remove('correct', 'incorrect');
+                        if (idx === selectedAnswers[index]) {
+                            if (idx === q.correct) {
+                                opt.classList.add('correct');
+                                feedback.textContent = `أحسنت! ${q.explanation}`;
+                                feedback.className = 'feedback correct';
+                                score++;
+                            } else {
+                                opt.classList.add('incorrect');
+                                options[q.correct].classList.add('correct');
+                                feedback.textContent = `غير صحيح. ${q.explanation}`;
+                                feedback.className = 'feedback incorrect';
+                            }
+                        }
+                    });
+                } else if (q.type === "إكمال") {
+                    const inputs = card.querySelectorAll('.answer-input');
+                    let allCorrect = true;
+                    let feedbackText = '';
+
+                    inputs.forEach((input, position) => {
+                        totalQuestions++;
+                        const userAnswer = input.value;
+                        const correctAnswer = q.answers[position];
+
+                        if (userAnswer === correctAnswer) {
+                            input.style.borderColor = '#2ecc71';
+                            score++;
+                        } else {
+                            input.style.borderColor = '#e74c3c';
+                            allCorrect = false;
+                        }
+
+                        feedbackText += `<br>${position + 1}. ${q.explanations[position]}`;
+                    });
+
+                    feedback.innerHTML = allCorrect ? 
+                        `<i class="fas fa-check-circle"></i> أحسنت! ${feedbackText}` :
+                        `<i class="fas fa-times-circle"></i> حاول مرة أخرى. ${feedbackText}`;
+                    feedback.className = `feedback ${allCorrect ? 'correct' : 'incorrect'}`;
+                }
+
+                feedback.style.display = 'block';
+            });
+
+            document.getElementById('score').textContent = score;
+            document.querySelector('.progress-bar').style.width = `${(score / totalQuestions) * 100}%`;
+
+            if (score === totalQuestions) {
+                createConfetti();
+                setTimeout(() => {
+                    alert('أحسنت! لقد أكملت المراجعة بنجاح!');
+                }, 500);
+            }
+        }
+
+        function resetExercise() {
+            selectedAnswers = {};
+            document.getElementById('score').textContent = '0';
+            document.querySelector('.progress-bar').style.width = '0%';
+            createQuestions();
+        }
+
+        // Initialize the exercise
+        createQuestions();
+    </script>
+</body>
+</html>

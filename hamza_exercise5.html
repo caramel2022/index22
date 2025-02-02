@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هَمْزَةُ الْوَصْلِ وَهَمْزَةُ الْقَطْعِ - التمرين الخامس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --background-color: #f4f6f7;
+            --text-color: #2d3436;
+            --highlight-color: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--highlight-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .exercise-section {
+            margin-top: 2rem;
+            background-color: #e8f4f8;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .sentence-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sentence {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .option-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--highlight-color);
+            border-radius: 5px;
+            background-color: white;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .option-btn:hover {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+
+        .option-btn.selected {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .next-btn, .check-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--highlight-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .next-btn:hover, .check-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .next-btn {
+            display: none;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .score {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>هَمْزَةُ الْوَصْلِ وَهَمْزَةُ الْقَطْعِ - التمرين الخامس</h1>
+
+        <div class="exercise-section">
+            <h2>تصحيح الجمل</h2>
+            <p>اختر الشكل الصحيح للهمزة في كل جملة</p>
+            
+            <div class="score">الدرجة: <span id="score">0</span> من <span id="totalQuestions">0</span></div>
+            
+            <div id="questionContainer" class="sentence-container">
+                <!-- Questions will be inserted here -->
+            </div>
+
+            <button id="checkBtn" class="check-btn">تحقق من إجابتك</button>
+            <button id="nextBtn" class="next-btn">السؤال التالي</button>
+        </div>
+
+        <a href="hamza_exercises.html" class="back-btn">العودة للصفحة الرئيسية</a>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                sentence: 'و___نطلق الطالب إلى المدرسة',
+                options: ['ا', 'أ'],
+                correct: 'ا',
+                explanation: 'الهمزة هنا همزة وصل لأنها في فعل خماسي (انطلق)'
+            },
+            {
+                sentence: '___كل الطفل التفاحة',
+                options: ['ا', 'أ'],
+                correct: 'أ',
+                explanation: 'الهمزة هنا همزة قطع لأنها في فعل ثلاثي (أكل)'
+            },
+            {
+                sentence: '___ستخرج المعلم الكتاب',
+                options: ['ا', 'أ'],
+                correct: 'ا',
+                explanation: 'الهمزة هنا همزة وصل لأنها في فعل سداسي (استخرج)'
+            },
+            {
+                sentence: '___ن الصدق منجاة',
+                options: ['ا', 'إ'],
+                correct: 'إ',
+                explanation: 'الهمزة هنا همزة قطع لأنها في حرف التوكيد (إنَّ)'
+            },
+            {
+                sentence: '___بن سينا عالم مشهور',
+                options: ['ا', 'إ'],
+                correct: 'ا',
+                explanation: 'الهمزة هنا همزة وصل لأنها في كلمة (ابن)'
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="sentence">${question.sentence}</div>
+                <div class="options">
+                    ${question.options.map(option => `
+                        <button class="option-btn" onclick="selectOption(this, '${option}')">${option}</button>
+                    `).join('')}
+                </div>
+                <div class="feedback"></div>
+                <div class="explanation">${question.explanation}</div>
+            `;
+
+            document.getElementById('totalQuestions').textContent = questions.length;
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            // Reset feedback and explanation
+            document.querySelector('.feedback').className = 'feedback';
+            document.querySelector('.explanation').style.display = 'none';
+        }
+
+        function selectOption(button, option) {
+            // Remove selected class from all buttons
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked button
+            button.classList.add('selected');
+        }
+
+        function checkAnswer() {
+            const selectedButton = document.querySelector('.option-btn.selected');
+            if (!selectedButton) {
+                alert('الرجاء اختيار إجابة');
+                return;
+            }
+
+            const feedback = document.querySelector('.feedback');
+            const explanation = document.querySelector('.explanation');
+            const checkBtn = document.getElementById('checkBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            const selectedAnswer = selectedButton.textContent;
+            const correctAnswer = questions[currentQuestion].correct;
+
+            if (selectedAnswer === correctAnswer) {
+                feedback.textContent = 'إجابة صحيحة! أحسنت!';
+                feedback.className = 'feedback correct';
+                score++;
+            } else {
+                feedback.textContent = 'إجابة خاطئة. حاول مرة أخرى!';
+                feedback.className = 'feedback incorrect';
+            }
+
+            document.getElementById('score').textContent = score;
+            explanation.style.display = 'block';
+            checkBtn.style.display = 'none';
+            
+            if (currentQuestion < questions.length - 1) {
+                nextBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                nextBtn.textContent = 'انتهى التمرين';
+                nextBtn.onclick = () => {
+                    alert(`انتهى التمرين! حصلت على ${score} من ${questions.length} نقاط`);
+                };
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            }
+        }
+
+        document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+        document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+        // Start the exercise
+        showQuestion();
+    </script>
+</body>
+</html>

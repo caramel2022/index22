@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكلمات البصرية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 48px;
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .words-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .word-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .word-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .word-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+        }
+
+        .word {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .meaning {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .word-content {
+            padding: 20px;
+        }
+
+        .example {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-listen {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .btn-practice {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .input-container {
+            text-align: center;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-container input {
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 60%; /* Adjusted width to make it smaller */
+        }
+
+        @media (max-width: 768px) {
+            .words-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .title {
+                font-size: 36px;
+            }
+
+            .word {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">الكلمات البصرية</h1>
+            <p class="subtitle">تعلم الكلمات الأساسية بأسلوب تفاعلي</p>
+            <h1 class="title"> الوحدة 1-الاسبوع4</h1>
+
+        </header>
+
+        <div class="words-grid">
+            <!-- كلمة 1 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">بَلَى</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">بَلَى، أَنا أُحِبُ اللُعبَ في الحديقةِ.</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كلمة 2 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">مِمَّا</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">مِمَّا يُعجبني في المدرسةِ هو التعليم الجيد.</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كلمة 3 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">ماذَا</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">ماذَا تَفعلُ في وقتِ فراغك؟</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كلمة 4 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">ذَلكَ</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">ذَلكَ هو الكتاب الذي قرأتهُ.</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كلمة 5 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">هيَّا</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">هيَّا نذهبُ إلى المتنزهِ معاً.</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كلمة 6 -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">مثلاً</div>
+                </div>
+                <div class="word-content">
+                    <p class="example">أَنا أُحبُ الذهابَ إلى المدرسةِ مثلاً في الصباح.</p>
+                    <div class="buttons">
+                        <button class="btn btn-listen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            </svg>
+                            استمع
+                        </button>
+                        <button class="btn btn-practice" onclick="showInputField(this)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            أتدرب
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showInputField(button) {
+            const wordCard = button.closest('.word-card');
+            const existingInput = wordCard.querySelector('.input-container');
+            if (!existingInput) {
+                const inputDiv = document.createElement('div');
+                inputDiv.className = 'input-container';
+                inputDiv.innerHTML = '<input type="text" placeholder="اكتب جملة هنا" />';
+                wordCard.appendChild(inputDiv);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي الكلمات البصرية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa; /* Light cyan background */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            font-size: 18px; /* Increased font size for body */
+            direction: rtl;
+            background-image: url('background.jpg'); /* Add a background image */
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px; /* Increased font size for buttons */
+            transition: background 0.3s, transform 0.3s ease;
+            background-image: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+        }
+        .button:hover {
+            background-image: linear-gradient(135deg, #0056b3, #007bff);
+            transform: translateY(-2px);
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px; /* Increased font size for input fields */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .timer {
+            font-size: 28px; /* Increased font size for timer */
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center; /* Center the timer */
+            margin: 20px 0; /* Add margin for spacing */
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .correct-sentences {
+            margin-top: 3%;
+            font-size: 2vw;
+            color: #333;
+            background-color: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .icon {
+            margin-right: 10px; /* Add space between icon and text */
+        }
+    </style>
+</head>
+<body>
+    <button class="button" id="backButton" onclick="window.location.href='basariya.html';">
+        <i class="icon">&#x27a1;</i> العودة
+    </button>
+    <div class="container">
+        <h1>
+            <i class="icon">&#x1f4dd;</i> تحدي الجمل
+        </h1>
+        <div class="timer" id="timerDisplay">60</div> <!-- Moved timer here for visibility -->
+        <button class="button" id="generateWord">
+            <i class="icon">&#x1f4ac;</i> الحصول على كلمة
+        </button>
+        <div id="visualWord" style="margin-top: 20px; font-size: 24px;"></div>
+        <input type="text" id="userSentence" class="input-field" placeholder="اكتب جملتك هنا..." />
+        <div class="correct-sentences" id="correctSentencesDisplay"></div>
+    </div>
+    <script>
+        const visuals = ['فَوقَ', 'لَمْ', 'عِندمَا', 'لا', 'أَمَّا إِذَا', 'خَلِالَ', 'الَّتِي'];
+        const button = document.getElementById('generateWord');
+        const display = document.getElementById('visualWord');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const userSentenceInput = document.getElementById('userSentence');
+        const correctSentencesDisplay = document.getElementById('correctSentencesDisplay');
+        let timer;
+        let timeLeft = 60; // Timer duration in seconds
+
+        button.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * visuals.length);
+            const currentVisual = visuals[randomIndex];
+            display.innerText = currentVisual;
+            startTimer(); // Start the timer when a visual word is displayed
+        });
+
+        function startTimer() {
+            timeLeft = Math.min(60, timeLeft); // Ensure timer does not exceed 60 seconds
+            timerDisplay.innerText = timeLeft;
+            clearInterval(timer); // Clear any existing timer
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('انتهى الوقت!'); // Alert when time is up
+                }
+            }, 1000);
+        }
+
+        userSentenceInput.addEventListener('input', () => {
+            const userInput = userSentenceInput.value;
+            if (userInput.includes(display.innerText)) {
+                correctSentencesDisplay.innerHTML += `<p>${userInput}</p>`;
+                userSentenceInput.value = ''; // Clear input after correct entry
+            }
+        });
+    </script>
+</body>
+</html>

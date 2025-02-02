@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هَمْزَةُ الْوَصْلِ وَهَمْزَةُ الْقَطْعِ - التمرين الرابع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --background-color: #f4f6f7;
+            --text-color: #2d3436;
+            --highlight-color: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--highlight-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .exercise-section {
+            margin-top: 2rem;
+            background-color: #e8f4f8;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .matching-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            background-color: var(--highlight-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .card-front {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+
+        .card-back {
+            background-color: white;
+            color: var(--text-color);
+            transform: rotateY(180deg);
+            border: 2px solid var(--highlight-color);
+        }
+
+        .card.matched {
+            background-color: #27ae60;
+            cursor: default;
+        }
+
+        .score {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 600px) {
+            .matching-game {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>هَمْزَةُ الْوَصْلِ وَهَمْزَةُ الْقَطْعِ - التمرين الرابع</h1>
+
+        <div class="exercise-section">
+            <h2>لعبة المطابقة</h2>
+            <p>اقلب البطاقات لمطابقة الكلمات مع نوع همزتها</p>
+            
+            <div class="score">المحاولات: <span id="attempts">0</span></div>
+            <div class="matching-game" id="gameBoard"></div>
+        </div>
+
+        <a href="hamza_exercises.html" class="back-btn">العودة للصفحة الرئيسية</a>
+    </div>
+
+    <script>
+        const words = [
+            { word: 'اِسْتَمَعَ', type: 'همزة وصل' },
+            { word: 'أَكَلَ', type: 'همزة قطع' },
+            { word: 'اِبْنٌ', type: 'همزة وصل' },
+            { word: 'إِنْسَانٌ', type: 'همزة قطع' },
+            { word: 'اِنْتَظَرَ', type: 'همزة وصل' },
+            { word: 'أَمِينٌ', type: 'همزة قطع' }
+        ];
+
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let attempts = 0;
+
+        function createBoard() {
+            const gameBoard = document.getElementById('gameBoard');
+            const allCards = [...words.map(item => ({ ...item, id: Math.random() }))];
+            
+            // Duplicate cards to create pairs
+            cards = [...allCards, ...allCards].sort(() => Math.random() - 0.5);
+
+            cards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+                    <div class="card-front">؟</div>
+                    <div class="card-back">${card.word || card.type}</div>
+                `;
+                cardElement.setAttribute('data-index', index);
+                cardElement.addEventListener('click', () => flipCard(cardElement, index));
+                gameBoard.appendChild(cardElement);
+            });
+        }
+
+        function flipCard(cardElement, index) {
+            if (
+                flippedCards.length === 2 || 
+                flippedCards.includes(index) || 
+                cardElement.classList.contains('matched')
+            ) {
+                return;
+            }
+
+            cardElement.classList.add('flipped');
+            flippedCards.push(index);
+
+            if (flippedCards.length === 2) {
+                attempts++;
+                document.getElementById('attempts').textContent = attempts;
+                
+                const firstCard = cards[flippedCards[0]];
+                const secondCard = cards[flippedCards[1]];
+
+                const isMatch = (firstCard.word && secondCard.type === 'همزة وصل' && firstCard.word.startsWith('ا')) ||
+                              (firstCard.type === 'همزة وصل' && secondCard.word && secondCard.word.startsWith('ا')) ||
+                              (firstCard.word && secondCard.type === 'همزة قطع' && (firstCard.word.startsWith('أ') || firstCard.word.startsWith('إ'))) ||
+                              (firstCard.type === 'همزة قطع' && secondCard.word && (secondCard.word.startsWith('أ') || secondCard.word.startsWith('إ')));
+
+                if (isMatch) {
+                    matchedPairs++;
+                    document.querySelectorAll('.card')[flippedCards[0]].classList.add('matched');
+                    document.querySelectorAll('.card')[flippedCards[1]].classList.add('matched');
+                    flippedCards = [];
+
+                    if (matchedPairs === words.length) {
+                        setTimeout(() => {
+                            alert('أحسنت! لقد أكملت اللعبة بنجاح!');
+                        }, 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        document.querySelectorAll('.card')[flippedCards[0]].classList.remove('flipped');
+                        document.querySelectorAll('.card')[flippedCards[1]].classList.remove('flipped');
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

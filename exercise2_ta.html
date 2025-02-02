@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين التاء المربوطة والتاء المبسوطة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .exercise {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .question {
+            font-size: 1.3em;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .result {
+            font-size: 1.2em;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .explanation {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .explanation h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .return-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 15px;
+            font-size: 1.2em;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .return-button:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين التاء المربوطة والتاء المبسوطة</h1>
+        
+        <div class="explanation">
+            <h2>تذكير مهم:</h2>
+            <p>• التاء المربوطة (ة): تكتب في آخر الأسماء وتنطق هاء عند الوقوف.</p>
+            <p>• التاء المبسوطة (ت): تكتب في آخر الأفعال وبعض الأسماء وتنطق تاء دائماً.</p>
+        </div>
+
+        <div class="exercise" id="exercise1">
+            <div class="question">اختر نوع التاء المناسب في كلمة (مدرسـ_):</div>
+            <div class="options">
+                <button onclick="checkAnswer('exercise1', 'ة')">ة</button>
+                <button onclick="checkAnswer('exercise1', 'ت')">ت</button>
+            </div>
+            <div class="result" id="result1"></div>
+        </div>
+
+        <div class="exercise" id="exercise2">
+            <div class="question">اختر نوع التاء المناسب في كلمة (كتبـ_):</div>
+            <div class="options">
+                <button onclick="checkAnswer('exercise2', 'ة')">ة</button>
+                <button onclick="checkAnswer('exercise2', 'ت')">ت</button>
+            </div>
+            <div class="result" id="result2"></div>
+        </div>
+
+        <div class="exercise" id="exercise3">
+            <div class="question">اختر نوع التاء المناسب في كلمة (فتا_):</div>
+            <div class="options">
+                <button onclick="checkAnswer('exercise3', 'ة')">ة</button>
+                <button onclick="checkAnswer('exercise3', 'ت')">ت</button>
+            </div>
+            <div class="result" id="result3"></div>
+        </div>
+
+        <a href="ta_exercises.html" class="return-button">العودة للتمارين</a>
+    </div>
+
+    <script>
+        function checkAnswer(exerciseId, answer) {
+            const resultDiv = document.getElementById('result' + exerciseId.slice(-1));
+            resultDiv.style.display = 'block';
+            
+            let isCorrect = false;
+            let explanation = '';
+            
+            switch(exerciseId) {
+                case 'exercise1':
+                    isCorrect = answer === 'ة';
+                    explanation = isCorrect ? 
+                        'صحيح! كلمة "مدرسة" اسم مؤنث تنتهي بتاء مربوطة.' :
+                        'غير صحيح! كلمة "مدرسة" اسم مؤنث يجب أن تنتهي بتاء مربوطة.';
+                    break;
+                case 'exercise2':
+                    isCorrect = answer === 'ت';
+                    explanation = isCorrect ?
+                        'صحيح! "كتبت" فعل ماضي يجب أن ينتهي بتاء مبسوطة.' :
+                        'غير صحيح! "كتبت" فعل ماضي يجب أن ينتهي بتاء مبسوطة.';
+                    break;
+                case 'exercise3':
+                    isCorrect = answer === 'ة';
+                    explanation = isCorrect ?
+                        'صحيح! كلمة "فتاة" اسم مؤنث تنتهي بتاء مربوطة.' :
+                        'غير صحيح! كلمة "فتاة" اسم مؤنث يجب أن تنتهي بتاء مربوطة.';
+                    break;
+            }
+            
+            resultDiv.className = 'result ' + (isCorrect ? 'correct' : 'incorrect');
+            resultDiv.textContent = explanation;
+        }
+    </script>
+</body>
+</html>
