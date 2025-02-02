@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم الأضداد السحري</title>
+    <style>
+        :root {
+            --space-bg: radial-gradient(circle, #000428 0%, #004e92 100%);
+            --neon-gold: #ffd700;
+            --neon-purple: #9d00ff;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--space-bg);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .galaxy-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            perspective: 1000px;
+        }
+
+        .nebula-header {
+            text-align: center;
+            padding: 4rem;
+            position: relative;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
+            animation: nebulaFlow 20s infinite linear;
+        }
+
+        @keyframes nebulaFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .stardust-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--neon-gold);
+            border-radius: 2rem;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 0 50px rgba(255,215,0,0.2);
+            transform-style: preserve-3d;
+            transition: 0.5s;
+        }
+
+        .stardust-card:hover {
+            transform: rotateY(5deg) rotateX(3deg);
+        }
+
+        .quantum-input {
+            width: 100%;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: 0.3s;
+            text-shadow: 0 0 15px var(--neon-purple);
+        }
+
+        .quantum-input:focus {
+            outline: none;
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 40px var(--neon-gold);
+        }
+
+        .celestial-btn {
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            color: var(--neon-purple);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            margin: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .celestial-btn::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(45deg, transparent, rgba(157,0,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: starlight 2s infinite linear;
+        }
+
+        @keyframes starlight {
+            0% { transform: rotate(45deg) translateX(-150%); }
+            100% { transform: rotate(45deg) translateX(150%); }
+        }
+
+        .celestial-btn:hover {
+            border-color: var(--neon-gold);
+            color: var(--neon-gold);
+            box-shadow: 0 0 40px var(--neon-gold);
+        }
+
+        .supernova-result {
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 1rem;
+            text-align: center;
+            animation: supernovaPulse 1.5s infinite alternate;
+        }
+
+        @keyframes supernovaPulse {
+            0% { transform: scale(0.98); opacity: 0.9; }
+            100% { transform: scale(1.02); opacity: 1; }
+        }
+
+        .correct-supernova {
+            background: linear-gradient(45deg, #00ff87, #60efff);
+            color: #000;
+        }
+
+        .wrong-supernova {
+            background: linear-gradient(45deg, #ff0f7b, #f89b29);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-container">
+        <div class="nebula-header">
+            <h1 style="color: var(--neon-gold); text-shadow: 0 0 40px var(--neon-gold);">
+                الوحدة 2 الأسبوع 1
+            </h1>
+            <p style="color: var(--neon-purple);">أكمل الفراغات بقوة الخيال الكوني!</p>
+        </div>
+
+        <div class="stardust-card">
+            <input type="text" class="quantum-input" id="antonym" placeholder="ضد الضيق">
+            <input type="text" class="quantum-input" id="antonym2" placeholder="ضد الجديدة">
+            <input type="text" class="quantum-input" id="synonym1" placeholder="مرادف ترحاب">
+            <input type="text" class="quantum-input" id="synonym2" placeholder="مرادف 'الواسع'">
+
+            <div style="text-align: center;">
+                <button class="celestial-btn" onclick="activateStellarCheck()">تفعيل الفحص النجمي</button>
+                <button class="celestial-btn" onclick="resetGalaxy()" style="border-color: var(--neon-gold); color: var(--neon-gold);">
+                    إعادة تشكيل المجرة
+                </button>
+            </div>
+
+            <div id="cosmicResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const cosmicAnswers = {
+            antonym: "فسيح",
+            antonym2: "القديمة",
+            synonym1: "حفاوة",
+            synonym2: "الممتد"
+        };
+
+        function activateStellarCheck() {
+            let stardustScore = 0;
+            const resultContainer = document.getElementById('cosmicResult');
+            resultContainer.innerHTML = '';
+
+            Object.keys(cosmicAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().replace(/[ًٌٍَُِّْ]/g, '');
+                const correct = cosmicAnswers[id].replace(/[ًٌٍَُِّْ]/g, '');
+                
+                if(userAnswer === correct) {
+                    input.style.borderColor = '#00ff87';
+                    stardustScore++;
+                    resultContainer.innerHTML += `
+                        <div class="supernova-result correct-supernova">
+                            🌟 إجابة كونية صحيحة!
+                        </div>
+                    `;
+                } else {
+                    input.style.borderColor = '#ff0f7b';
+                    resultContainer.innerHTML += `
+                        <div class="supernova-result wrong-supernova">
+                            💥 الإجابة الصحيحة: ${cosmicAnswers[id]}
+                        </div>
+                    `;
+                }
+            });
+
+            resultContainer.innerHTML += `
+                <div class="supernova-result" style="background: ${stardustScore === 4 ? 
+                    'linear-gradient(45deg, #00ff87, #60efff)' : 
+                    'linear-gradient(45deg, #ff0f7b, #f89b29)'}">
+                    ☄️ طاقة النجوم: ${stardustScore * 25}%
+                </div>
+            `;
+        }
+
+        function resetGalaxy() {
+            document.querySelectorAll('.quantum-input').forEach(input => {
+                input.value = '';
+                input.style.borderColor = var(--neon-purple);
+            });
+            document.getElementById('cosmicResult').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

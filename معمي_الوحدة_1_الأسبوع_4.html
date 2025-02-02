@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين المضادات والجمع</title>
+    <style>
+        :root {
+            --main-gradient: linear-gradient(45deg, #6a11cb, #2575fc);
+            --accent-color: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            font-size: 1.2em; /* تكبير حجم الخط */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--main-gradient);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .question {
+            font-size: 1.1em;
+            margin: 20px 0;
+            padding: 15px;
+            border-right: 4px solid var(--accent-color);
+            background: linear-gradient(90deg, #fff5f5 0%, #ffffff 100%);
+        }
+
+        .input-container {
+            position: relative;
+            margin: 25px 0;
+        }
+
+        .magic-input {
+            width: 100%;
+            padding: 15px 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.4s;
+            background: #fff;
+            font-size: 1.2em; /* تكبير حجم خط حقول الإدخال */
+        }
+
+        .magic-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(255,107,107,0.2);
+            background: #fff9f9;
+        }
+
+        .submit-btn {
+            background: var(--main-gradient);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result-feedback {
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin: 15px 0;
+            font-weight: bold;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+        }
+
+        .show-result {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .correct {
+            background: #e8fff3;
+            color: #2ecc71;
+            border: 2px solid #2ecc71;
+        }
+
+        .wrong {
+            background: #ffeff0;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>تمرين المضادات وجمع الكلمات</h1>
+            <p>أكمل الفراغات بالإجابات الصحيحة</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="question">
+                🛡️ اكتب ضد الكلمات التالية:
+                <div class="input-container">
+                    <input type="text" class="magic-input" id="antonym1" placeholder="ضد 'خارج'">
+                    <input type="text" class="magic-input" id="antonym2" placeholder="ضد 'حرب'">
+                </div>
+            </div>
+
+            <div class="question">
+                ✨ اكتب جمع الكلمات التالية:
+                <div class="input-container">
+                    <input type="text" class="magic-input" id="plural1" placeholder="جمع 'روح'">
+                    <input type="text" class="magic-input" id="plural2" placeholder="جمع 'ركن'">
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="checkAnswers()">تحقق من الإجابات</button>
+            <button class="submit-btn" onclick="resetExercise()" style="background: var(--accent-color);">إعادة المحاولة</button>
+
+            <div id="resultMessage" class="result-feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            antonym1: "داخل",
+            antonym2: "سلام",
+            plural1: "أرواح",
+            plural2: "أركان"
+        };
+
+        function checkAnswers() {
+            let score = 0;
+            const resultDiv = document.getElementById('resultMessage');
+            
+            Object.keys(correctAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().toLowerCase();
+                const correct = correctAnswers[id].toLowerCase();
+                
+                if(userAnswer === correct) {
+                    input.classList.add('correct');
+                    input.classList.remove('wrong');
+                    score++;
+                } else {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                }
+            });
+
+            resultDiv.textContent = `النتيجة: ${score}/4`;
+            resultDiv.classList.add('show-result');
+            resultDiv.className = `result-feedback ${score === 4 ? 'correct' : 'wrong'}`;
+        }
+
+        function resetExercise() {
+            document.querySelectorAll('.magic-input').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'wrong');
+            });
+            document.getElementById('resultMessage').classList.remove('show-result');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعبير كتابي</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f6f8ff 0%, #e9f0ff 100%);
+            color: #2d3436;
+            direction: rtl;
+            text-align: right;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #6c5ce7;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #6c5ce7, #a55eea);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .units-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .unit {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .unit:hover {
+            transform: translateY(-5px);
+        }
+
+        .unit-header {
+            background: linear-gradient(90deg, #6c5ce7, #a55eea);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .weeks-list {
+            padding: 20px;
+        }
+
+        .week-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .week-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .week-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2d3436;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .week-link:hover {
+            background-color: #f0f2f5;
+            transform: translateX(-5px);
+        }
+
+        .week-number {
+            background: #6c5ce7;
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-left: 15px;
+            font-weight: 600;
+        }
+
+        .week-title {
+            flex-grow: 1;
+        }
+
+        .week-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .status-complete {
+            background-color: #00b894;
+        }
+
+        .status-in-progress {
+            background-color: #fdcb6e;
+        }
+
+        .status-not-started {
+            background-color: #dfe6e9;
+        }
+
+        @media (max-width: 768px) {
+            .units-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>تعبير كتابي</h1>
+    
+    <div class="units-container">
+        <!-- الوحدة الأولى -->
+        <div class="unit">
+            <div class="unit-header">الوحدة الأولى: من نحن؟</div>
+            <div class="weeks-list">
+                <div class="week-item">
+                    <a href="writing_expreu1s1.html" class="week-link">
+                        <div class="week-number">1</div>
+                        <div class="week-title">توسيع فكرة (1)</div>
+                        <div class="week-status status-complete"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu1s2.html" class="week-link">
+                        <div class="week-number">2</div>
+                        <div class="week-title">توسيع فكرة (2)</div>
+                        <div class="week-status status-in-progress"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu1s3.html" class="week-link">
+                        <div class="week-number">3</div>
+                        <div class="week-title">توسيع فكرة (3)</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu1s4.html" class="week-link">
+                        <div class="week-number">4</div>
+                        <div class="week-title">كتابة فقرة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu1s5.html" class="week-link">
+                        <div class="week-number">5</div>
+                        <div class="week-title">توليف</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الوحدة الثانية -->
+        <div class="unit">
+            <div class="unit-header">الوحدة الثانية: أين نحن في الزمان والمكان؟</div>
+            <div class="weeks-list">
+                <div class="week-item">
+                    <a href="writing_expreu2s2.html" class="week-link">
+                        <div class="week-number">1</div>
+                        <div class="week-title">الوصف (1)</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu2s3.html" class="week-link">
+                        <div class="week-number">2</div>
+                        <div class="week-title">الوصف (2)</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu2s4.html" class="week-link">
+                        <div class="week-number">3</div>
+                        <div class="week-title">الوصف (3)</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu2s5.html" class="week-link">
+                        <div class="week-number">4</div>
+                        <div class="week-title">الوصف (4)</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="writing_expreu2s6.html" class="week-link">
+                        <div class="week-number">5</div>
+                        <div class="week-title">توليف</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الوحدة الثالثة -->
+        <div class="unit">
+            <div class="unit-header">الوحدة الثالثة: وطني</div>
+            <div class="weeks-list">
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">1</div>
+                        <div class="week-title">وصف مكان</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">2</div>
+                        <div class="week-title">كتابة قصة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">3</div>
+                        <div class="week-title">كتابة مقال</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">4</div>
+                        <div class="week-title">تعبير عن صورة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">5</div>
+                        <div class="week-title">كتابة تقرير</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الوحدة الرابعة -->
+        <div class="unit">
+            <div class="unit-header">الوحدة الرابعة: صحتي وسلامتي</div>
+            <div class="weeks-list">
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">1</div>
+                        <div class="week-title">الغذاء الصحي</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">2</div>
+                        <div class="week-title">الرياضة والصحة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">3</div>
+                        <div class="week-title">النظافة الشخصية</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">4</div>
+                        <div class="week-title">السلامة في المنزل</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">5</div>
+                        <div class="week-title">السلامة في الطريق</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الوحدة الخامسة -->
+        <div class="unit">
+            <div class="unit-header">الوحدة الخامسة: بيئتي</div>
+            <div class="weeks-list">
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">1</div>
+                        <div class="week-title">المحافظة على البيئة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">2</div>
+                        <div class="week-title">إعادة التدوير</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">3</div>
+                        <div class="week-title">ترشيد استهلاك الماء</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">4</div>
+                        <div class="week-title">الطاقة النظيفة</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+                <div class="week-item">
+                    <a href="#" class="week-link">
+                        <div class="week-number">5</div>
+                        <div class="week-title">حماية الحيوانات</div>
+                        <div class="week-status status-not-started"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

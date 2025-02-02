@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>معجمي السحري ✨</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --text-color: #ffffff;
+            --accent-color: #ffd700;
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --success-color: #4CAF50;
+            --error-color: #ff6b6b;
+        }
+
+        body {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3.5em;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .question-text {
+            text-align: center;
+            font-size: 1.5em;
+            color: var(--text-color);
+            margin: 20px 0 30px 0;
+            padding: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .exercise-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .exercise-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            margin-top: 20px;
+        }
+
+        .category-cell {
+            font-size: 1.4em;
+            color: var(--accent-color);
+            font-weight: bold;
+            width: 15%;
+            vertical-align: middle;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .word-cell {
+            color: var(--text-color);
+            font-size: 1.2em;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .word-group {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        .word-group span {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .answer-input {
+            width: 150px;
+            padding: 12px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1.1em;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        }
+
+        .check-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            color: var(--primary-color);
+            background: var(--accent-color);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .check-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #ffe44d;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.3em;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .correct {
+            border-color: var(--success-color) !important;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .incorrect {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>مُعْجَمِي السَّحْرِي ✨</h1>
+    
+    <div class="question-text">
+        أَكْمِلْ بِمَا يُنَاسِبُ مِنْ نَصِّ "الصَّدِيقُ الْجَدِيدُ" ج1
+    </div>
+
+    <div class="exercise-section">
+        <table class="exercise-table">
+            <tbody>
+                <tr>
+                    <td class="category-cell">الضِّد</td>
+                    <td class="word-cell">
+                        <div class="word-group">
+                            <span>اِنْتَهَتْ</span>
+                            <input type="text" class="answer-input" id="answer1">
+                        </div>
+                        <div class="word-group">
+                            <span>اِبْتَعَدَ</span>
+                            <input type="text" class="answer-input" id="answer2">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category-cell">مُرَادِف</td>
+                    <td class="word-cell">
+                        <div class="word-group">
+                            <span>فَاجَأَهُ</span>
+                            <input type="text" class="answer-input" id="answer3">
+                        </div>
+                        <div class="word-group">
+                            <span>أَسْرَعَ</span>
+                            <input type="text" class="answer-input" id="answer4">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category-cell">جَمْع</td>
+                    <td class="word-cell">
+                        <div class="word-group">
+                            <span>الطِّفْلُ</span>
+                            <input type="text" class="answer-input" id="answer5">
+                        </div>
+                        <div class="word-group">
+                            <span>اَلْبِرْكَةُ</span>
+                            <input type="text" class="answer-input" id="answer6">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="check-button" onclick="checkAnswers()">تَحَقَّقْ مِنَ الإِجَابَاتِ</button>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            const answers = Array.from({length: 6}, (_, i) => 
+                document.getElementById(`answer${i + 1}`).value.trim()
+            );
+
+            // تعريف جميع الإجابات الصحيحة
+            const correctAnswers = {
+                1: 'انْطلقَت',    // ضد انتهت
+                2: 'اقترب',       // ضد ابتعد
+                3: 'بَاغتَه',     // مرادف فاجأه
+                4: 'هَرع',        // مرادف أسرع
+                5: 'الأطفال',    // جمع الطفل
+                6: 'البرك'       // جمع البركة
+            };
+
+            // التحقق من إذا كانت جميع الحقول مملوءة
+            if (answers.every(answer => answer !== '')) {
+                let correctCount = 0;
+
+                // التحقق من كل إجابة وتطبيق التنسيق المناسب
+                for (let i = 1; i <= 6; i++) {
+                    const input = document.getElementById(`answer${i}`);
+                    const isCorrect = answers[i-1] === correctAnswers[i];
+                    
+                    input.classList.remove('correct', 'incorrect');
+                    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    
+                    if (isCorrect) correctCount++;
+                }
+
+                // عرض الرسالة المناسبة بناءً على عدد الإجابات الصحيحة
+                if (correctCount === 6) {
+                    document.getElementById('feedback').innerHTML = '✨ أَحْسَنْتَ! جَمِيعُ الإِجَابَاتِ صَحِيحَةٌ';
+                    document.getElementById('feedback').style.color = 'var(--success-color)';
+                } else {
+                    document.getElementById('feedback').innerHTML = `✨ أَحْسَنْتَ! لَدَيْكَ ${correctCount} إِجَابَات صَحِيحَة مِنْ 6`;
+                    document.getElementById('feedback').style.color = 'var(--accent-color)';
+                }
+            } else {
+                document.getElementById('feedback').innerHTML = '❌ الرَّجَاءُ مِلْءُ جَمِيعِ الحُقُولِ';
+                document.getElementById('feedback').style.color = 'var(--error-color)';
+            }
+        }
+    </script>
+</body>
+</html>

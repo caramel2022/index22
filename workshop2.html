@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة الكلمة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Responsive Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #e6f2ff;
+            line-height: 1.6;
+            direction: rtl;
+            color: #2c3e50;
+            min-width: 320px; /* Minimum width for smallest devices */
+        }
+
+        /* Fluid Typography */
+        html {
+            font-size: calc(14px + 0.5vw);
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Container and Layout */
+        .container {
+            width: 90%; /* Responsive width */
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            border: 1px solid #d1e7ff;
+        }
+
+        /* Responsive Typography */
+        h1 {
+            text-align: center;
+            color: #1a5f7a;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4fc3f7;
+            padding-bottom: 0.5rem;
+        }
+
+        .practical-exercise-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #2980b9;
+            font-size: 1.2rem;
+        }
+
+        /* Word List Buttons */
+        .word-list-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .word-list-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(79,195,247,0.3);
+            flex-grow: 1;
+            max-width: calc(33.333% - 0.5rem);
+        }
+
+        .word-list-button:hover {
+            background-color: #03a9f4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(79,195,247,0.4);
+        }
+
+        /* Exercise Section */
+        .exercise-section {
+            background-color: #f0f8ff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #b3d9ff;
+        }
+
+        /* Input Styles */
+        .word {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #a1c5e8;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .box {
+            background-color: #ffffff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #e6f2ff;
+        }
+
+        .dropdown-label {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1a5f7a;
+            font-size: 0.9rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #a1c5e8;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: #f9fcff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Custom Dropdown Styles */
+        .box:nth-child(1) select {
+            border-color: #ff6b6b; /* Red-like for first dropdown */
+            background-color: #fff0f0;
+            color: #d63031;
+        }
+
+        .box:nth-child(2) select {
+            border-color: #4ecdc4; /* Teal for second dropdown */
+            background-color: #f0fffc;
+            color: #0a8080;
+        }
+
+        .box:nth-child(3) select {
+            border-color: #6c5ce7; /* Purple for third dropdown */
+            background-color: #f4f0ff;
+            color: #6a5acd;
+        }
+
+        .box:nth-child(4) select {
+            border-color: #fdcb6e; /* Golden for fourth dropdown */
+            background-color: #fffaf0;
+            color: #d35400;
+        }
+
+        /* Hover and Focus States for Colored Dropdowns */
+        .box select:hover {
+            opacity: 0.9;
+        }
+
+        .box select:focus {
+            outline: 2px solid rgba(0,0,0,0.2);
+            outline-offset: 2px;
+        }
+
+        /* Custom Dropdown Arrow */
+        .box select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                              linear-gradient(135deg, currentColor 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px),
+                                 calc(100% - 15px) calc(1em + 2px);
+            background-size: 5px 5px,
+                             5px 5px;
+            background-repeat: no-repeat;
+            padding-right: 30px;
+        }
+
+        /* Dropdown Label Coloring to Match */
+        .box:nth-child(1) .dropdown-label {
+            color: #d63031;
+        }
+
+        .box:nth-child(2) .dropdown-label {
+            color: #0a8080;
+        }
+
+        .box:nth-child(3) .dropdown-label {
+            color: #6a5acd;
+        }
+
+        .box:nth-child(4) .dropdown-label {
+            color: #d35400;
+        }
+
+        /* Verification Button */
+        .verification-container {
+            text-align: center;
+        }
+
+        #verifyButton {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(46,204,113,0.3);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #verifyButton:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(46,204,113,0.4);
+        }
+
+        /* Evaluation Message Styles */
+        .evaluation-message {
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .evaluation-message.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .evaluation-message.error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+
+        /* Advanced Responsive Techniques */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .word-list-button {
+                max-width: calc(50% - 0.5rem);
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .practical-exercise-title {
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .word-list-button {
+                max-width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            select, .word {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+        }
+
+        /* Touch and Accessibility Improvements */
+        @media (pointer: coarse) {
+            .word-list-button,
+            #verifyButton,
+            select,
+            .word {
+                min-height: 44px; /* Minimum touch target size */
+                min-width: 44px;
+            }
+        }
+
+        /* Prevent horizontal scrolling */
+        body, html {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>خريطة الكلمة</h1>
+        <h2>خريطة الكلمة</h2>
+        <p class="word-map-definition">
+            خريطة الكلمة هي أداة تعليمية تساعد على فهم الكلمة بشكل شامل وعميق. تتضمن:
+            • نوع الكلمة (اسم، فعل، صفة)
+            • المرادفات (الكلمات ذات المعنى المتقارب)
+            • الأضداد (الكلمات المعاكسة في المعنى)
+            • أمثلة على استخدام الكلمة في جمل مختلفة
+
+            الهدف من خريطة الكلمة هو توسيع المفردات وتعميق الفهم اللغوي.
+        </p>
+
+        <div class="practical-exercise-title">
+            تمرين تطبيقي: خريطة الكلمات
+        </div>
+
+        <div class="word-list-container">
+            <button class="word-list-button">سعيد</button>
+            <button class="word-list-button">جبان</button>
+            <button class="word-list-button">مفيدة</button>
+            <button class="word-list-button">زملاء</button>
+            <button class="word-list-button">يسافر</button>
+            <button class="word-list-button">يكتب</button>
+            <button class="word-list-button">يقرأ</button>
+        </div>
+
+        <div class="exercise-section">
+            <input type="text" class="word" placeholder="الكلمة">
+            <div class="grid">
+                <div class="box">
+                    <div class="dropdown-label">نوعها</div>
+                    <select id="typeSelect"></select>
+                </div>
+                <div class="box">
+                    <div class="dropdown-label">مرادفها</div>
+                    <select id="synonymSelect"></select>
+                </div>
+                <div class="box">
+                    <div class="dropdown-label">ضدها</div>
+                    <select id="antonymSelect"></select>
+                </div>
+                <div class="box">
+                    <div class="dropdown-label">جملة مفيدة</div>
+                    <select id="sentenceSelect"></select>
+                </div>
+            </div>
+            <div class="verification-section">
+                <div id="evaluationMessage" class="evaluation-message" style="display: none;"></div>
+                <div class="verification-container">
+                    <button id="verifyButton" class="verify-btn">التحقق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wordDatabase = {
+            "جبان": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["خل", "رعديد", "مقدام"],
+                antonymOptions: ["ماكر", "شجاع", "قاتل"],
+                sentenceOptions: [
+                    "الجبان يهرب من المواجهة دائما.",
+                    "حبان صديقي أنت",
+                    "خائف جبان في الطريق."
+                ]
+            },
+            "سعيد": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["كئيب", "مبتهج", "مثابر"],
+                antonymOptions: ["حزين", "صبور", "عزيز"],
+                sentenceOptions: [
+                    "الابتسامة سعيد الاخرين بها.",
+                    "أحمد سعيد بنجاحة في الامتحان",
+                    "غياب طويل سعيد برؤية اصدقائه."
+                ]
+            },
+            "مفيدة": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["نافعة", "سليمة", "جميلة"],
+                antonymOptions: ["ضارة", "سيئة", "قبيحة"],
+                sentenceOptions: [
+                    "القراءة مفيدة للعقل والفكر.",
+                    "المعرفة المجتمع مفيدة",
+                    "البناء الحوار مفيدة في حل المشكلات"
+                ]
+            },
+            "زملاء": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["أحفاد", "أصحاب", "أجانب"],
+                antonymOptions: ["أحباء", "أخلاء", "خصوم"],
+                sentenceOptions: [
+                    "أحترم زملائي في القسم.",
+                    "زملائي العمل يساعدونني دائما",
+                    "أحب العمل في الاصدقاء."
+                ]
+            },
+            "يسافر": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["يعود", "يرتحل", "يدور"],
+                antonymOptions: ["يقيم", "يحوم", "يتجول"],
+                sentenceOptions: [
+                    "أبي كل أسبوع يسافر البادية",
+                    "يسافر الطالب إلى الخارج للدراسة",
+                    "يحب في العطة يسافر."
+                ]
+            },
+            "يكتب": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["يدون", "يرسم", "يحيط"],
+                antonymOptions: ["يمحو", "يلاحظ", "يراجع"],
+                sentenceOptions: [
+                    "يحب القصص يكتب الروايات",
+                    "يكتب الطالب درسه بعناية",
+                    "يكتب الدرس على السبورة الأستاذ."
+                ]
+            },
+            "يقرأ": {
+                typeOptions: ["اسم", "فعل"],
+                synonymOptions: ["يطالع", "يدرس", "يتصفح"],
+                antonymOptions: ["يهمل", "يتجاهل", "يترك"],
+                sentenceOptions: [
+                    "يقرأ أخي المرسة القريبة منا.",
+                    "يقرأ جدي الصحف يوميا",
+                    "التلميذ القسم يقرأ."
+                ]
+            }
+        };
+
+        // Function to create dropdown with default 'اختر' option
+        function createDropdownWithDefaultOption(selectElement, options) {
+            // Clear existing options
+            selectElement.innerHTML = '';
+
+            // Create default 'اختر' option
+            const defaultOption = document.createElement('option');
+            defaultOption.textContent = 'اختر';
+            defaultOption.value = '';
+            selectElement.appendChild(defaultOption);
+
+            // Add other options
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.textContent = option;
+                optionElement.value = option;
+                selectElement.appendChild(optionElement);
+            });
+        }
+
+        // Function to hide evaluation message
+        function hideEvaluationMessage() {
+            const evaluationMessageElement = document.getElementById('evaluationMessage');
+            evaluationMessageElement.style.display = 'none';
+            evaluationMessageElement.textContent = '';
+        }
+
+        // Convert word list items to buttons
+        const wordListButtons = document.querySelectorAll('.word-list-button');
+        wordListButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Hide any existing evaluation message
+                hideEvaluationMessage();
+
+                const selectedWord = this.textContent;
+                document.querySelector('.word').value = selectedWord;
+
+                // Populate dropdowns
+                const typeSelect = document.getElementById('typeSelect');
+                const synonymSelect = document.getElementById('synonymSelect');
+                const antonymSelect = document.getElementById('antonymSelect');
+                const sentenceSelect = document.getElementById('sentenceSelect');
+
+                if (wordDatabase[selectedWord]) {
+                    createDropdownWithDefaultOption(typeSelect, wordDatabase[selectedWord].typeOptions);
+                    createDropdownWithDefaultOption(synonymSelect, wordDatabase[selectedWord].synonymOptions);
+                    createDropdownWithDefaultOption(antonymSelect, wordDatabase[selectedWord].antonymOptions);
+                    createDropdownWithDefaultOption(sentenceSelect, wordDatabase[selectedWord].sentenceOptions);
+                }
+            });
+        });
+
+        // Verify word details function
+        function verifyWordDetails() {
+            const evaluationMessageElement = document.getElementById('evaluationMessage');
+            
+            const word = document.querySelector('.word').value;
+            const type = document.getElementById('typeSelect').value;
+            const synonym = document.getElementById('synonymSelect').value;
+            const antonym = document.getElementById('antonymSelect').value;
+            const sentence = document.getElementById('sentenceSelect').value;
+
+            if (!word || !type || !synonym || !antonym || !sentence) {
+                evaluationMessageElement.textContent = 'يرجى ملء جميع الحقول';
+                evaluationMessageElement.className = 'evaluation-message error';
+                evaluationMessageElement.style.display = 'block';
+                
+                // Hide message after 3 seconds
+                setTimeout(hideEvaluationMessage, 3000);
+                return;
+            }
+
+            const wordData = wordDatabase[word];
+            if (!wordData) {
+                evaluationMessageElement.textContent = 'الكلمة غير موجودة';
+                evaluationMessageElement.className = 'evaluation-message error';
+                evaluationMessageElement.style.display = 'block';
+                
+                // Hide message after 3 seconds
+                setTimeout(hideEvaluationMessage, 3000);
+                return;
+            }
+
+            // Logical consistency checks for each word
+            const logicalConsistencyChecks = {
+                "جبان": () => {
+                    // Logical type check
+                    const validTypes = ["اسم", "فعل"];
+                    const isTypeLogical = validTypes.includes(type);
+
+                    // Logical synonym check
+                    const synonymRelations = {
+                        "خل": ["رعديد", "جبان"],
+                        "رعديد": ["خل", "جبان"],
+                        "مقدام": ["شجاع", "بطل"]
+                    };
+
+                    const isSynonymLogical = synonymRelations[synonym] && 
+                        (synonymRelations[synonym].includes(word) || 
+                         synonymRelations[synonym].some(rel => rel === antonym));
+
+                    // Logical antonym check
+                    const antonymRelations = {
+                        "شجاع": ["بطل", "مقدام"],
+                        "بطل": ["شجاع", "مقدام"],
+                        "ماكر": ["خل", "رعديد"]
+                    };
+
+                    const isAntonymLogical = antonymRelations[antonym] && 
+                        (antonymRelations[antonym].includes(synonym) || 
+                         antonymRelations[antonym].some(rel => rel === synonym));
+
+                    // Sentence check
+                    const sentenceContainsWord = sentence.includes(word);
+
+                    return isTypeLogical && isSynonymLogical && isAntonymLogical && sentenceContainsWord;
+                },
+                "سعيد": () => {
+                    // Similar logical checks for "سعيد"
+                    const validTypes = ["اسم", "فعل"];
+                    const isTypeLogical = validTypes.includes(type);
+
+                    const synonymRelations = {
+                        "مبتهج": ["فرحان", "سعيد"],
+                        "فرحان": ["مبتهج", "سعيد"],
+                        "مسرور": ["سعيد", "مبتهج"]
+                    };
+
+                    const isSynonymLogical = synonymRelations[synonym] && 
+                        (synonymRelations[synonym].includes(word) || 
+                         synonymRelations[synonym].some(rel => rel === antonym));
+
+                    const antonymRelations = {
+                        "حزين": ["مكتئب", "متضايق"],
+                        "مكتئب": ["حزين", "متضايق"],
+                        "متضايق": ["حزين", "مكتئب"]
+                    };
+
+                    const isAntonymLogical = antonymRelations[antonym] && 
+                        (antonymRelations[antonym].includes(synonym) || 
+                         antonymRelations[antonym].some(rel => rel === synonym));
+
+                    const sentenceContainsWord = sentence.includes(word);
+
+                    return isTypeLogical && isSynonymLogical && isAntonymLogical && sentenceContainsWord;
+                },
+                "default": () => {
+                    // Default logical check for other words
+                    return true;
+                }
+            };
+
+            // Perform logical consistency check
+            const isLogicallyConsistent = logicalConsistencyChecks[word] 
+                ? logicalConsistencyChecks[word]() 
+                : logicalConsistencyChecks["default"]();
+
+            if (isLogicallyConsistent) {
+                evaluationMessageElement.textContent = 'أحسنت! الإجابات منطقية';
+                evaluationMessageElement.className = 'evaluation-message success';
+            } else {
+                evaluationMessageElement.textContent = 'الإجابات غير منطقية';
+                evaluationMessageElement.className = 'evaluation-message error';
+            }
+            
+            evaluationMessageElement.style.display = 'block';
+            
+            // Hide message after 3 seconds
+            setTimeout(hideEvaluationMessage, 3000);
+        }
+
+        // Bind verify button
+        const verifyButton = document.getElementById('verifyButton');
+        if (verifyButton) {
+            verifyButton.addEventListener('click', verifyWordDetails);
+        }
+    </script>
+</body>
+</html>

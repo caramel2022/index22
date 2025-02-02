@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معجمي</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #27ae60;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .exercise-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .question-group {
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+        }
+
+        .input-field {
+            width: 200px;
+            padding: 8px;
+            margin: 5px 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .correct { border-color: #2ecc71 !important; background: #e8f6ee; }
+        .wrong { border-color: #e74c3c !important; background: #fbeeee; }
+
+        button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>معجمي</h1>
+        <p>أستخرج من نص ص 18</p>
+        
+        <div class="exercise-section">
+            <h3>الجزء الأول: اكتب ضد الكلمة</h3>
+            
+            <div class="question-group">
+                <p>القليل ← <input type="text" class="input-field" id="antonym1"></p>
+                <p>يقل ← <input type="text" class="input-field" id="antonym2"></p>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h3>الجزء الثاني: اكتب جمع الكلمة</h3>
+            
+            <div class="question-group">
+                <p>شعب ← <input type="text" class="input-field" id="plural1"></p>
+                <p>سوق ← <input type="text" class="input-field" id="plural2"></p>
+                <p>ثوب ← <input type="text" class="input-field" id="plural3"></p>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="checkAnswers()">تصحيح الإجابات</button>
+            <button onclick="resetExercise()">إعادة المحاولة</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            antonyms: {
+                antonym1: "الكثير",
+                antonym2: "يفوق"
+            },
+            plurals: {
+                plural1: "شعوب",
+                plural2: "أسواق",
+                plural3: "أثواب"
+            }
+        };
+
+        function checkAnswers() {
+            // Check antonyms
+            Object.keys(correctAnswers.antonyms).forEach(id => {
+                const input = document.getElementById(id);
+                if(input.value.trim() === correctAnswers.antonyms[id]) {
+                    input.classList.add('correct');
+                    input.classList.remove('wrong');
+                } else {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                }
+            });
+
+            // Check plurals
+            Object.keys(correctAnswers.plurals).forEach(id => {
+                const input = document.getElementById(id);
+                if(input.value.trim() === correctAnswers.plurals[id]) {
+                    input.classList.add('correct');
+                    input.classList.remove('wrong');
+                } else {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                }
+            });
+        }
+
+        function resetExercise() {
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'wrong');
+            });
+        }
+    </script>
+</body>
+</html>

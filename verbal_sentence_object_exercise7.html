@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تمرين المفعول به - لعبة الذاكرة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .game-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            aspect-ratio: 3/4;
+            background-color: #3498db;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .card-front {
+            background-color: #3498db;
+            transform: rotateY(180deg);
+        }
+        .card-back {
+            background-color: #2c3e50;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .return-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .feedback {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #a8e6cf;
+            color: #1b5e20;
+        }
+        .incorrect {
+            background-color: #ffb3b3;
+            color: #c62828;
+        }
+        .instructions {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين المفعول به - لعبة الذاكرة</h1>
+        <div class="score">النقاط: <span id="score">0</span></div>
+        <div class="instructions">اقلب البطاقات لتجد المفعول به المناسب لكل جملة</div>
+        <div id="feedback" class="feedback"></div>
+        <div class="game-area" id="gameArea"></div>
+        <button class="return-btn" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        const pairs = [
+            {
+                sentence: "قرأَ الطالبُ _____",
+                object: "الكتابَ"
+            },
+            {
+                sentence: "شربَ الطفلُ _____",
+                object: "الماءَ"
+            },
+            {
+                sentence: "أكلَ الضيفُ _____",
+                object: "الطعامَ"
+            },
+            {
+                sentence: "كتبَ المعلمُ _____",
+                object: "الدرسَ"
+            },
+            {
+                sentence: "فتحَ البائعُ _____",
+                object: "المحلَ"
+            },
+            {
+                sentence: "غسلَ العاملُ _____",
+                object: "السيارةَ"
+            }
+        ];
+
+        let score = 0;
+        let flippedCards = [];
+        let matchedPairs = new Set();
+        let canFlip = true;
+
+        function createCards() {
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = '';
+            
+            // Create array of all cards (sentences and objects)
+            const allCards = [];
+            pairs.forEach((pair, index) => {
+                allCards.push({
+                    type: 'sentence',
+                    content: pair.sentence,
+                    index: index
+                });
+                allCards.push({
+                    type: 'object',
+                    content: pair.object,
+                    index: index
+                });
+            });
+            
+            // Shuffle cards
+            shuffleArray(allCards);
+            
+            // Create card elements
+            allCards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-front">${cardData.content}</div>
+                    <div class="card-back">?</div>
+                `;
+                card.dataset.index = cardData.index;
+                card.dataset.type = cardData.type;
+                card.onclick = () => flipCard(card);
+                gameArea.appendChild(card);
+            });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function flipCard(card) {
+            if (!canFlip || flippedCards.includes(card) || 
+                matchedPairs.has(parseInt(card.dataset.index))) return;
+            
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const index1 = parseInt(card1.dataset.index);
+            const index2 = parseInt(card2.dataset.index);
+            const feedback = document.getElementById('feedback');
+            
+            if (index1 === index2 && card1.dataset.type !== card2.dataset.type) {
+                score += 10;
+                matchedPairs.add(index1);
+                feedback.textContent = 'أحسنت! لقد وجدت المفعول به الصحيح';
+                feedback.className = 'feedback correct';
+                
+                if (matchedPairs.size === pairs.length) {
+                    setTimeout(() => {
+                        alert('مبروك! لقد أكملت اللعبة بنجاح!');
+                        resetGame();
+                    }, 1000);
+                }
+            } else {
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                }, 1000);
+            }
+            
+            document.getElementById('score').textContent = score;
+            setTimeout(() => {
+                flippedCards = [];
+                canFlip = true;
+            }, 1000);
+        }
+
+        function resetGame() {
+            score = 0;
+            document.getElementById('score').textContent = score;
+            matchedPairs.clear();
+            flippedCards = [];
+            canFlip = true;
+            document.getElementById('feedback').textContent = '';
+            createCards();
+        }
+
+        // Start the game
+        createCards();
+    </script>
+</body>
+</html>

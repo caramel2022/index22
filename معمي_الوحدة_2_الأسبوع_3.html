@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين اللغة المتناغم - الوحدة 2 الأسبوع 3</title>
+    <style>
+        :root {
+            --main-bg: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+            --primary-color: #2a4d69;
+            --accent-teal: #4ca1af;
+            --accent-coral: #ff7f5b;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--main-bg);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-size: 20px; /* يمكنك تعديل الحجم حسب الحاجة */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(42,77,105,0.08);
+            margin-bottom: 2rem;
+            border: 2px solid rgba(76,161,175,0.1);
+        }
+
+        .exercise-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(76,161,175,0.08);
+            transition: transform 0.3s;
+            border: 2px solid rgba(76,161,175,0.15);
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid #cfe8f3;
+            border-radius: 50px;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.9);
+            color: var(--primary-color);
+        }
+
+        .input-field:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 20px rgba(76,161,175,0.15);
+            outline: none;
+        }
+
+        .action-btn {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            margin: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .correct {
+            color: #2a4d69;
+            border: 2px solid var(--accent-teal);
+            background: rgba(76,161,175,0.1);
+        }
+
+        .wrong {
+            color: #ff7f5b;
+            border: 2px solid var(--accent-coral);
+            background: rgba(255,127,91,0.1);
+        }
+
+        .score-board {
+            background: rgba(255,255,255,0.9);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(42,77,105,0.05);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="color: var(--primary-color);">🌊 تمرين اللغة المائي 📘</h1>
+            <p style="color: var(--accent-teal);">أكمل التمارين التالية بدقة</p>
+        </div>
+
+        <div class="exercise-card">
+            <!-- ضد الكلمات -->
+            <input type="text" class="input-field" id="antonym1" placeholder="ضد 'تفرق'">
+            <input type="text" class="input-field" id="antonym2" placeholder="ضد 'قليلاً'">
+            
+            <!-- مرادفات -->
+            <input type="text" class="input-field" id="synonym1" placeholder="مرادف 'العالية'">
+            <input type="text" class="input-field" id="synonym2" placeholder="مرادف 'أحسب'">
+            
+            <!-- جمع الكلمات -->
+            <input type="text" class="input-field" id="plural1" placeholder="جمع 'الثلج'">
+            <input type="text" class="input-field" id="plural2" placeholder="جمع 'منظر'">
+
+            <div style="text-align: center;">
+                <button class="action-btn" onclick="checkAnswers()">تحقق من الإجابات</button>
+                <button class="action-btn" onclick="resetExercise()" style="background: var(--accent-coral);">إعادة المحاولة</button>
+            </div>
+
+            <div id="resultContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            antonym1: "يجتمع",
+            antonym2: "كثيراً",
+            synonym1: "المرتفعة",
+            synonym2: "أظن",
+            plural1: "أثلجة",
+            plural2: "مناظر"
+        };
+
+        function checkAnswers() {
+            let score = 0;
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = '';
+
+            Object.keys(correctAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().replace(/[ًٌٍَُِّْ]/g, '');
+                const correct = correctAnswers[id].replace(/[ًٌٍَُِّْ]/g, '');
+                
+                if(userAnswer === correct) {
+                    input.style.borderColor = '#4ca1af';
+                    score++;
+                    resultContainer.innerHTML += `
+                        <div class="result-box correct">
+                            ✅ ${correctAnswers[id]}
+                        </div>
+                    `;
+                } else {
+                    input.style.borderColor = '#ff7f5b';
+                    resultContainer.innerHTML += `
+                        <div class="result-box wrong">
+                            ❌ ${correctAnswers[id]}
+                        </div>
+                    `;
+                }
+            });
+
+            resultContainer.innerHTML += `
+                <div class="score-board" style="margin-top: 1rem;">
+                    النتيجة النهائية: ${score}/${Object.keys(correctAnswers).length}
+                </div>
+            `;
+        }
+
+        function resetExercise() {
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.value = '';
+                input.style.borderColor = '#cfe8f3';
+            });
+            document.getElementById('resultContainer').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تمرين المفعول به - تحليل الجمل</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .game-area {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .sentence {
+            font-size: 24px;
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+        }
+        .analysis-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .analysis-box {
+            padding: 15px;
+            background-color: #f1f8ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .analysis-box h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        .word-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .check-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .check-btn:hover {
+            background-color: #27ae60;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .return-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .feedback {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #a8e6cf;
+            color: #1b5e20;
+        }
+        .incorrect {
+            background-color: #ffb3b3;
+            color: #c62828;
+        }
+        .hint {
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين المفعول به - تحليل الجمل</h1>
+        <div class="score">النقاط: <span id="score">0</span></div>
+        <div class="game-area">
+            <div class="sentence" id="sentence"></div>
+            <div class="analysis-area">
+                <div class="analysis-box">
+                    <h3>الفعل</h3>
+                    <input type="text" class="word-input" id="verb" placeholder="اكتب الفعل">
+                    <div class="hint">الكلمة التي تدل على حدث</div>
+                </div>
+                <div class="analysis-box">
+                    <h3>الفاعل</h3>
+                    <input type="text" class="word-input" id="subject" placeholder="اكتب الفاعل">
+                    <div class="hint">من قام بالفعل</div>
+                </div>
+                <div class="analysis-box">
+                    <h3>المفعول به</h3>
+                    <input type="text" class="word-input" id="object" placeholder="اكتب المفعول به">
+                    <div class="hint">من أو ما وقع عليه الفعل</div>
+                </div>
+            </div>
+            <button class="check-btn" onclick="checkAnalysis()">تحقق من التحليل</button>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        <button class="return-btn" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                full: "قرأَ التلميذُ القصةَ",
+                verb: "قرأَ",
+                subject: "التلميذُ",
+                object: "القصةَ"
+            },
+            {
+                full: "كتبَ الكاتبُ المقالَ",
+                verb: "كتبَ",
+                subject: "الكاتبُ",
+                object: "المقالَ"
+            },
+            {
+                full: "شربَ الضيفُ القهوةَ",
+                verb: "شربَ",
+                subject: "الضيفُ",
+                object: "القهوةَ"
+            },
+            {
+                full: "زرعَ الفلاحُ الشجرةَ",
+                verb: "زرعَ",
+                subject: "الفلاحُ",
+                object: "الشجرةَ"
+            },
+            {
+                full: "رسمَ الفنانُ اللوحةَ",
+                verb: "رسمَ",
+                subject: "الفنانُ",
+                object: "اللوحةَ"
+            }
+        ];
+
+        let currentScore = 0;
+        let currentSentence = 0;
+
+        function displaySentence() {
+            const sentence = sentences[currentSentence];
+            document.getElementById('sentence').textContent = sentence.full;
+            document.getElementById('verb').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('object').value = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+        }
+
+        function checkAnalysis() {
+            const sentence = sentences[currentSentence];
+            const verbInput = document.getElementById('verb').value.trim();
+            const subjectInput = document.getElementById('subject').value.trim();
+            const objectInput = document.getElementById('object').value.trim();
+            const feedback = document.getElementById('feedback');
+            
+            if (verbInput === sentence.verb && 
+                subjectInput === sentence.subject && 
+                objectInput === sentence.object) {
+                currentScore += 20;
+                feedback.textContent = 'أحسنت! تحليل صحيح للجملة';
+                feedback.className = 'feedback correct';
+                
+                setTimeout(() => {
+                    currentSentence = (currentSentence + 1) % sentences.length;
+                    displaySentence();
+                }, 1500);
+            } else {
+                let errorMessage = 'هناك خطأ في التحليل:';
+                if (verbInput !== sentence.verb) errorMessage += ' الفعل،';
+                if (subjectInput !== sentence.subject) errorMessage += ' الفاعل،';
+                if (objectInput !== sentence.object) errorMessage += ' المفعول به،';
+                errorMessage = errorMessage.slice(0, -1);
+                
+                feedback.textContent = errorMessage;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            document.getElementById('score').textContent = currentScore;
+        }
+
+        // Add enter key support for all inputs
+        const inputs = ['verb', 'subject', 'object'];
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnalysis();
+                }
+            });
+        });
+
+        // Start the game
+        displaySentence();
+    </script>
+</body>
+</html>

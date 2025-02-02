@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة الاولى الاسبوع5- التعبير الكتابي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .images-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .image-box {
+            text-align: center;
+            margin: 10px;
+        }
+        .image-box img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid #3498db;
+        }
+        .connecting-words {
+            background-color: #eaf2f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .connecting-words span {
+            margin: 0 10px;
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            resize: vertical;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        #feedback, #feedback2 {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الوحدة الاولى الاسبوع5- التعبير الكتابي</h1>
+        
+        <div class="instructions">
+            <h2>التعليمات:</h2>
+            <p>انظر إلى الصور الثلاث التالية، ثم اكتب فقرة تصف ما تراه مستخدماً أدوات الربط المناسبة.</p>
+        </div>
+
+        <div class="images-container">
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/218051059.png" alt="طفل يستيقظ من نومه">
+                <p>طفل يستيقظ من نومه</p>
+            </div>
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/433156520.png" alt="ولد ينظف أسنانه">
+                <p>ولد ينظف أسنانه</p>
+            </div>
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/472812578.png" alt="ولد يذهب إلى المدرسة">
+                <p>ولد يذهب إلى المدرسة</p>
+            </div>
+        </div>
+
+        <div class="connecting-words">
+            <h3>أدوات الربط المقترحة:</h3>
+            <span>و</span>
+            <span>ثم</span>
+            <span>بعد ذلك</span>
+            <span>في البداية</span>
+            <span>أخيراً</span>
+            <span>عندما</span>
+            <span>حيث</span>
+            <span>بينما</span>
+        </div>
+
+        <div class="writing-section">
+            <h3>اكتب فقرتك هنا:</h3>
+            <textarea id="studentText" placeholder="اكتب هنا فقرة تصف فيها الصور مستخدماً أدوات الربط المناسبة... مثلاً: في البداية استيقظ الولد من النوم، ثم..."></textarea>
+            <button onclick="checkWriting()">تحقق من الكتابة</button>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <hr style="margin: 40px 0; border: 0; border-top: 2px solid #3498db;">
+
+    <div class="container">
+        <h1>تمرين إضافي للتعبير الكتابي</h1>
+        
+        <div class="instructions">
+            <h2>التعليمات:</h2>
+            <p>انظر إلى الصور الثلاث التالية، ثم اكتب فقرة تصف ما تراه مستخدماً أدوات الربط المناسبة.</p>
+        </div>
+
+        <div class="images-container">
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/579051586.png" alt="طفلة تزرع شجرة">
+                <p>طفلة تزرع شجرة</p>
+            </div>
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/555295068.png" alt="طفلة تسقي الشجرة">
+                <p>طفلة تسقي الشجرة</p>
+            </div>
+            <div class="image-box">
+                <img src="https://www2.0zz0.com/2025/01/30/12/909847379.png" alt="طفلة تقطف الثمار">
+                <p>طفلة تقطف الثمار</p>
+            </div>
+        </div>
+
+        <div class="connecting-words">
+            <h3>أدوات الربط المقترحة:</h3>
+            <span>و</span>
+            <span>ثم</span>
+            <span>بعد ذلك</span>
+            <span>في البداية</span>
+            <span>أخيراً</span>
+            <span>عندما</span>
+            <span>حيث</span>
+            <span>بينما</span>
+        </div>
+
+        <div class="writing-section">
+            <h3>اكتب فقرتك هنا:</h3>
+            <textarea id="studentText2" placeholder="اكتب هنا فقرة تصف فيها الصور مستخدماً أدوات الربط المناسبة... مثلاً: في البداية زرعت الطفلة شجرة صغيرة، ثم..."></textarea>
+            <button onclick="checkWriting2()">تحقق من الكتابة</button>
+        </div>
+
+        <div id="feedback2"></div>
+    </div>
+
+    <script>
+        function checkWriting() {
+            checkWritingHelper('studentText', 'feedback');
+        }
+
+        function checkWriting2() {
+            checkWritingHelper('studentText2', 'feedback2');
+        }
+
+        function checkWritingHelper(textareaId, feedbackId) {
+            const text = document.getElementById(textareaId).value;
+            const connectingWords = ['و', 'ثم', 'بعد ذلك', 'في البداية', 'أخيراً', 'عندما', 'حيث', 'بينما'];
+            const feedback = document.getElementById(feedbackId);
+            
+            let usedWords = 0;
+            connectingWords.forEach(word => {
+                if (text.includes(word)) {
+                    usedWords++;
+                }
+            });
+
+            let message = '';
+            if (text.length < 50) {
+                message = 'نحتاج إلى المزيد من الكتابة. حاول كتابة فقرة أطول.';
+                feedback.style.backgroundColor = '#ffe6e6';
+            } else if (usedWords < 3) {
+                message = 'حاول استخدام المزيد من أدوات الربط في فقرتك.';
+                feedback.style.backgroundColor = '#fff3cd';
+            } else {
+                message = 'أحسنت! لقد استخدمت أدوات الربط بشكل جيد.';
+                feedback.style.backgroundColor = '#d4edda';
+            }
+
+            feedback.textContent = message;
+            feedback.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

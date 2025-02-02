@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سباق تحديد الفاعل</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            font-size: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            font-size: 2em;
+            color: #FF6B6B;
+            margin: 10px 0;
+        }
+
+        .score {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .race-track {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .car {
+            width: 60px;
+            height: 40px;
+            position: absolute;
+            transition: all 0.3s ease;
+            font-size: 2em;
+        }
+
+        .sentence {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .option-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .finish-line {
+            position: absolute;
+            right: 10%;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: repeating-linear-gradient(
+                45deg,
+                #000,
+                #000 10px,
+                #ff0 10px,
+                #ff0 20px
+            );
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>سباق تحديد الفاعل</h1>
+        <div class="game-info">
+            <div class="timer">الوقت المتبقي: <span id="timer">30</span></div>
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        <div class="race-track" id="raceTrack">
+            <div class="finish-line"></div>
+            <div class="car" id="car">🚗</div>
+        </div>
+        <div class="sentence" id="sentence"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                text: "يلعبُ الأطفالُ في الحديقةِ",
+                options: ["يلعبُ", "الأطفالُ", "في الحديقةِ"],
+                correct: "الأطفالُ"
+            },
+            {
+                text: "يكتبُ المعلمُ على السبورةِ",
+                options: ["يكتبُ", "المعلمُ", "على السبورةِ"],
+                correct: "المعلمُ"
+            },
+            {
+                text: "تطيرُ العصافيرُ في السماءِ",
+                options: ["تطيرُ", "العصافيرُ", "في السماءِ"],
+                correct: "العصافيرُ"
+            },
+            {
+                text: "يقرأُ الطالبُ الكتابَ",
+                options: ["يقرأُ", "الطالبُ", "الكتابَ"],
+                correct: "الطالبُ"
+            },
+            {
+                text: "تسبحُ الأسماكُ في البحرِ",
+                options: ["تسبحُ", "الأسماكُ", "في البحرِ"],
+                correct: "الأسماكُ"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timeLeft = 30;
+        let timerInterval;
+        let carPosition = 0;
+
+        function startGame() {
+            showQuestion();
+            startTimer();
+            updateCar(0);
+        }
+
+        function showQuestion() {
+            const question = sentences[currentQuestion];
+            document.getElementById('sentence').textContent = question.text;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+        }
+
+        function checkAnswer(selected) {
+            const question = sentences[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            
+            if (selected === question.correct) {
+                feedback.textContent = 'أحسنت! إجابة صحيحة';
+                feedback.className = 'feedback correct';
+                score += 10;
+                document.getElementById('score').textContent = score;
+                carPosition += 20;
+                updateCar(carPosition);
+                
+                if (carPosition >= 80) {
+                    endGame(true);
+                    return;
+                }
+
+                currentQuestion++;
+                if (currentQuestion < sentences.length) {
+                    setTimeout(showQuestion, 1000);
+                }
+            } else {
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+                carPosition = Math.max(0, carPosition - 5);
+                updateCar(carPosition);
+            }
+        }
+
+        function updateCar(position) {
+            const car = document.getElementById('car');
+            car.style.right = position + '%';
+            document.getElementById('progress').style.width = position + '%';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function endGame(won) {
+            clearInterval(timerInterval);
+            const feedback = document.getElementById('feedback');
+            
+            if (won) {
+                feedback.textContent = 'مبروك! لقد فزت بالسباق! 🎉';
+                feedback.className = 'feedback correct celebrate';
+            } else {
+                feedback.textContent = 'انتهى الوقت! حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+            }
+
+            document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+        }
+
+        // Start the game
+        startGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة بناء الجمل الفعلية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            font-size: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4a4a4a;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            text-align: center;
+            font-size: 1.5em;
+            color: #6e8efb;
+            margin-bottom: 20px;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            min-height: 80px;
+            padding: 15px;
+            background: rgba(110, 142, 251, 0.1);
+            border-radius: 10px;
+        }
+
+        .sentence-area {
+            min-height: 100px;
+            border: 3px dashed #a777e3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .word {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 25px;
+            cursor: move;
+            font-size: 1.2em;
+            user-select: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .word.dragging {
+            opacity: 0.5;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .instructions {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة بناء الجمل الفعلية</h1>
+        <div class="score-board">
+            النقاط: <span id="score">0</span>
+        </div>
+        <div class="instructions">
+            اسحب الكلمات وأفلتها لتكوين جملة فعلية صحيحة. تذكر أن الجملة تبدأ بالفعل!
+        </div>
+        <div class="game-area">
+            <div class="word-bank" id="wordBank"></div>
+            <div class="sentence-area" id="sentenceArea"></div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <button class="next-btn" id="checkBtn" onclick="checkSentence()">تحقق من الإجابة</button>
+        <button class="next-btn" id="nextBtn" onclick="nextSentence()" style="display: none;">السؤال التالي</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                words: ["يكتبُ", "التلميذُ", "الدرسَ", "بإتقانٍ"],
+                correct: "يكتبُ التلميذُ الدرسَ بإتقانٍ"
+            },
+            {
+                words: ["تطبخُ", "الأمُ", "الطعامَ", "في المطبخِ"],
+                correct: "تطبخُ الأمُ الطعامَ في المطبخِ"
+            },
+            {
+                words: ["يلعبُ", "الأطفالُ", "بالكرةِ", "في الحديقةِ"],
+                correct: "يلعبُ الأطفالُ بالكرةِ في الحديقةِ"
+            },
+            {
+                words: ["يقرأُ", "الطالبُ", "القصةَ", "بصوتٍ عالٍ"],
+                correct: "يقرأُ الطالبُ القصةَ بصوتٍ عالٍ"
+            },
+            {
+                words: ["تغردُ", "العصافيرُ", "على", "الأغصانِ"],
+                correct: "تغردُ العصافيرُ على الأغصانِ"
+            }
+        ];
+
+        let currentSentence = 0;
+        let score = 0;
+        let wordsPlaced = [];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function displaySentence() {
+            const wordBank = document.getElementById('wordBank');
+            const sentenceArea = document.getElementById('sentenceArea');
+            wordBank.innerHTML = '';
+            sentenceArea.innerHTML = '';
+            wordsPlaced = [];
+
+            const shuffledWords = shuffle([...sentences[currentSentence].words]);
+            shuffledWords.forEach(word => {
+                const wordElement = createWordElement(word);
+                wordBank.appendChild(wordElement);
+            });
+
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+        }
+
+        function createWordElement(word) {
+            const div = document.createElement('div');
+            div.className = 'word';
+            div.textContent = word;
+            div.draggable = true;
+            
+            div.addEventListener('dragstart', e => {
+                div.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', word);
+            });
+            
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
+            
+            return div;
+        }
+
+        function checkSentence() {
+            const sentenceArea = document.getElementById('sentenceArea');
+            const userSentence = Array.from(sentenceArea.children)
+                .map(word => word.textContent)
+                .join(' ');
+            
+            const feedback = document.getElementById('feedback');
+            
+            if (userSentence === sentences[currentSentence].correct) {
+                feedback.textContent = 'أحسنت! الجملة صحيحة';
+                feedback.className = 'feedback correct';
+                score += 10;
+                document.getElementById('score').textContent = score;
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
+                sentenceArea.classList.add('celebrate');
+            } else {
+                feedback.textContent = 'حاول مرة أخرى! تأكد من ترتيب الكلمات بشكل صحيح';
+                feedback.className = 'feedback incorrect';
+                sentenceArea.classList.remove('celebrate');
+            }
+        }
+
+        function nextSentence() {
+            currentSentence++;
+            if (currentSentence < sentences.length) {
+                displaySentence();
+            } else {
+                const gameArea = document.querySelector('.game-area');
+                gameArea.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h2>أحسنت! لقد أكملت جميع الجمل</h2>
+                        <p>مجموع نقاطك: ${score}</p>
+                    </div>
+                `;
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+
+        // Initialize drag and drop events
+        document.addEventListener('DOMContentLoaded', () => {
+            const sentenceArea = document.getElementById('sentenceArea');
+            const wordBank = document.getElementById('wordBank');
+
+            sentenceArea.addEventListener('dragover', e => {
+                e.preventDefault();
+            });
+
+            sentenceArea.addEventListener('drop', e => {
+                e.preventDefault();
+                const word = e.dataTransfer.getData('text/plain');
+                const draggingElement = document.querySelector('.dragging');
+                
+                if (draggingElement && draggingElement.parentElement === wordBank) {
+                    const wordElement = createWordElement(word);
+                    sentenceArea.appendChild(wordElement);
+                    draggingElement.remove();
+                }
+            });
+
+            wordBank.addEventListener('dragover', e => {
+                e.preventDefault();
+            });
+
+            wordBank.addEventListener('drop', e => {
+                e.preventDefault();
+                const word = e.dataTransfer.getData('text/plain');
+                const draggingElement = document.querySelector('.dragging');
+                
+                if (draggingElement && draggingElement.parentElement === sentenceArea) {
+                    const wordElement = createWordElement(word);
+                    wordBank.appendChild(wordElement);
+                    draggingElement.remove();
+                }
+            });
+
+            displaySentence();
+        });
+    </script>
+</body>
+</html>

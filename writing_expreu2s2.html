@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الوصف (1)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a55eea;
+            --accent-color: #fd79a8;
+            --text-color: #2d3436;
+            --light-color: #dfe6e9;
+            --success-color: #00b894;
+            --error-color: #d63031;
+            --gradient-1: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            --gradient-2: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%);
+            min-height: 100vh;
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .exercise-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--secondary-color);
+            margin: 25px 0;
+            font-weight: 600;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .subtitle::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .input-group {
+            margin: 25px 0;
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--light-color);
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--light-color);
+            border-radius: 10px;
+            font-size: 18px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108,92,231,0.2);
+            outline: none;
+        }
+
+        textarea.input-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .correct {
+            background-color: rgba(0,184,148,0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .incorrect {
+            background-color: rgba(214,48,49,0.1);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 5px 15px rgba(108,92,231,0.2);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(108,92,231,0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Image styles */
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Third exercise specific styles */
+        .exercise-box.playground-exercise {
+            background: linear-gradient(135deg, #f6f9fc 0%, #ffffff 100%);
+            border: 2px solid #e1e8ed;
+            padding: 35px;
+        }
+
+        .playground-exercise .subtitle {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .playground-exercise .input-group {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .playground-exercise .input-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .playground-exercise label {
+            color: var(--primary-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .playground-exercise .input-field {
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .playground-exercise .input-field:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+            outline: none;
+        }
+
+        .playground-exercise .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            width: auto;
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .playground-exercise .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        /* Decorative elements */
+        .decoration {
+            position: fixed;
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .decoration-1 {
+            top: 10%;
+            left: 5%;
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-1);
+            filter: blur(40px);
+        }
+
+        .decoration-2 {
+            bottom: 10%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-2);
+            filter: blur(40px);
+        }
+
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">العودة</button>
+
+    <!-- Decorative background elements -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+
+    <div class="container">
+        <!-- Main Title -->
+        <h1 class="main-title">الوحدة 2-الاسبوع 1 - الوصف(1)</h1>
+        
+        <!-- First Exercise -->
+        <div class="exercise-box">
+            <div class="title">الوَصْفُ (1)</div>
+            <div class="subtitle">أَتَدَرَّبُ مَعَ زُمَلائي</div>
+            <div class="image-container">
+                <img src="https://i.ibb.co/5WyR9RT0/image.jpg" alt="صورة شاطئ" id="beach-image">
+            </div>
+            <div class="input-group">
+                <label>اسم المكان:</label>
+                <input type="text" class="input-field" id="place-name" placeholder="اكتب اسم المكان...">
+                <div class="feedback" id="place-feedback"></div>
+            </div>
+            <div class="input-group">
+                <label>العناصر المميزة للمكان:</label>
+                <input type="text" class="input-field" id="place-elements" placeholder="اكتب العناصر المميزة...">
+                <div class="feedback" id="elements-feedback"></div>
+            </div>
+            <div class="input-group">
+                <label>الصفات:</label>
+                <input type="text" class="input-field" id="place-attributes" placeholder="اكتب الصفات...">
+                <div class="feedback" id="attributes-feedback"></div>
+            </div>
+            <button class="submit-btn" onclick="checkFirstExercise()">تحقق من الإجابات</button>
+        </div>
+
+        <!-- Second Exercise -->
+        <div class="exercise-box">
+            <div class="subtitle">أَسْتَعْمِلُ عَناصِرَ الوَصْفِ وَأَكْتُبُ فِقْرَةً أَصِفُ فيها قَرْيَةً</div>
+            <div class="image-container">
+                <img src="https://i.ibb.co/YTpKY3Dr/image.jpg" alt="صورة قرية" id="village-image">
+            </div>
+            <div class="input-group">
+                <label>قريتنا:</label>
+                <textarea class="input-field" id="village-description" rows="4" placeholder="اكتب وصف القرية..."></textarea>
+                <div class="feedback" id="village-feedback"></div>
+            </div>
+            <button class="submit-btn" onclick="checkSecondExercise()">تحقق من الإجابة</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="exercise-box">
+            <div class="subtitle">أُلاحِظُ مَشْهَدَ الحَيِّ وَأَصِفُ مَلْعَبَ الحَيِّ</div>
+            <div class="image-container">
+                <img src="https://i.ibb.co/B5QRnd83/image.jpg" alt="صورة ملعب الحي" id="playground-image">
+            </div>
+            <div class="input-group">
+                <label>اسم المكان:</label>
+                <input type="text" class="input-field" id="playground-name" placeholder="اكتب اسم المكان...">
+                <div class="feedback" id="playground-name-feedback"></div>
+            </div>
+            <div class="input-group">
+                <label>العناصر الموجودة في الملعب:</label>
+                <input type="text" class="input-field" id="playground-elements" placeholder="اكتب العناصر الموجودة في الملعب...">
+                <div class="feedback" id="playground-elements-feedback"></div>
+            </div>
+            <div class="input-group">
+                <label>الأنشطة في الملعب:</label>
+                <input type="text" class="input-field" id="playground-activities" placeholder="اكتب الأنشطة التي تتم في الملعب...">
+                <div class="feedback" id="playground-activities-feedback"></div>
+            </div>
+            <div class="input-group">
+                <label>وصف الملعب:</label>
+                <textarea class="input-field" id="playground-description" rows="4" placeholder="اكتب وصفاً كاملاً للملعب..."></textarea>
+                <div class="feedback" id="playground-description-feedback"></div>
+            </div>
+            <button class="submit-btn" onclick="checkThirdExercise()">تحقق من الإجابات</button>
+        </div>
+    </div>
+    <script>
+        function checkFirstExercise() {
+            const placeName = document.getElementById('place-name').value.trim();
+            const placeElements = document.getElementById('place-elements').value.trim();
+            const placeAttributes = document.getElementById('place-attributes').value.trim();
+
+            // Check place name
+            const placeNameFeedback = document.getElementById('place-feedback');
+            if (placeName.includes('شاطئ')) {
+                showFeedback(placeNameFeedback, true, 'أحسنت! إجابة صحيحة');
+            } else {
+                showFeedback(placeNameFeedback, false, 'حاول مرة أخرى. تذكر أن المكان هو الشاطئ');
+            }
+
+            // Check elements
+            const elementsFeedback = document.getElementById('elements-feedback');
+            const requiredElements = ['رمال', 'أمواج', 'مياه'];
+            const hasRequiredElements = requiredElements.some(element => 
+                placeElements.includes(element));
+            
+            if (hasRequiredElements) {
+                showFeedback(elementsFeedback, true, 'أحسنت! إجابة صحيحة');
+            } else {
+                showFeedback(elementsFeedback, false, 'حاول مرة أخرى. فكر في العناصر التي تراها في الشاطئ');
+            }
+
+            // Check attributes
+            const attributesFeedback = document.getElementById('attributes-feedback');
+            const validAttributes = ['ذهبية', 'هادئة', 'زرقاء'];
+            const hasValidAttributes = validAttributes.some(attr => 
+                placeAttributes.includes(attr));
+
+            if (hasValidAttributes) {
+                showFeedback(attributesFeedback, true, 'أحسنت! إجابة صحيحة');
+            } else {
+                showFeedback(attributesFeedback, false, 'حاول مرة أخرى. فكر في صفات الشاطئ');
+            }
+        }
+
+        function checkSecondExercise() {
+            const villageDescription = document.getElementById('village-description').value.trim();
+            const villageFeedback = document.getElementById('village-feedback');
+
+            // Check if description contains key elements
+            const requiredElements = ['قرية', 'الناس', 'طيبون', 'متعاونون'];
+            const hasRequiredElements = requiredElements.some(element => 
+                villageDescription.includes(element));
+
+            if (villageDescription.length > 20 && hasRequiredElements) {
+                showFeedback(villageFeedback, true, 'أحسنت! وصف جميل للقرية');
+            } else {
+                showFeedback(villageFeedback, false, 'حاول أن تصف القرية بشكل أكثر تفصيلاً. تذكر أن تذكر الناس وصفاتهم');
+            }
+        }
+
+        function checkThirdExercise() {
+            const playgroundName = document.getElementById('playground-name').value.trim();
+            const playgroundElements = document.getElementById('playground-elements').value.trim();
+            const playgroundActivities = document.getElementById('playground-activities').value.trim();
+            const playgroundDescription = document.getElementById('playground-description').value.trim();
+
+            // Check playground name
+            const nameFeedback = document.getElementById('playground-name-feedback');
+            if (playgroundName.includes('ملعب')) {
+                showFeedback(nameFeedback, true, 'أحسنت! إجابة صحيحة');
+            } else {
+                showFeedback(nameFeedback, false, 'حاول مرة أخرى. تذكر أن المكان هو الملعب');
+            }
+
+            // Check playground elements
+            const elementsFeedback = document.getElementById('playground-elements-feedback');
+            const requiredElements = ['مرمى', 'كرة', 'مقاعد', 'أرضية', 'سور'];
+            const hasElements = requiredElements.some(element => 
+                playgroundElements.includes(element));
+            
+            if (hasElements) {
+                showFeedback(elementsFeedback, true, 'أحسنت! لقد ذكرت عناصر مهمة في الملعب');
+            } else {
+                showFeedback(elementsFeedback, false, 'فكر في العناصر الأساسية التي تراها في الملعب');
+            }
+
+            // Check activities
+            const activitiesFeedback = document.getElementById('playground-activities-feedback');
+            const validActivities = ['كرة القدم', 'لعب', 'رياضة', 'جري', 'مباراة'];
+            const hasActivities = validActivities.some(activity => 
+                playgroundActivities.includes(activity));
+
+            if (hasActivities) {
+                showFeedback(activitiesFeedback, true, 'أحسنت! لقد ذكرت أنشطة مهمة تتم في الملعب');
+            } else {
+                showFeedback(activitiesFeedback, false, 'فكر في الأنشطة التي يمارسها الأطفال في الملعب');
+            }
+
+            // Check full description
+            const descriptionFeedback = document.getElementById('playground-description-feedback');
+            const hasGoodDescription = playgroundDescription.length > 30 && 
+                (playgroundDescription.includes('ملعب') || 
+                 playgroundDescription.includes('رياضة') || 
+                 playgroundDescription.includes('أطفال'));
+
+            if (hasGoodDescription) {
+                showFeedback(descriptionFeedback, true, 'أحسنت! وصف رائع وشامل للملعب');
+            } else {
+                showFeedback(descriptionFeedback, false, 'حاول أن تصف الملعب بشكل أكثر تفصيلاً. اذكر مكوناته والأنشطة التي تتم فيه');
+            }
+        }
+
+        function showFeedback(element, isCorrect, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+            element.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+        }
+    </script>
+</body>
+</html>

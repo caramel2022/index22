@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمارين الكتابة التفاعلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --accent-color: #FFE66D;
+            --dark-color: #2C3E50;
+            --light-color: #F7F9FC;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f1f8ff 100%);
+            min-height: 100vh;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: var(--dark-color);
+            margin-bottom: 50px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        .exercise-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .exercise {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .exercise:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            font-size: 2em;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        h2::before {
+            content: '✏️';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .prompt {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: 15px;
+            color: var(--dark-color);
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-right: 4px solid var(--secondary-color);
+        }
+
+        .writing-area {
+            width: 100%;
+            height: 200px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-family: 'Cairo', sans-serif;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: rgba(247, 249, 252, 0.8);
+        }
+
+        .writing-area:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.2);
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary-color), #FF8E8E);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الوحدة 2 - الأسبوع 5 - توليف</h1>
+        <h1>تمارين الكتابة الإبداعية ✨</h1>
+        
+        <div class="exercise-container">
+            <div class="exercise">
+                <h2>وصف ساحة المدرسة</h2>
+                <div class="prompt">
+                    تخيل أنك تقف في ساحة المدرسة. صف ما تراه من حولك: الأطفال يلعبون، الأشجار، الملعب، الأصوات، والحركة... 🏫
+                </div>
+                <textarea class="writing-area" id="exercise1" placeholder="اكتب وصفك هنا..."></textarea>
+                <button onclick="checkExercise(1)">تحقق من إجابتك ✨</button>
+                <div id="feedback1" class="feedback"></div>
+            </div>
+
+            <div class="exercise">
+                <h2>أفكار تلميذ</h2>
+                <div class="prompt">
+                    اكتب ما يدور في ذهن تلميذ خلال حصة دراسية: ماذا يفكر؟ ما هي أحلامه؟ ما الذي يشغل باله؟ 💭
+                </div>
+                <textarea class="writing-area" id="exercise2" placeholder="اكتب أفكار التلميذ هنا..."></textarea>
+                <button onclick="checkExercise(2)">تحقق من إجابتك ✨</button>
+                <div id="feedback2" class="feedback"></div>
+            </div>
+
+            <div class="exercise">
+                <h2>رحلة خيالية</h2>
+                <div class="prompt">
+                    تخيل أنك تستطيع السفر إلى أي مكان في العالم. صف رحلتك: أين ستذهب؟ ماذا ستفعل؟ من ستقابل؟ 🌍
+                </div>
+                <textarea class="writing-area" id="exercise3" placeholder="اكتب عن رحلتك هنا..."></textarea>
+                <button onclick="checkExercise(3)">تحقق من إجابتك ✨</button>
+                <div id="feedback3" class="feedback"></div>
+            </div>
+
+            <div class="exercise">
+                <h2>وصف شخصية خيالية</h2>
+                <div class="prompt">
+                    اكتب وصفًا لشخصية خيالية، متضمنًا مظهرها، شخصيتها، وأفكارها.
+                </div>
+                <textarea class="writing-area" id="exercise4" placeholder="اكتب وصفك هنا..."></textarea>
+                <button onclick="checkExercise(4)">تحقق من إجابتك ✨</button>
+                <div id="feedback4" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkExercise(number) {
+            const text = document.getElementById(`exercise${number}`).value;
+            const feedback = document.getElementById(`feedback${number}`);
+            
+            feedback.classList.remove('show');
+            setTimeout(() => {
+                if (text.length < 50) {
+                    feedback.innerHTML = "✏️ حاول الكتابة أكثر! نحتاج على الأقل 50 حرفاً.";
+                    feedback.style.color = "#FF6B6B";
+                } else {
+                    feedback.innerHTML = "🌟 أحسنت! استمر في الكتابة الإبداعية.";
+                    feedback.style.color = "#4ECDC4";
+                }
+                feedback.classList.add('show');
+            }, 100);
+        }
+    </script>
+</body>
+</html>

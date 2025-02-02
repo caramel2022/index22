@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة تركيب الجمل الفعلية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #9C27B0, #E91E63);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            font-size: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 1.5em;
+            color: #9C27B0;
+            margin: 10px 0;
+        }
+
+        .puzzle-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .sentence-template {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .slot {
+            width: 120px;
+            height: 50px;
+            border: 3px dashed #9C27B0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .slot-label {
+            position: absolute;
+            top: -25px;
+            font-size: 0.9em;
+            color: #9C27B0;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(156, 39, 176, 0.1);
+            border-radius: 15px;
+            min-height: 80px;
+        }
+
+        .word {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+            border-radius: 25px;
+            cursor: move;
+            font-size: 1.2em;
+            user-select: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .word.dragging {
+            opacity: 0.5;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .check-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .next-btn {
+            display: none;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+
+        .hint {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة تركيب الجمل الفعلية</h1>
+        <div class="game-info">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+        
+        <div class="hint">اسحب الكلمات إلى المكان المناسب لتكوين جملة فعلية صحيحة</div>
+        
+        <div class="puzzle-area">
+            <div class="word-bank" id="wordBank"></div>
+            <div class="sentence-template">
+                <div class="slot" id="verb-slot">
+                    <div class="slot-label">الفعل</div>
+                </div>
+                <div class="slot" id="subject-slot">
+                    <div class="slot-label">الفاعل</div>
+                </div>
+                <div class="slot" id="object-slot">
+                    <div class="slot-label">المفعول به</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        <button class="check-btn" id="checkBtn" onclick="checkAnswer()">تحقق من الإجابة</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                verb: "يكتبُ",
+                subject: "الطالبُ",
+                object: "الدرسَ"
+            },
+            {
+                verb: "يقرأُ",
+                subject: "المعلمُ",
+                object: "القصةَ"
+            },
+            {
+                verb: "يرسمُ",
+                subject: "الفنانُ",
+                object: "اللوحةَ"
+            },
+            {
+                verb: "يشربُ",
+                subject: "الطفلُ",
+                object: "الحليبَ"
+            },
+            {
+                verb: "تأكلُ",
+                subject: "القطةُ",
+                object: "السمكَ"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createWord(text) {
+            const word = document.createElement('div');
+            word.className = 'word';
+            word.textContent = text;
+            word.draggable = true;
+            
+            word.addEventListener('dragstart', e => {
+                word.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', text);
+            });
+            
+            word.addEventListener('dragend', () => {
+                word.classList.remove('dragging');
+            });
+            
+            return word;
+        }
+
+        function setupSlots() {
+            const slots = ['verb-slot', 'subject-slot', 'object-slot'];
+            
+            slots.forEach(slotId => {
+                const slot = document.getElementById(slotId);
+                
+                slot.addEventListener('dragover', e => {
+                    e.preventDefault();
+                });
+                
+                slot.addEventListener('drop', e => {
+                    e.preventDefault();
+                    const word = e.dataTransfer.getData('text/plain');
+                    const draggingElement = document.querySelector('.dragging');
+                    
+                    // Remove any existing word in the slot
+                    const existingWord = slot.querySelector('.word');
+                    if (existingWord) {
+                        document.getElementById('wordBank').appendChild(createWord(existingWord.textContent));
+                        existingWord.remove();
+                    }
+                    
+                    if (draggingElement) {
+                        slot.appendChild(createWord(word));
+                        draggingElement.remove();
+                    }
+                });
+            });
+        }
+
+        function showQuestion() {
+            const wordBank = document.getElementById('wordBank');
+            wordBank.innerHTML = '';
+            
+            // Clear slots
+            document.querySelectorAll('.slot').forEach(slot => {
+                const label = slot.querySelector('.slot-label');
+                slot.innerHTML = '';
+                slot.appendChild(label);
+            });
+            
+            // Add shuffled words to word bank
+            const currentSentence = sentences[currentQuestion];
+            const words = shuffleArray([currentSentence.verb, currentSentence.subject, currentSentence.object]);
+            words.forEach(word => {
+                wordBank.appendChild(createWord(word));
+            });
+            
+            // Update progress bar
+            const progress = ((currentQuestion) / sentences.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Reset feedback and buttons
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer() {
+            const verbSlot = document.getElementById('verb-slot').querySelector('.word')?.textContent;
+            const subjectSlot = document.getElementById('subject-slot').querySelector('.word')?.textContent;
+            const objectSlot = document.getElementById('object-slot').querySelector('.word')?.textContent;
+
+            const currentSentence = sentences[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            
+            if (!verbSlot || !subjectSlot || !objectSlot) {
+                feedback.textContent = 'يجب ملء جميع الفراغات';
+                feedback.className = 'feedback incorrect';
+                return;
+            }
+            
+            const isCorrect = 
+                verbSlot === currentSentence.verb &&
+                subjectSlot === currentSentence.subject &&
+                objectSlot === currentSentence.object;
+
+            if (isCorrect) {
+                feedback.textContent = 'أحسنت! جملة صحيحة';
+                feedback.className = 'feedback correct celebrate';
+                score += 10;
+                document.getElementById('score').textContent = score;
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
+            } else {
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < sentences.length) {
+                showQuestion();
+            } else {
+                const container = document.querySelector('.container');
+                container.innerHTML = `
+                    <h1>أحسنت!</h1>
+                    <div class="game-info">
+                        <div class="score">مجموع نقاطك: ${score}</div>
+                        <div>لقد أكملت جميع الأسئلة بنجاح!</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize game
+        setupSlots();
+        showQuestion();
+    </script>
+</body>
+</html>

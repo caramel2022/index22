@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>ورشة الكتابة - الوصف (3)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f7ff;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header-section {
+            background: linear-gradient(135deg, #6a89cc, #4a69bd);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header-section h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .header-section h3 {
+            font-size: 1.8em;
+        }
+        .objectives-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .objectives-box h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+        .objectives-box h4 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-around;
+        }
+        .objective-item {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1 1 200px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            position: relative;
+            font-size: 1.2em;
+        }
+        .objective-number {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #4a69bd;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        .character-section {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            align-items: flex-start;
+        }
+        .character-image {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .character-description {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .exercise-table th, .exercise-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+        .exercise-table th {
+            background-color: #4a69bd;
+            color: white;
+            font-size: 1.2em;
+        }
+        .exercise-table input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            direction: rtl;
+            font-size: 1.1em;
+        }
+        .check-button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.3em;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .check-button:hover {
+            background-color: #219a52;
+        }
+        .feedback {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+            font-size: 1.2em;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .mascot {
+            width: 50px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .section-title {
+            background-color: #4a69bd;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .exercise-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .exercise-subtitle {
+            color: #4a69bd;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4a69bd;
+            text-align: center;
+        }
+        .description-item {
+            margin-bottom: 30px;
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .description-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .label {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: bold;
+            padding-right: 15px;
+            border-right: 4px solid #4a69bd;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: white;
+            border: 2px solid #4a69bd;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            position: relative;
+        }
+        .option:hover {
+            background-color: #e8f0fe;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .option input[type="checkbox"] {
+            display: none;
+        }
+        .option span {
+            font-size: 1.2em;
+            color: #4a69bd;
+            transition: all 0.3s ease;
+            padding-right: 25px;
+        }
+        .option input[type="checkbox"]:checked + span::before {
+            content: "✓";
+            position: absolute;
+            right: 15px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .option input[type="checkbox"]:checked {
+            background-color: #f0f7ff;
+        }
+        .option input[type="checkbox"]:checked + span {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .game-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #4a69bd;
+            color: white;
+            border-radius: 10px;
+        }
+        .score-box, .timer-box {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .character-builder {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .character-preview {
+            flex: 0 0 200px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .character-preview img {
+            max-width: 100%;
+            height: auto;
+        }
+        .character-description-box {
+            flex: 1;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 150px;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        .attribute-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .attribute-category {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .attribute-category h4 {
+            color: #4a69bd;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .attribute-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .attribute-buttons button {
+            background-color: white;
+            border: 2px solid #4a69bd;
+            color: #4a69bd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+        .attribute-buttons button:hover {
+            background-color: #4a69bd;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .attribute-buttons button.selected {
+            background-color: #4a69bd;
+            color: white;
+        }
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .game-button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        .game-button:hover {
+            background-color: #219a52;
+            transform: translateY(-2px);
+        }
+        .game-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>ورشة الكتابة</h1>
+            <h2>الإنتاج الكتابي</h2>
+            <h3>الوصف (3)</h3>
+        </div>
+
+        <div class="objectives-box">
+            <h3>
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyMCIgZmlsbD0iIzRhNjliZCIvPjxwYXRoIGQ9Ik0xMiAxMmgxNnYxNmgtMTZ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" class="mascot" alt="mascot">
+                لِنَتَعَلَّمْ جَميعاً
+            </h3>
+            <h4>لأَصِفَ شَخْصاً:</h4>
+            <ul class="objectives-list">
+                <li class="objective-item">
+                    <span class="objective-number">١</span>
+                    أَصِفُ مَلامِحَ وَجْهِهِ
+                </li>
+                <li class="objective-item">
+                    <span class="objective-number">٢</span>
+                    أَصِفُ قامَتَهُ
+                </li>
+                <li class="objective-item">
+                    <span class="objective-number">٣</span>
+                    أَصِفُ مَلابِسَهُ
+                </li>
+                <li class="objective-item">
+                    <span class="objective-number">٤</span>
+                    أَصِفُ الأَفْعالَ الَّتي يَقومُ بِها
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">التمرين التفاعلي</div>
+
+        <div class="character-section">
+            <img src="https://up6.cc/2025/01/17382537382831.jpg" class="character-image" alt="شخصية أحمد">
+            <div class="character-description">
+                أَحْمَدُ طِفْلٌ صَغيرٌ وَجْهُهُ مُسْتَديرٌ وَعَيْناهُ كَبيرَتانِ وَشَعْرُهُ أَسْوَدٌ قَصيرٌ، قامَتُهُ قَصيرَةٌ وَجِسْمُهُ نَحيفٌ. يَلْبَسُ قَميصاً أَصْفَرَ وَسِرْوالاً قَصيراً أَحْمَرَ وَحِذاءً بُنِّياً. يُداوِمُ عَلى حَمْلِ حَقيبَتِهِ الْمَدْرَسِيَّةِ الزَّرْقاءِ، هُوَ طِفْلٌ مَرِحٌ وَفُضولِيٌّ وَيُحِبُّ مُساعَدَةَ أَصْدِقائِهِ.
+            </div>
+        </div>
+
+        <table class="exercise-table">
+            <tr>
+                <th>الصِّفات</th>
+                <th>الوصف</th>
+            </tr>
+            <tr>
+                <td>مَلامِحُ الْوَجْهِ</td>
+                <td><input type="text" id="features" placeholder="اكتب وصف ملامح الوجه..."></td>
+            </tr>
+            <tr>
+                <td>القامَة</td>
+                <td><input type="text" id="height" placeholder="اكتب وصف القامة..."></td>
+            </tr>
+            <tr>
+                <td>المَلابِس</td>
+                <td><input type="text" id="clothes" placeholder="اكتب وصف الملابس..."></td>
+            </tr>
+            <tr>
+                <td>الأَفْعال الَّتي يَقومُ بِها</td>
+                <td><input type="text" id="actions" placeholder="اكتب وصف الأفعال..."></td>
+            </tr>
+        </table>
+
+        <button onclick="checkAnswers()" class="check-button">تَحَقَّق مِنْ إجاباتِك</button>
+        <div id="feedback" class="feedback"></div>
+
+        <div class="section-title">أُنْجِزُ بِمُفْرَدي</div>
+        
+        <div class="exercise-box">
+            <h3 class="exercise-subtitle">أَشْطَبُ الصِّفاتِ غَيْرَ المُناسِبَةِ:</h3>
+            
+            <div class="description-item">
+                <span class="label">صَديقَتي فاطِمَةُ لَها وَجْهٌ</span>
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="face" value="دائِرِيّ">
+                        <span>دائِرِيّ</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="face" value="جَميل">
+                        <span>جَميل</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="face" value="طُفولي">
+                        <span>طُفولي</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="face" value="أَزْرَق">
+                        <span>أَزْرَق</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-item">
+                <span class="label">وَعَيْنانِ</span>
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="eyes" value="بَرّاقَتان">
+                        <span>بَرّاقَتان</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="eyes" value="واسِعَتان">
+                        <span>واسِعَتان</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="eyes" value="طَويلَتان">
+                        <span>طَويلَتان</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-item">
+                <span class="label">كَما أَنَّ أَنْفَها</span>
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="nose" value="مَقْوَس">
+                        <span>مَقْوَس</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="nose" value="صَغير">
+                        <span>صَغير</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="nose" value="جَميل">
+                        <span>جَميل</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="nose" value="مُرَبَّع">
+                        <span>مُرَبَّع</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-item">
+                <span class="label">وَشَعْرُها</span>
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="hair" value="قَصير">
+                        <span>قَصير</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="hair" value="مُجَعَّد">
+                        <span>مُجَعَّد</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="hair" value="أَشْقَر">
+                        <span>أَشْقَر</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="hair" value="نَحيف">
+                        <span>نَحيف</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-item">
+                <span class="label">ذاتُ قامَة</span>
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="height" value="طَويلة">
+                        <span>طَويلة</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="height" value="زَرْقاء">
+                        <span>زَرْقاء</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="height" value="بَدينة">
+                        <span>بَدينة</span>
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="height" value="قَصيرة">
+                        <span>قَصيرة</span>
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="checkDescriptions()" class="check-button">تَحَقَّق مِنْ إجاباتِك</button>
+            <div id="description-feedback" class="feedback"></div>
+        </div>
+
+        <div class="section-title">لُعْبَة وَصْف الشَّخْصِيَّة</div>
+        
+        <div class="game-container">
+            <div class="game-header">
+                <div class="score-box">النقاط: <span id="score">0</span></div>
+                <div class="timer-box">الوقت: <span id="timer">60</span> ثانية</div>
+            </div>
+
+            <div class="character-builder">
+                <div class="character-preview">
+                    <img id="characterImage" src="https://up6.cc/2025/01/173825461159891.jpg" alt="الشخصية" style="max-width: 200px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+                <div class="character-description-box">
+                    <p id="currentDescription">ابدأ بوصف الشخصية...</p>
+                </div>
+            </div>
+
+            <div class="attribute-selector">
+                <div class="attribute-category">
+                    <h4>شكل الوجه</h4>
+                    <div class="attribute-buttons">
+                        <button onclick="addAttribute('face', 'مُسْتَدير')">مُسْتَدير</button>
+                        <button onclick="addAttribute('face', 'بَيْضاوي')">بَيْضاوي</button>
+                        <button onclick="addAttribute('face', 'نَحيف')">نَحيف</button>
+                    </div>
+                </div>
+                <div class="attribute-category">
+                    <h4>العينان</h4>
+                    <div class="attribute-buttons">
+                        <button onclick="addAttribute('eyes', 'واسِعَتان')">واسِعَتان</button>
+                        <button onclick="addAttribute('eyes', 'عَسَلِيَّتان')">عَسَلِيَّتان</button>
+                        <button onclick="addAttribute('eyes', 'سَوْداوان')">سَوْداوان</button>
+                    </div>
+                </div>
+                <div class="attribute-category">
+                    <h4>الشَّعر</h4>
+                    <div class="attribute-buttons">
+                        <button onclick="addAttribute('hair', 'طَويل')">طَويل</button>
+                        <button onclick="addAttribute('hair', 'قَصير')">قَصير</button>
+                        <button onclick="addAttribute('hair', 'مُجَعَّد')">مُجَعَّد</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button id="startGame" class="game-button" onclick="startGame()">ابدأ اللعبة</button>
+                <button id="submitDescription" class="game-button" onclick="submitDescription()" disabled>تأكيد الوصف</button>
+            </div>
+        </div>
+
+        <script>
+            const correctAnswers = {
+                features: ["مستدير", "عيناه كبيرتان", "شعره أسود قصير"],
+                height: ["قامته قصيرة", "جسمه نحيف"],
+                clothes: ["قميص أصفر", "سروال قصير أحمر", "حذاء بني", "حقيبة مدرسية زرقاء"],
+                actions: ["يداوم على حمل حقيبته", "يحب مساعدة أصدقائه"]
+            };
+
+            function checkAnswers() {
+                const feedback = document.getElementById('feedback');
+                let allCorrect = true;
+                let feedbackMessage = '';
+
+                for (const [field, correctList] of Object.entries(correctAnswers)) {
+                    const input = document.getElementById(field).value.trim();
+                    if (!input) {
+                        allCorrect = false;
+                        feedbackMessage += `الرجاء ملء حقل ${getFieldName(field)}<br>`;
+                        continue;
+                    }
+
+                    let hasMatch = correctList.some(correct => 
+                        input.includes(correct) || correct.includes(input)
+                    );
+
+                    if (!hasMatch) {
+                        allCorrect = false;
+                        feedbackMessage += `إجابتك في ${getFieldName(field)} تحتاج إلى مراجعة<br>`;
+                    }
+                }
+
+                feedback.style.display = 'block';
+                if (allCorrect) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = 'أحسنت! جميع إجاباتك صحيحة';
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = feedbackMessage;
+                }
+            }
+
+            function getFieldName(field) {
+                const names = {
+                    features: 'ملامح الوجه',
+                    height: 'القامة',
+                    clothes: 'الملابس',
+                    actions: 'الأفعال'
+                };
+                return names[field];
+            }
+        </script>
+
+        <script>
+            function checkDescriptions() {
+                const correctAnswers = {
+                    face: ["دائِرِيّ", "جَميل"],
+                    eyes: ["بَرّاقَتان", "واسِعَتان"],
+                    nose: ["صَغير", "جَميل"],
+                    hair: ["قَصير", "مُجَعَّد"],
+                    height: ["طَويلة"]
+                };
+
+                let feedback = "";
+                let allCorrect = true;
+
+                for (const [category, correct] of Object.entries(correctAnswers)) {
+                    const selected = Array.from(document.querySelectorAll(`input[name="${category}"]:checked`))
+                        .map(cb => cb.value);
+                    
+                    const unchecked = Array.from(document.querySelectorAll(`input[name="${category}"]:not(:checked)`))
+                        .map(cb => cb.value);
+                    
+                    // Check if all correct options are selected and no incorrect options are selected
+                    const hasAllCorrect = correct.every(answer => selected.includes(answer));
+                    const hasNoIncorrect = selected.every(answer => correct.includes(answer));
+
+                    if (!hasAllCorrect || !hasNoIncorrect) {
+                        allCorrect = false;
+                        feedback += `مراجعة اختياراتك في ${getCategoryName(category)}<br>`;
+                    }
+                }
+
+                const feedbackElement = document.getElementById('description-feedback');
+                feedbackElement.style.display = 'block';
+                
+                if (allCorrect) {
+                    feedbackElement.className = 'feedback correct';
+                    feedbackElement.innerHTML = 'أحسنت! جميع اختياراتك صحيحة';
+                } else {
+                    feedbackElement.className = 'feedback incorrect';
+                    feedbackElement.innerHTML = feedback;
+                }
+            }
+
+            function getCategoryName(category) {
+                const names = {
+                    face: 'وصف الوجه',
+                    eyes: 'وصف العينين',
+                    nose: 'وصف الأنف',
+                    hair: 'وصف الشعر',
+                    height: 'وصف القامة'
+                };
+                return names[category];
+            }
+        </script>
+
+        <script>
+            let gameTimer;
+            let currentScore = 0;
+            let isGameActive = false;
+            const selectedAttributes = {
+                face: '',
+                eyes: '',
+                hair: ''
+            };
+
+            function startGame() {
+                isGameActive = true;
+                currentScore = 0;
+                document.getElementById('score').textContent = currentScore;
+                document.getElementById('startGame').disabled = true;
+                document.getElementById('submitDescription').disabled = false;
+                
+                // Reset description
+                document.getElementById('currentDescription').textContent = 'ابدأ بوصف الشخصية...';
+                
+                // Reset selected attributes
+                Object.keys(selectedAttributes).forEach(key => {
+                    selectedAttributes[key] = '';
+                });
+                
+                // Reset button styles
+                document.querySelectorAll('.attribute-buttons button').forEach(button => {
+                    button.classList.remove('selected');
+                });
+
+                // Start timer
+                let timeLeft = 60;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                gameTimer = setInterval(() => {
+                    timeLeft--;
+                    document.getElementById('timer').textContent = timeLeft;
+                    
+                    if (timeLeft <= 0) {
+                        endGame();
+                    }
+                }, 1000);
+            }
+
+            function addAttribute(category, value) {
+                if (!isGameActive) return;
+                
+                // Remove previous selection in this category
+                if (selectedAttributes[category]) {
+                    document.querySelectorAll(`.attribute-buttons button`).forEach(button => {
+                        if (button.textContent === selectedAttributes[category]) {
+                            button.classList.remove('selected');
+                        }
+                    });
+                }
+                
+                selectedAttributes[category] = value;
+                
+                // Add selected class to the clicked button
+                event.target.classList.add('selected');
+                
+                updateDescription();
+            }
+
+            function updateDescription() {
+                let description = 'هذه شخصية ';
+                
+                if (selectedAttributes.face) {
+                    description += `ذات وجه ${selectedAttributes.face}`;
+                }
+                
+                if (selectedAttributes.eyes) {
+                    description += selectedAttributes.face ? '، ' : '';
+                    description += `وعينان ${selectedAttributes.eyes}`;
+                }
+                
+                if (selectedAttributes.hair) {
+                    description += (selectedAttributes.face || selectedAttributes.eyes) ? '، ' : '';
+                    description += `وشعر ${selectedAttributes.hair}`;
+                }
+                
+                description += '.';
+                
+                document.getElementById('currentDescription').textContent = description;
+            }
+
+            function submitDescription() {
+                if (!isGameActive) return;
+                
+                // Check if all attributes are selected
+                const allSelected = Object.values(selectedAttributes).every(attr => attr !== '');
+                
+                if (allSelected) {
+                    currentScore += 10;
+                    document.getElementById('score').textContent = currentScore;
+                    
+                    // Reset for next round
+                    Object.keys(selectedAttributes).forEach(key => {
+                        selectedAttributes[key] = '';
+                    });
+                    
+                    // Reset button styles
+                    document.querySelectorAll('.attribute-buttons button').forEach(button => {
+                        button.classList.remove('selected');
+                    });
+                    
+                    document.getElementById('currentDescription').textContent = 'أحسنت! اختر صفات جديدة...';
+                }
+            }
+
+            function endGame() {
+                clearInterval(gameTimer);
+                isGameActive = false;
+                document.getElementById('startGame').disabled = false;
+                document.getElementById('submitDescription').disabled = true;
+                
+                // Show final score
+                document.getElementById('currentDescription').textContent = 
+                    `انتهت اللعبة! مجموع نقاطك: ${currentScore}`;
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تمرين المفعول به - السحب والإفلات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .game-area {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .sentence {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #34495e;
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+        }
+        .draggable {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: move;
+            display: inline-block;
+            user-select: none;
+        }
+        .drop-zone {
+            border: 2px dashed #bdc3c7;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 10px;
+            min-height: 50px;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .return-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .feedback {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #a8e6cf;
+            color: #1b5e20;
+        }
+        .incorrect {
+            background-color: #ffb3b3;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة المفعول به - السحب والإفلات</h1>
+        <div class="score">النقاط: <span id="score">0</span></div>
+        <div class="game-area">
+            <div class="sentence" id="sentence"></div>
+            <div class="words" id="words"></div>
+            <div class="drop-zone" id="dropZone">اسحب المفعول به إلى هنا</div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        <button class="return-btn" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                text: "كتبَ الطالبُ الدرسَ",
+                words: ["الطالبُ", "الدرسَ"],
+                correct: "الدرسَ"
+            },
+            {
+                text: "شاهدَ الطفلُ التلفازَ",
+                words: ["الطفلُ", "التلفازَ"],
+                correct: "التلفازَ"
+            },
+            {
+                text: "حملَ الرجلُ الحقيبةَ",
+                words: ["الرجلُ", "الحقيبةَ"],
+                correct: "الحقيبةَ"
+            },
+            {
+                text: "زرعَ الفلاحُ الشجرةَ",
+                words: ["الفلاحُ", "الشجرةَ"],
+                correct: "الشجرةَ"
+            },
+            {
+                text: "غسلَ الولدُ السيارةَ",
+                words: ["الولدُ", "السيارةَ"],
+                correct: "السيارةَ"
+            }
+        ];
+
+        let currentScore = 0;
+        let currentQuestion = 0;
+
+        function displayQuestion() {
+            const question = sentences[currentQuestion];
+            document.getElementById('sentence').textContent = question.text;
+            
+            const wordsContainer = document.getElementById('words');
+            wordsContainer.innerHTML = '';
+            
+            question.words.sort(() => Math.random() - 0.5).forEach(word => {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'draggable';
+                wordElement.textContent = word;
+                wordElement.draggable = true;
+                wordElement.addEventListener('dragstart', drag);
+                wordsContainer.appendChild(wordElement);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const correct = sentences[currentQuestion].correct;
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (data === correct) {
+                currentScore += 10;
+                feedbackElement.textContent = 'أحسنت! إجابة صحيحة';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'حاول مرة أخرى';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            document.getElementById('score').textContent = currentScore;
+            
+            setTimeout(() => {
+                currentQuestion = (currentQuestion + 1) % sentences.length;
+                displayQuestion();
+            }, 1500);
+        }
+
+        // Set up drop zone
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', allowDrop);
+        dropZone.addEventListener('drop', drop);
+
+        // Start the game
+        displayQuestion();
+    </script>
+</body>
+</html>

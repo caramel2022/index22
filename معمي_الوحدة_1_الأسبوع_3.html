@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معجمي الوحدة 1 الاسبوع 3</title>
+    <style>
+        :root {
+            --gradient-1: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            --gradient-2: linear-gradient(135deg, #4ecdc4, #88dac8);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            font-size: 1.2em; /* تكبير حجم الخط */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin: 15px 0;
+            padding: 15px;
+            border-right: 4px solid #ff6b6b;
+            background: #fff5f5;
+        }
+
+        .input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            font-size: 1.2em; /* تكبير حجم خط حقول الإدخال */
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.2);
+        }
+
+        .check-button {
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            float: left;
+        }
+
+        .result-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .correct {
+            background: #e8fff8;
+            color: #27ae60;
+            border: 2px solid #2ecc71;
+        }
+
+        .wrong {
+            background: #ffefef;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين المضادات والمرادفات</h1>
+        
+        <div class="card">
+            <div class="question">
+                اكتب ضد الكلمات التالية:
+                <div class="input-container">
+                    <input type="text" class="input-field" id="q1" placeholder="ضد 'الفَرْدِيّ'">
+                    <input type="text" class="input-field" id="q2" placeholder="ضد 'مُفيدٌ'">
+                </div>
+            </div>
+
+            <div class="question">
+                اكتب مرادف الكلمات التالية:
+                <div class="input-container">
+                    <input type="text" class="input-field" id="q3" placeholder="مرادف 'التَّقاسُم'">
+                    <input type="text" class="input-field" id="q4" placeholder="مرادف 'يُعِينُنا'">
+                </div>
+            </div>
+
+            <div class="question">
+                اكتب جمع الكلمات التالية:
+                <div class="input-container">
+                    <input type="text" class="input-field" id="q5" placeholder="جمع 'رَأْيٌ'">
+                    <input type="text" class="input-field" id="q6" placeholder="جمع 'المُهِمَّةُ'">
+                </div>
+            </div>
+
+            <button class="check-button" onclick="checkAnswers()">تحقق من الإجابات</button>
+            <button class="check-button" onclick="resetExercise()" style="background: var(--gradient-1);">إعادة المحاولة</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: "الجَماعِي",
+            q2: "مُضِرٌّ",
+            q3: "التشارك",
+            q4: "يساعدنا",
+            q5: "آراء",
+            q6: "المَهَام"
+        };
+
+        function checkAnswers() {
+            Object.keys(correctAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                const correct = correctAnswers[id].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                
+                if(userAnswer === correct) {
+                    input.classList.add('correct');
+                    input.classList.remove('wrong');
+                } else {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                }
+            });
+        }
+
+        function resetExercise() {
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'wrong');
+            });
+        }
+    </script>
+</body>
+</html>

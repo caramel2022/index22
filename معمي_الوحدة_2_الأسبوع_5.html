@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة اللغة الملوّنة - الوحدة 2 الأسبوع 4</title>
+    <style>
+        :root {
+            --main-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --primary-color: #4a5568;
+            --accent-blue: #4299e1;
+            --accent-pink: #ed64a6;
+            --input-bg-1: #ff6f61; /* برتقالي مرجاني */
+            --input-bg-2: #6b5b95; /* بنفسجي */
+            --input-bg-3: #88b04b; /* أخضر */
+            --input-bg-4: #f7cac9; /* وردي فاتح */
+            --input-bg-5: #92a8d1; /* أزرق فاتح */
+            --input-bg-6: #955251; /* أحمر خمري */
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--main-bg);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-size: 20px; /* تم تعديل الحجم */
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .game-header {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(74,85,104,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(66,153,225,0.1);
+            transition: transform 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 15px;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            color: white;
+            font-weight: bold;
+        }
+
+        .game-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        #antonym1 { background: var(--input-bg-1); }
+        #antonym2 { background: var(--input-bg-2); }
+        #synonym1 { background: var(--input-bg-3); }
+        #synonym2 { background: var(--input-bg-4); }
+        #singular1 { background: var(--input-bg-5); }
+        #singular2 { background: var(--input-bg-6); }
+
+        .game-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            margin: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .game-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .game-result {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .correct {
+            color: #2f855a;
+            border: 2px solid #48bb78;
+            background: rgba(72,187,120,0.1);
+        }
+
+        .wrong {
+            color: #c53030;
+            border: 2px solid #f56565;
+            background: rgba(245,101,101,0.1);
+        }
+
+        .score-board {
+            background: rgba(255,255,255,0.9);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(74,85,104,0.05);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 style="color: var(--primary-color);">🎨 لعبة اللغة الملوّنة 🌈</h1>
+            <p style="color: var(--accent-blue);">أكمل التحديات اللغوية بألوان زاهية!</p>
+        </div>
+
+        <div class="game-card">
+            <!-- ضد الكلمات -->
+            <input type="text" class="game-input" id="antonym1" placeholder="ضد 'نهاية'">
+            <input type="text" class="game-input" id="antonym2" placeholder="ضد 'نصغر'">
+            
+            <!-- مرادفات -->
+            <input type="text" class="game-input" id="synonym1" placeholder="مرادف 'أنصت'">
+            <input type="text" class="game-input" id="synonym2" placeholder="مرادف 'أسقطه'">
+            
+            <!-- مفرد الكلمات -->
+            <input type="text" class="game-input" id="singular1" placeholder="مفرد 'دورات'">
+            <input type="text" class="game-input" id="singular2" placeholder="مفرد 'رؤوس'">
+
+            <div style="text-align: center;">
+                <button class="game-btn" onclick="checkGameAnswers()">تحقق من الإجابات</button>
+                <button class="game-btn" onclick="resetGame()" style="background: var(--accent-pink);">إعادة اللعبة</button>
+            </div>
+
+            <div id="gameResultContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const gameAnswers = {
+            antonym1: "بداية",
+            antonym2: "نكبر",
+            synonym1: "استمع",
+            synonym2: "ألقاه",
+            singular1: "دورة",
+            singular2: "رأس"
+        };
+
+        function checkGameAnswers() {
+            let score = 0;
+            const resultContainer = document.getElementById('gameResultContainer');
+            resultContainer.innerHTML = '';
+
+            Object.keys(gameAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().replace(/[ًٌٍَُِّْ]/g, '');
+                const correct = gameAnswers[id].replace(/[ًٌٍَُِّْ]/g, '');
+                
+                if(userAnswer === correct) {
+                    input.style.borderColor = '#48bb78';
+                    score++;
+                    resultContainer.innerHTML += `
+                        <div class="game-result correct">
+                            ✅ ${gameAnswers[id]}
+                        </div>
+                    `;
+                } else {
+                    input.style.borderColor = '#f56565';
+                    resultContainer.innerHTML += `
+                        <div class="game-result wrong">
+                            ❌ ${gameAnswers[id]}
+                        </div>
+                    `;
+                }
+            });
+
+            resultContainer.innerHTML += `
+                <div class="score-board" style="margin-top: 1rem;">
+                    النتيجة النهائية: ${score}/${Object.keys(gameAnswers).length}
+                </div>
+            `;
+        }
+
+        function resetGame() {
+            document.querySelectorAll('.game-input').forEach(input => {
+                input.value = '';
+                input.style.borderColor = 'rgba(255,255,255,0.5)';
+            });
+            document.getElementById('gameResultContainer').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

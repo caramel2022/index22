@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين الأحلام اللغوي</title>
+    <style>
+        :root {
+            --galaxy-bg: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #333; /* لون خلفية جديد */
+            color: #f0f0f0; /* لون نص أوضح */
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .starry-header {
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .starry-header::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 70% 30%, var(--neon-blue) 2%, transparent 50%),
+                radial-gradient(circle at 30% 70%, var(--neon-pink) 2%, transparent 50%);
+            animation: stars 20s linear infinite;
+        }
+
+        @keyframes stars {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hologram-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 
+                0 0 50px rgba(0,243,255,0.1),
+                0 0 50px rgba(255,0,255,0.1) inset;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .hologram-card:hover {
+            transform: rotate3d(1,1,0,5deg);
+        }
+
+        .cyber-input {
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            transition: 0.3s;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .cyber-input:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        .neon-btn {
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            margin: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0,243,255,0.2), transparent);
+            transform: rotate(45deg);
+        }
+
+        .neon-btn:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            text-shadow: 0 0 15px var(--neon-pink);
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        .result-beam {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            animation: beam 1s infinite alternate;
+            text-align: center;
+        }
+
+        @keyframes beam {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+
+        .correct-beam {
+            background: linear-gradient(45deg, #00ff88, #00f3ff);
+            color: #0f0c29;
+        }
+
+        .wrong-beam {
+            background: linear-gradient(45deg, #ff0000, #ff00ff);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="starry-header">
+            <h1 style="color: var(--neon-blue); text-shadow: 0 0 30px var(--neon-blue);">🌌 تمرين الأحلام اللغوي 🪐</h1>
+            <p style="color: black;">اكمل التمرين انطلاقا من النص ص 89</p>
+        </div>
+
+        <div class="hologram-card">
+            <input type="text" class="cyber-input" id="antonym" placeholder="ضد 'الجديدة'" style="color: black;">
+            <input type="text" class="cyber-input" id="antonym" placeholder="ضد 'ينحني'" style="color: black;">
+            <input type="text" class="cyber-input" id="synonym1" placeholder="مرادف 'العريقة'" style="color: black;">
+            <input type="text" class="cyber-input" id="synonym2" placeholder="مرادف 'الشاهق'" style="color: black;">
+
+            <div style="text-align: center;">
+                <button class="neon-btn" onclick="activateNeuralCheck()">تفعيل الفحص</button>
+                <button class="neon-btn" onclick="quantumReset()" style="border-color: var(--neon-pink); color: var(--neon-pink);">إعادة توليد</button>
+            </div>
+
+            <div id="quantumResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const quantumAnswers = {
+            antonym: "الرحابة",
+            synonym1: "العريقة",
+            synonym2: "الشاهق"
+        };
+
+        function activateNeuralCheck() {
+            let energyLevel = 0;
+            const resultContainer = document.getElementById('quantumResult');
+            resultContainer.innerHTML = '';
+
+            Object.keys(quantumAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().replace(/[ًٌٍَُِّْ]/g, '');
+                const correct = quantumAnswers[id].replace(/[ًٌٍَُِّْ]/g, '');
+                
+                if(userAnswer === correct) {
+                    input.style.borderColor = '#00ff88';
+                    energyLevel++;
+                    resultContainer.innerHTML += `
+                        <div class="result-beam correct-beam">
+                            🚀 إجابة صحيحة! (طاقة +25%)
+                        </div>
+                    `;
+                } else {
+                    input.style.borderColor = '#ff0000';
+                    resultContainer.innerHTML += `
+                        <div class="result-beam wrong-beam">
+                            ☄️ الإجابة الصحيحة: ${quantumAnswers[id]}
+                        </div>
+                    `;
+                }
+            });
+
+            resultContainer.innerHTML += `
+                <div class="result-beam" style="background: ${energyLevel === 3 ? 
+                    'linear-gradient(45deg, #00ff88, #00f3ff)' : 
+                    'linear-gradient(45deg, #ff0000, #ff00ff)'}">
+                    💫 مستوى الطاقة: ${energyLevel * 33}%
+                </div>
+            `;
+        }
+
+        function quantumReset() {
+            document.querySelectorAll('.cyber-input').forEach(input => {
+                input.value = '';
+                input.style.borderColor = var(--neon-blue);
+            });
+            document.getElementById('quantumResult').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

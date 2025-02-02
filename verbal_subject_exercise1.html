@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين الفاعل في الجملة الفعلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2f9 100%);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a237e;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #1a237e, #3949ab);
+            border-radius: 2px;
+        }
+        .question {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(to right, #ffffff, #f8f9fa);
+            border-radius: 12px;
+            text-align: right;
+            border: 1px solid #e3e9f0;
+            transition: transform 0.3s ease;
+        }
+        .question:hover {
+            transform: translateY(-5px);
+        }
+        .question p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .question p:first-child {
+            color: #1a237e;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        span[onclick] {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        span[onclick]:hover {
+            background-color: #e8eaf6;
+            color: #3949ab;
+        }
+        button {
+            background: linear-gradient(45deg, #1a237e, #3949ab);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px;
+            font-size: 1.1em;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            background: linear-gradient(45deg, #3949ab, #1a237e);
+        }
+        .back-button {
+            background: linear-gradient(45deg, #1a237e, #3949ab);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            background: linear-gradient(45deg, #3949ab, #1a237e);
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .correct {
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            border: 1px solid #a5d6a7;
+        }
+        .incorrect {
+            color: #c62828;
+            background-color: #ffebee;
+            border: 1px solid #ef9a9a;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                font-size: 16px;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: left; margin-bottom: 20px;">
+            <button onclick="window.history.back()" class="back-button">
+                <span style="display: inline-block; transform: scaleX(-1);">➜</span> عودة
+            </button>
+        </div>
+        <h1>تمرين الفاعل في الجملة الفعلية</h1>
+        
+        <div id="exercise">
+            <div class="question" id="q1">
+                <p>حدد الفاعل في الجملة التالية:</p>
+                <p>كتبَ <span onclick="checkAnswer('الطالبُ', 1)" style="cursor: pointer">الطالبُ</span> <span onclick="checkAnswer('الدرسَ', 1)" style="cursor: pointer">الدرسَ</span></p>
+                <div id="result1" class="result"></div>
+            </div>
+
+            <div class="question" id="q2">
+                <p>حدد الفاعل في الجملة التالية:</p>
+                <p>يلعبُ <span onclick="checkAnswer('الأطفالُ', 2)" style="cursor: pointer">الأطفالُ</span> في <span onclick="checkAnswer('الحديقةِ', 2)" style="cursor: pointer">الحديقةِ</span></p>
+                <div id="result2" class="result"></div>
+            </div>
+
+            <div class="question" id="q3">
+                <p>حدد الفاعل في الجملة التالية:</p>
+                <p>شربَ <span onclick="checkAnswer('القطُّ', 3)" style="cursor: pointer">القطُّ</span> <span onclick="checkAnswer('الحليبَ', 3)" style="cursor: pointer">الحليبَ</span></p>
+                <div id="result3" class="result"></div>
+            </div>
+        </div>
+
+        <button onclick="resetExercise()">إعادة التمرين</button>
+    </div>
+
+    <script>
+        function checkAnswer(selected, questionNum) {
+            const correctAnswers = {
+                1: 'الطالبُ',
+                2: 'الأطفالُ',
+                3: 'القطُّ'
+            };
+            
+            const resultDiv = document.getElementById('result' + questionNum);
+            if (selected === correctAnswers[questionNum]) {
+                resultDiv.innerHTML = 'أحسنت! إجابة صحيحة ✓';
+                resultDiv.className = 'result correct';
+            } else {
+                resultDiv.innerHTML = 'حاول مرة أخرى ✗';
+                resultDiv.className = 'result incorrect';
+            }
+        }
+
+        function resetExercise() {
+            const results = document.getElementsByClassName('result');
+            for (let result of results) {
+                result.innerHTML = '';
+                result.className = 'result';
+            }
+        }
+    </script>
+</body>
+</html>

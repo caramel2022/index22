@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة الأولى -الاسبوع4-التعبير الكتابي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: right;
+            background: #f0f7ff;
+            min-height: 100vh;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        .content {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2e7d32;
+        }
+        h1 {
+            font-size: 2.8em;
+            color: #1b5e20;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #4caf50;
+            border-radius: 2px;
+        }
+        h2 {
+            font-size: 2.3em;
+            color: #2e7d32;
+        }
+        h3 {
+            font-size: 1.8em;
+            color: #388e3c;
+        }
+        .example, .exercise {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .example {
+            background: #e8f5e9;
+            border-color: #a5d6a7;
+        }
+        .exercise {
+            background: #fff3e0;
+            border-color: #ffcc80;
+            margin-top: 40px;
+        }
+        .exercise:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .exercise-title {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #f57c00;
+        }
+        input, select {
+            width: 200px;
+            padding: 10px 15px;
+            margin: 8px;
+            border: 2px solid #bdbdbd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        }
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 1em center;
+            background-size: 1em;
+            padding-left: 3em;
+        }
+        select:hover {
+            border-color: #4caf50;
+        }
+        .sentence {
+            margin: 15px 0;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 8px;
+            font-size: 1.2em;
+            border: 1px solid #e0e0e0;
+        }
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background: #43a047;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+        }
+        .correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+        .paragraph-exercise {
+            font-size: 1.2em;
+            line-height: 2;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+        ol {
+            font-size: 1.2em;
+            padding-right: 20px;
+            color: #424242;
+        }
+        li {
+            margin: 12px 0;
+            padding: 5px 0;
+        }
+        p {
+            margin: 15px 0;
+            color: #424242;
+        }
+        .scene {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .scene-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .writing-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .writing-section h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Tajawal', Arial, sans-serif;
+            font-size: 1.1em;
+            line-height: 1.8;
+            resize: vertical;
+            direction: rtl;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        }
+        .save-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        .save-button:hover {
+            background: #43a047;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>الوحدة الأولى -الأسبوع4 -التعبير الكتابي</h2>
+        
+        <h3>كتابة فقرة</h3>
+        <div class="instructions">
+            <p>لنتعلم معاً</p>
+            <p>لكتابة فقرة بالاستعانة باستراتيجية توسيع فكرة:</p>
+            <ol>
+                <li>أوسع الجمل.</li>
+                <li>أربط بين الجمل بأداة ربط مناسبة.</li>
+                <li>أقرأ وأتحقق من انسجام معنى الفقرة.</li>
+            </ol>
+            
+            <div class="example">
+                <p>مثال:</p>
+                <p>تنمو الأشجار في الحديقة وتتفتح الأزهار في فصل الربيع.</p>
+                <p>فيخرج الناس للنزهة والتمتع بجمال الطبيعة...</p>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">
+                    <span>١. أتدرب مع زملائي</span>
+                </div>
+                <p>ثم أضيف أداة الربط المناسبة: قبل أن - عندما - فجأة - بعد أن</p>
+                <div class="sentence">
+                    تخضر أوراق 
+                    <select id="ex1-1">
+                        <option value="">اختر أداة الربط</option>
+                        <option value="قبل أن">قبل أن</option>
+                        <option value="عندما">عندما</option>
+                        <option value="فجأة">فجأة</option>
+                        <option value="بعد أن">بعد أن</option>
+                    </select>
+                    يحل فصل الربيع.
+                </div>
+                <div class="sentence">
+                    شكر التلاميذ 
+                    <select id="ex1-2">
+                        <option value="">اختر أداة الربط</option>
+                        <option value="قبل أن">قبل أن</option>
+                        <option value="عندما">عندما</option>
+                        <option value="فجأة">فجأة</option>
+                        <option value="بعد أن">بعد أن</option>
+                    </select>
+                    يغادروا قاعة الدرس.
+                </div>
+                <div class="sentence">
+                    أغلقت مروى 
+                    <select id="ex1-3">
+                        <option value="">اختر أداة الربط</option>
+                        <option value="قبل أن">قبل أن</option>
+                        <option value="عندما">عندما</option>
+                        <option value="فجأة">فجأة</option>
+                        <option value="بعد أن">بعد أن</option>
+                    </select>
+                    أنهت قراءة النص.
+                </div>
+                <div class="sentence">
+                    كنا نشاهد 
+                    <select id="ex1-4">
+                        <option value="">اختر أداة الربط</option>
+                        <option value="قبل أن">قبل أن</option>
+                        <option value="عندما">عندما</option>
+                        <option value="فجأة">فجأة</option>
+                        <option value="بعد أن">بعد أن</option>
+                    </select>
+                    انقطع النور.
+                </div>
+                <button onclick="checkExercise1()">تحقق من إجاباتك</button>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">
+                    <span>٢. أتم الفقرة بأدوات الربط المناسبة</span>
+                </div>
+                <div class="paragraph-exercise">
+                    <p>
+                        <select id="ex2-0">
+                            <option value="">اختر أداة الربط</option>
+                            <option value="في البداية">في البِدَايَةِ</option>
+                            <option value="أولاً">أَوَّلاً</option>
+                            <option value="في الصباح">في الصَّبَاحِ</option>
+                            <option value="عندما">عِنْدَمَا</option>
+                            <option value="بعد أن">بَعْدَ أَنْ</option>
+                        </select>
+                        سَاعَدْتُ أُمِّي في تَنْظِيفِ المَنْزِلِ 
+                        <select id="ex2-1">
+                            <option value="">اختر أداة الربط</option>
+                            <option value="قبل أن">قَبْلَ أَنْ</option>
+                            <option value="عندما">عِنْدَمَا</option>
+                            <option value="فجأة">فَجْأَةً</option>
+                            <option value="بعد أن">بَعْدَ أَنْ</option>
+                            <option value="ثم">ثُمَّ</option>
+                        </select>
+                        عُدْتُ مِنَ المَدْرَسَةِ 
+                        <select id="ex2-2">
+                            <option value="">اختر أداة الربط</option>
+                            <option value="قبل أن">قَبْلَ أَنْ</option>
+                            <option value="عندما">عِنْدَمَا</option>
+                            <option value="فجأة">فَجْأَةً</option>
+                            <option value="بعد أن">بَعْدَ أَنْ</option>
+                            <option value="ثم">ثُمَّ</option>
+                        </select>
+                        أَنْهَيْتُ، قُمْتُ بِحَلِّ وَاجِبَاتِي.</p>
+                    <p>
+                        <select id="ex2-3">
+                            <option value="">اختر أداة الربط</option>
+                            <option value="قبل أن">قَبْلَ أَنْ</option>
+                            <option value="عندما">عِنْدَمَا</option>
+                            <option value="فجأة">فَجْأَةً</option>
+                            <option value="بعد أن">بَعْدَ أَنْ</option>
+                            <option value="ثم">ثُمَّ</option>
+                        </select>
+                        أَنْهَيْتُ وَاجِبَاتِي المَدْرَسِيَّةَ، سَمِعْتُ أُمِّي تُنَادِينَا لِتَنَاوُلِ وَجْبَةِ العَشَاءِ، 
+                        <select id="ex2-4">
+                            <option value="">اختر أداة الربط</option>
+                            <option value="قبل أن">قَبْلَ أَنْ</option>
+                            <option value="عندما">عِنْدَمَا</option>
+                            <option value="فجأة">فَجْأَةً</option>
+                            <option value="بعد أن">بَعْدَ أَنْ</option>
+                            <option value="ثم">ثُمَّ</option>
+                        </select>
+                        دَعَانِي أَبِي لِلنُّزْهَةِ.</p>
+                </div>
+                <button onclick="checkExercise2()">تحقق من إجاباتك</button>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">
+                    <span>٣. أكتب فقرة عن طفل وجد كلباً جريحاً</span>
+                </div>
+                <p>أكمل الفقرة التالية بأدوات الربط المناسبة لتعبر عن المشاهد الثلاثة:</p>
+                
+                <div class="paragraph-exercise">
+                    <div class="scene">
+                        <p class="scene-title">المشهد الأول:</p>
+                        <p>
+                            <select id="ex3-1">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="في البداية">في البِدَايَةِ</option>
+                                <option value="ذات يوم">ذَاتَ يَوْمٍ</option>
+                                <option value="في الصباح">في الصَّبَاحِ</option>
+                                <option value="عندما">عِنْدَمَا</option>
+                            </select>
+                            كُنْتُ أَمْشِي في الشَّارِعِ، 
+                            <select id="ex3-2">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="فجأة">فَجْأَةً</option>
+                                <option value="عندما">عِنْدَمَا</option>
+                                <option value="حين">حِينَ</option>
+                            </select>
+                            سَمِعْتُ صَوْتَ أَنِينٍ ضَعِيفٍ يَأْتِي مِنْ زَاوِيَةِ الشَّارِعِ.
+                        </p>
+                    </div>
+
+                    <div class="scene">
+                        <p class="scene-title">المشهد الثاني:</p>
+                        <p>
+                            <select id="ex3-3">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="عندما">عِنْدَمَا</option>
+                                <option value="حين">حِينَ</option>
+                                <option value="بعد أن">بَعْدَ أَنْ</option>
+                            </select>
+                            اقْتَرَبْتُ، وَجَدْتُ كَلْباً صَغِيراً جَرِيحاً في قَائِمِهِ، 
+                            <select id="ex3-4">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="ف">فَـ</option>
+                                <option value="لذلك">لِذَلِكَ</option>
+                                <option value="ثم">ثُمَّ</option>
+                            </select>
+                            قَرَّرْتُ مُسَاعَدَتَهُ.
+                        </p>
+                    </div>
+
+                    <div class="scene">
+                        <p class="scene-title">المشهد الثالث:</p>
+                        <p>
+                            <select id="ex3-5">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="بعد ذلك">بَعْدَ ذَلِكَ</option>
+                                <option value="ثم">ثُمَّ</option>
+                                <option value="و">وَ</option>
+                            </select>
+                            أَحْضَرْتُ ضِمَادَةً مِنَ المَنْزِلِ، 
+                            <select id="ex3-6">
+                                <option value="">اختر أداة الربط</option>
+                                <option value="و">وَ</option>
+                                <option value="ثم">ثُمَّ</option>
+                                <option value="ف">فَـ</option>
+                            </select>
+                            وَضَعْتُهَا بِرِفْقٍ عَلَى قَائِمِهِ المُصَابِ.
+                        </p>
+                    </div>
+                </div>
+                <button onclick="checkExercise3()">تحقق من إجاباتك</button>
+
+                <div class="writing-section">
+                    <h4>اكتب فقرة تجمع فيها المشاهد الثلاثة:</h4>
+                    <p>استخدم أدوات الربط المناسبة لتكوين فقرة متماسكة تحكي قصة الطفل والكلب الجريح.</p>
+                    <textarea id="finalParagraph" placeholder="اكتب فقرتك هنا..." oninput="autoSave()"></textarea>
+                    <button class="save-button" onclick="saveParagraph()">احفظ الفقرة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkExercise1() {
+            const answers = {
+                'ex1-1': ['عندما', 'قبل أن'],
+                'ex1-2': ['قبل أن'],
+                'ex1-3': ['بعد أن'],
+                'ex1-4': ['عندما', 'فجأة']
+            };
+            
+            for (let id in answers) {
+                const select = document.getElementById(id);
+                const userAnswer = select.value;
+                if (answers[id].includes(userAnswer)) {
+                    select.classList.add('correct');
+                    select.classList.remove('incorrect');
+                } else {
+                    select.classList.add('incorrect');
+                    select.classList.remove('correct');
+                }
+            }
+        }
+
+        function checkExercise2() {
+            const answers = {
+                'ex2-0': ['في البداية', 'أولاً', 'في الصباح', 'عندما', 'بعد أن'],
+                'ex2-1': ['بعد أن', 'عندما'],
+                'ex2-2': ['ثم'],
+                'ex2-3': ['عندما', 'فجأة'],
+                'ex2-4': ['ثم']
+            };
+            
+            for (let id in answers) {
+                const select = document.getElementById(id);
+                const userAnswer = select.value;
+                if (answers[id].includes(userAnswer)) {
+                    select.classList.add('correct');
+                    select.classList.remove('incorrect');
+                } else {
+                    select.classList.add('incorrect');
+                    select.classList.remove('correct');
+                }
+            }
+        }
+
+        function checkExercise3() {
+            const answers = {
+                'ex3-1': ['في البداية', 'ذات يوم', 'في الصباح', 'عندما'],
+                'ex3-2': ['فجأة', 'عندما', 'حين'],
+                'ex3-3': ['عندما', 'حين', 'بعد أن'],
+                'ex3-4': ['ف', 'لذلك', 'ثم'],
+                'ex3-5': ['بعد ذلك', 'ثم', 'و'],
+                'ex3-6': ['و', 'ثم', 'ف']
+            };
+            
+            for (let id in answers) {
+                const select = document.getElementById(id);
+                const userAnswer = select.value;
+                if (answers[id].includes(userAnswer)) {
+                    select.classList.add('correct');
+                    select.classList.remove('incorrect');
+                } else {
+                    select.classList.add('incorrect');
+                    select.classList.remove('correct');
+                }
+            }
+        }
+
+        function autoSave() {
+            const text = document.getElementById('finalParagraph').value;
+            localStorage.setItem('savedParagraph', text);
+        }
+
+        function saveParagraph() {
+            const text = document.getElementById('finalParagraph').value;
+            localStorage.setItem('savedParagraph', text);
+            alert('تم حفظ الفقرة بنجاح!');
+        }
+
+        // استرجاع النص المحفوظ عند تحميل الصفحة
+        window.onload = function() {
+            const savedText = localStorage.getItem('savedParagraph');
+            if (savedText) {
+                document.getElementById('finalParagraph').value = savedText;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة بطاقات الفعل والفاعل</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            font-size: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .score {
+            font-size: 1.5em;
+            color: #00b09b;
+            margin: 10px 0;
+        }
+
+        .timer {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            perspective: 1000px;
+        }
+
+        .memory-card {
+            position: relative;
+            height: 120px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transform: scale(1);
+            transition: transform 0.5s;
+        }
+
+        .memory-card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .memory-card:active {
+            transform: scale(0.97);
+            transition: transform 0.2s;
+        }
+
+        .front-face,
+        .back-face {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            position: absolute;
+            border-radius: 10px;
+            background: #fff;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .front-face {
+            transform: rotateY(180deg);
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            color: white;
+        }
+
+        .back-face {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+        }
+
+        .matched {
+            background: #27ae60 !important;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebration {
+            animation: celebrate 0.5s ease;
+        }
+
+        .restart-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة بطاقات الفعل والفاعل</h1>
+        <div class="game-info">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="timer">الوقت: <span id="timer">00:00</span></div>
+        </div>
+        <div class="memory-game" id="memoryGame"></div>
+        <button class="restart-btn" onclick="restartGame()">إعادة اللعبة</button>
+    </div>
+
+    <script>
+        const cardPairs = [
+            { verb: "يكتبُ", subject: "الطالبُ" },
+            { verb: "يلعبُ", subject: "الطفلُ" },
+            { verb: "تطبخُ", subject: "الأمُ" },
+            { verb: "يقرأُ", subject: "المعلمُ" },
+            { verb: "تغردُ", subject: "العصافيرُ" },
+            { verb: "يسبحُ", subject: "السمكُ" },
+            { verb: "تشرقُ", subject: "الشمسُ" },
+            { verb: "ينامُ", subject: "الأسدُ" }
+        ];
+
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
+        let score = 0;
+        let matchedPairs = 0;
+        let startTime;
+        let timerInterval;
+
+        function createBoard() {
+            const gameBoard = document.getElementById('memoryGame');
+            const allCards = [];
+
+            // Create verb cards
+            cardPairs.forEach(pair => {
+                allCards.push(createCard(pair.verb, 'verb'));
+                allCards.push(createCard(pair.subject, 'subject'));
+            });
+
+            // Shuffle cards
+            allCards.sort(() => Math.random() - 0.5);
+
+            // Add to board
+            allCards.forEach(card => gameBoard.appendChild(card));
+        }
+
+        function createCard(content, type) {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.dataset.type = type;
+            card.dataset.content = content;
+
+            const frontFace = document.createElement('div');
+            frontFace.className = 'front-face';
+            frontFace.textContent = content;
+
+            const backFace = document.createElement('div');
+            backFace.className = 'back-face';
+            backFace.textContent = type === 'verb' ? 'فعل' : 'فاعل';
+
+            card.appendChild(frontFace);
+            card.appendChild(backFace);
+
+            card.addEventListener('click', flipCard);
+            return card;
+        }
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+
+            this.classList.add('flip');
+
+            if (!hasFlippedCard) {
+                hasFlippedCard = true;
+                firstCard = this;
+                if (!startTime) startTimer();
+                return;
+            }
+
+            secondCard = this;
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            const isMatch = isValidPair(firstCard, secondCard);
+
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        function isValidPair(card1, card2) {
+            if (card1.dataset.type === card2.dataset.type) return false;
+
+            const pair1 = cardPairs.find(pair => 
+                (pair.verb === card1.dataset.content && pair.subject === card2.dataset.content) ||
+                (pair.verb === card2.dataset.content && pair.subject === card1.dataset.content)
+            );
+
+            return !!pair1;
+        }
+
+        function disableCards() {
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+
+            firstCard.querySelector('.front-face').classList.add('matched');
+            secondCard.querySelector('.front-face').classList.add('matched');
+
+            score += 10;
+            matchedPairs++;
+            document.getElementById('score').textContent = score;
+
+            if (matchedPairs === cardPairs.length) {
+                setTimeout(() => {
+                    clearInterval(timerInterval);
+                    alert('أحسنت! لقد أكملت اللعبة بنجاح!\nالنقاط: ' + score);
+                }, 500);
+            }
+
+            resetBoard();
+        }
+
+        function unflipCards() {
+            lockBoard = true;
+
+            setTimeout(() => {
+                firstCard.classList.remove('flip');
+                secondCard.classList.remove('flip');
+
+                resetBoard();
+            }, 1500);
+        }
+
+        function resetBoard() {
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function restartGame() {
+            const gameBoard = document.getElementById('memoryGame');
+            gameBoard.innerHTML = '';
+            score = 0;
+            matchedPairs = 0;
+            document.getElementById('score').textContent = '0';
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = '00:00';
+            startTime = null;
+            createBoard();
+        }
+
+        // Initialize game
+        createBoard();
+    </script>
+</body>
+</html>

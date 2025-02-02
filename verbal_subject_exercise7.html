@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرز كلمات الجملة الفعلية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            font-size: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .score {
+            font-size: 1.5em;
+            color: #4CAF50;
+            margin: 10px 0;
+        }
+
+        .sorting-area {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .category {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 200px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px dashed #4CAF50;
+        }
+
+        .category-title {
+            font-size: 1.3em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 15px;
+        }
+
+        .word {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border-radius: 25px;
+            cursor: move;
+            font-size: 1.2em;
+            user-select: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .word.dragging {
+            opacity: 0.5;
+        }
+
+        .category .word {
+            margin: 5px;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .check-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .next-btn {
+            display: none;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', Arial, sans-serif;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>فرز كلمات الجملة الفعلية</h1>
+        <div class="game-info">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div>اسحب كل كلمة إلى الفئة المناسبة لها</div>
+        </div>
+        
+        <div class="word-bank" id="wordBank"></div>
+        
+        <div class="sorting-area">
+            <div class="category" id="verb-category">
+                <div class="category-title">الفعل</div>
+            </div>
+            <div class="category" id="subject-category">
+                <div class="category-title">الفاعل</div>
+            </div>
+            <div class="category" id="other-category">
+                <div class="category-title">باقي الكلمات</div>
+            </div>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        <button class="check-btn" id="checkBtn" onclick="checkAnswer()">تحقق من الإجابة</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                words: ["يكتبُ", "الطالبُ", "الدرسَ", "بقلمٍ"],
+                verb: "يكتبُ",
+                subject: "الطالبُ",
+                others: ["الدرسَ", "بقلمٍ"]
+            },
+            {
+                words: ["تلعبُ", "البنتُ", "في", "الحديقةِ"],
+                verb: "تلعبُ",
+                subject: "البنتُ",
+                others: ["في", "الحديقةِ"]
+            },
+            {
+                words: ["يسبحُ", "السمكُ", "في", "البحرِ"],
+                verb: "يسبحُ",
+                subject: "السمكُ",
+                others: ["في", "البحرِ"]
+            },
+            {
+                words: ["تطيرُ", "العصافيرُ", "فوقَ", "الأشجارِ"],
+                verb: "تطيرُ",
+                subject: "العصافيرُ",
+                others: ["فوقَ", "الأشجارِ"]
+            },
+            {
+                words: ["يشرحُ", "المعلمُ", "الدرسَ", "للطلابِ"],
+                verb: "يشرحُ",
+                subject: "المعلمُ",
+                others: ["الدرسَ", "للطلابِ"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createWord(text) {
+            const word = document.createElement('div');
+            word.className = 'word';
+            word.textContent = text;
+            word.draggable = true;
+            
+            word.addEventListener('dragstart', e => {
+                word.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', text);
+            });
+            
+            word.addEventListener('dragend', () => {
+                word.classList.remove('dragging');
+            });
+            
+            return word;
+        }
+
+        function setupCategories() {
+            const categories = ['verb-category', 'subject-category', 'other-category'];
+            
+            categories.forEach(categoryId => {
+                const category = document.getElementById(categoryId);
+                
+                category.addEventListener('dragover', e => {
+                    e.preventDefault();
+                });
+                
+                category.addEventListener('drop', e => {
+                    e.preventDefault();
+                    const word = e.dataTransfer.getData('text/plain');
+                    const draggingElement = document.querySelector('.dragging');
+                    
+                    if (draggingElement) {
+                        category.appendChild(createWord(word));
+                        draggingElement.remove();
+                    }
+                });
+            });
+        }
+
+        function showQuestion() {
+            const wordBank = document.getElementById('wordBank');
+            wordBank.innerHTML = '';
+            
+            // Clear categories
+            document.getElementById('verb-category').innerHTML = '<div class="category-title">الفعل</div>';
+            document.getElementById('subject-category').innerHTML = '<div class="category-title">الفاعل</div>';
+            document.getElementById('other-category').innerHTML = '<div class="category-title">باقي الكلمات</div>';
+            
+            // Add shuffled words to word bank
+            const shuffledWords = shuffleArray([...sentences[currentQuestion].words]);
+            shuffledWords.forEach(word => {
+                wordBank.appendChild(createWord(word));
+            });
+            
+            // Reset feedback and buttons
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer() {
+            const verbCategory = Array.from(document.getElementById('verb-category').children)
+                .filter(child => child.className === 'word')
+                .map(word => word.textContent);
+            
+            const subjectCategory = Array.from(document.getElementById('subject-category').children)
+                .filter(child => child.className === 'word')
+                .map(word => word.textContent);
+            
+            const otherCategory = Array.from(document.getElementById('other-category').children)
+                .filter(child => child.className === 'word')
+                .map(word => word.textContent);
+
+            const currentSentence = sentences[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            
+            const isCorrect = 
+                verbCategory.length === 1 && verbCategory[0] === currentSentence.verb &&
+                subjectCategory.length === 1 && subjectCategory[0] === currentSentence.subject &&
+                otherCategory.length === currentSentence.others.length && 
+                currentSentence.others.every(word => otherCategory.includes(word));
+
+            if (isCorrect) {
+                feedback.textContent = 'أحسنت! تصنيف صحيح';
+                feedback.className = 'feedback correct celebrate';
+                score += 10;
+                document.getElementById('score').textContent = score;
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
+            } else {
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < sentences.length) {
+                showQuestion();
+            } else {
+                const container = document.querySelector('.container');
+                container.innerHTML = `
+                    <h1>أحسنت!</h1>
+                    <div class="game-info">
+                        <div class="score">مجموع نقاطك: ${score}</div>
+                        <div>لقد أكملت جميع الأسئلة بنجاح!</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize game
+        setupCategories();
+        showQuestion();
+    </script>
+</body>
+</html>

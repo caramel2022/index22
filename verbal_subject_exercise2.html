@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين الفاعل في الجملة الفعلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 150, 136, 0.1);
+        }
+        h1 {
+            color: #00796b;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .exercise-container {
+            background-color: #f5fdfd;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #b2ebf2;
+        }
+        .sentence {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: #004d40;
+            text-align: center;
+            line-height: 1.6;
+            padding: 15px;
+            background-color: #e0f7fa;
+            border-radius: 10px;
+        }
+        .options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .option {
+            padding: 15px 30px;
+            background-color: #26a69a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.4em;
+            min-width: 120px;
+        }
+        .option:hover {
+            background-color: #00897b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 150, 136, 0.2);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            font-size: 1.4em;
+        }
+        .correct {
+            background-color: #a5d6a7;
+            color: #1b5e20;
+        }
+        .incorrect {
+            background-color: #ffcdd2;
+            color: #b71c1c;
+        }
+        .score {
+            text-align: center;
+            font-size: 1.6em;
+            margin-top: 25px;
+            color: #00695c;
+            font-weight: bold;
+        }
+        .next-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 35px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.4em;
+            transition: all 0.3s ease;
+            font-family: 'Noto Kufi Arabic', Arial, sans-serif;
+        }
+        .next-btn:hover {
+            background-color: #00796b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 150, 136, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .sentence {
+                font-size: 1.5em;
+            }
+            .option {
+                font-size: 1.2em;
+                padding: 12px 25px;
+            }
+            .score {
+                font-size: 1.4em;
+            }
+            .next-btn {
+                font-size: 1.2em;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين الفاعل في الجملة الفعلية</h1>
+        <div class="exercise-container">
+            <div id="sentence" class="sentence"></div>
+            <div id="options" class="options"></div>
+            <div id="result" class="result"></div>
+        </div>
+        <div id="score" class="score">النتيجة: 0/0</div>
+        <button id="nextBtn" class="next-btn">السؤال التالي</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                text: "كَتَبَ الطالِبُ الدَّرْسَ",
+                subject: "الطالِبُ",
+                options: ["الطالِبُ", "الدَّرْسَ", "كَتَبَ"]
+            },
+            {
+                text: "قَرَأَ مُحَمَّدٌ الكِتابَ",
+                subject: "مُحَمَّدٌ",
+                options: ["قَرَأَ", "مُحَمَّدٌ", "الكِتابَ"]
+            },
+            {
+                text: "لَعِبَ الأَطْفالُ في الحَديقَةِ",
+                subject: "الأَطْفالُ",
+                options: ["لَعِبَ", "الأَطْفالُ", "الحَديقَةِ"]
+            },
+            {
+                text: "شَرِبَتْ البِنْتُ العَصيرَ",
+                subject: "البِنْتُ",
+                options: ["شَرِبَتْ", "البِنْتُ", "العَصيرَ"]
+            },
+            {
+                text: "نامَ الطِّفْلُ مُبَكِّراً",
+                subject: "الطِّفْلُ",
+                options: ["نامَ", "الطِّفْلُ", "مُبَكِّراً"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let totalAnswered = 0;
+
+        function displayQuestion() {
+            const question = sentences[currentQuestion];
+            document.getElementById('sentence').textContent = question.text;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('result').className = 'result';
+        }
+
+        function checkAnswer(selected) {
+            const question = sentences[currentQuestion];
+            const resultDiv = document.getElementById('result');
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach(button => button.disabled = true);
+
+            if (selected === question.subject) {
+                score++;
+                resultDiv.textContent = 'أحسنت! إجابة صحيحة';
+                resultDiv.className = 'result correct';
+            } else {
+                resultDiv.textContent = 'غير صحيح. الإجابة الصحيحة هي: ' + question.subject;
+                resultDiv.className = 'result incorrect';
+            }
+            
+            totalAnswered++;
+            document.getElementById('score').textContent = `النتيجة: ${score}/${totalAnswered}`;
+            resultDiv.style.display = 'block';
+        }
+
+        document.getElementById('nextBtn').onclick = () => {
+            currentQuestion = (currentQuestion + 1) % sentences.length;
+            displayQuestion();
+        };
+
+        // Start the exercise
+        displayQuestion();
+    </script>
+</body>
+</html>

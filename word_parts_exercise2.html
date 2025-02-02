@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تمرين 2 - أقسام الكلمة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: right;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .explanation {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .exercise {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .question {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .word {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            gap: 10px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .option {
+            padding: 8px 16px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .selected {
+            background-color: #3498db;
+            color: white;
+        }
+        .check-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين 2 - أقسام الكلمة</h1>
+        
+        <div class="explanation">
+            <p>في هذا التمرين، حدد نوع الكلمة: اسم، فعل، أو حرف.</p>
+        </div>
+
+        <div class="exercise">
+            <div class="question" id="q1">
+                <div class="word">كَتَبَ</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(1, 'اسم')">اسم</div>
+                    <div class="option" onclick="selectOption(1, 'فعل')">فعل</div>
+                    <div class="option" onclick="selectOption(1, 'حرف')">حرف</div>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question" id="q2">
+                <div class="word">في</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(2, 'اسم')">اسم</div>
+                    <div class="option" onclick="selectOption(2, 'فعل')">فعل</div>
+                    <div class="option" onclick="selectOption(2, 'حرف')">حرف</div>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question" id="q3">
+                <div class="word">كِتَاب</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(3, 'اسم')">اسم</div>
+                    <div class="option" onclick="selectOption(3, 'فعل')">فعل</div>
+                    <div class="option" onclick="selectOption(3, 'حرف')">حرف</div>
+                </div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <button onclick="checkAllAnswers()" class="check-btn">تحقق من الإجابات</button>
+            <div id="result"></div>
+        </div>
+        <button onclick="window.location.href='exercise9_word_parts.html'" class="back-btn">العودة للتمارين</button>
+    </div>
+
+    <script>
+        let answers = {
+            1: '',
+            2: '',
+            3: ''
+        };
+
+        let correctAnswers = {
+            1: 'فعل',
+            2: 'حرف',
+            3: 'اسم'
+        };
+
+        function selectOption(questionNum, answer) {
+            answers[questionNum] = answer;
+            
+            // Remove selected class from all options in the question
+            document.querySelectorAll(`#q${questionNum} .option`).forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.target.classList.add('selected');
+        }
+
+        function showFeedback(questionNum) {
+            const feedbackElement = document.getElementById(`feedback${questionNum}`);
+            const userAnswer = answers[questionNum];
+            const correctAnswer = correctAnswers[questionNum];
+            
+            if (userAnswer === correctAnswer) {
+                feedbackElement.innerHTML = '✓ إجابة صحيحة!';
+                feedbackElement.style.color = '#2ecc71';
+            } else {
+                feedbackElement.innerHTML = `✗ إجابة خاطئة. الإجابة الصحيحة هي: ${correctAnswer}`;
+                feedbackElement.style.color = '#e74c3c';
+            }
+        }
+
+        function checkAllAnswers() {
+            let score = 0;
+            
+            // Check each answer and show feedback
+            for (let i = 1; i <= 3; i++) {
+                if (answers[i] === correctAnswers[i]) {
+                    score++;
+                }
+                showFeedback(i);
+            }
+            
+            // Show final score
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `النتيجة النهائية: ${score} من 3`;
+            resultElement.style.color = score === 3 ? '#2ecc71' : '#e74c3c';
+        }
+    </script>
+</body>
+</html>

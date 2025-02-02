@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لعبة الجملة الفعلية والمفعول به</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff, #e6f3ff);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .game-area {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        .sentence {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #34495e;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+        .score {
+            font-size: 20px;
+            color: #27ae60;
+            margin: 20px 0;
+        }
+        .feedback {
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .correct {
+            background-color: #a8f0c6;
+            color: #2ecc71;
+        }
+        .incorrect {
+            background-color: #ffd3d3;
+            color: #e74c3c;
+        }
+        .home-button {
+            background-color: #95a5a6;
+            margin-top: 20px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة اكتشاف المفعول به 🎯</h1>
+        <div class="score">النقاط: <span id="score">0</span></div>
+        <div class="game-area">
+            <div class="sentence" id="sentence"></div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <button onclick="nextQuestion()" id="nextBtn" style="display: none;">السؤال التالي</button>
+        <button onclick="window.history.back()" class="home-button">العودة</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                sentence: "قرأ الطالبُ الكتابَ",
+                options: ["الكتابَ", "الطالبُ", "قرأ"],
+                correct: "الكتابَ"
+            },
+            {
+                sentence: "كتب المعلمُ الدرسَ",
+                options: ["المعلمُ", "الدرسَ", "كتب"],
+                correct: "الدرسَ"
+            },
+            {
+                sentence: "أكل الطفلُ التفاحةَ",
+                options: ["الطفلُ", "التفاحةَ", "أكل"],
+                correct: "التفاحةَ"
+            },
+            {
+                sentence: "شرب محمدٌ الحليبَ",
+                options: ["محمدٌ", "الحليبَ", "شرب"],
+                correct: "الحليبَ"
+            },
+            {
+                sentence: "فتح الولدُ البابَ",
+                options: ["الولدُ", "البابَ", "فتح"],
+                correct: "البابَ"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const question = sentences[currentQuestion];
+            document.getElementById('sentence').textContent = question.sentence;
+            
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer(selected) {
+            const question = sentences[currentQuestion];
+            const feedbackDiv = document.getElementById('feedback');
+            const buttons = document.querySelectorAll('.options button');
+            
+            buttons.forEach(button => button.disabled = true);
+
+            if (selected === question.correct) {
+                score += 10;
+                feedbackDiv.textContent = "أحسنت! إجابة صحيحة 🎉";
+                feedbackDiv.className = 'feedback correct';
+            } else {
+                feedbackDiv.textContent = "حاول مرة أخرى! الإجابة الصحيحة هي: " + question.correct;
+                feedbackDiv.className = 'feedback incorrect';
+            }
+
+            document.getElementById('score').textContent = score;
+            
+            if (currentQuestion < sentences.length - 1) {
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                feedbackDiv.textContent += "\nانتهت اللعبة! مجموع نقاطك: " + score;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < sentences.length) {
+                displayQuestion();
+            }
+        }
+
+        // Start the game
+        displayQuestion();
+    </script>
+</body>
+</html>

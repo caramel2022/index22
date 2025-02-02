@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تمرين الوصف</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Naskh Arabic', serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #303f9f;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .words-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f3f4ff;
+            border-radius: 20px;
+            justify-content: center;
+        }
+
+        .word {
+            background: linear-gradient(45deg, #3949ab, #1e88e5);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .word:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .sentence {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3em;
+            flex-wrap: wrap;
+        }
+
+        .dropzone {
+            min-width: 200px;
+            height: 45px;
+            border: 3px dashed #3949ab;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            font-size: 1.1em;
+            background: #f5f5ff;
+        }
+
+        .dropzone.filled {
+            border-style: solid;
+            background: #e3f2fd;
+        }
+
+        .btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #2196f3, #1976d2);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.4em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .image-exercise {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            margin-top: 40px;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover {
+            transform: scale(1.03);
+        }
+
+        .exercise-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .description-form {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            color: #1a237e;
+            font-weight: bold;
+        }
+
+        .description-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            font-family: 'Noto Naskh Arabic', serif;
+            direction: rtl;
+        }
+
+        .description-input:focus {
+            border-color: #2196f3;
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+            outline: none;
+        }
+
+        .description-input.correct {
+            border-color: #4caf50;
+            background-color: #f1f8e9;
+        }
+
+        .description-input.incorrect {
+            border-color: #f44336;
+            background-color: #ffebee;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: #666;
+            min-height: 25px;
+        }
+
+        .feedback.success {
+            color: #4caf50;
+        }
+
+        .feedback.error {
+            color: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .word {
+                font-size: 1.1em;
+            }
+
+            .sentence {
+                font-size: 1.2em;
+            }
+
+            .description-input {
+                font-size: 1.1em;
+            }
+        }
+
+        .game-exercise {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 40px;
+            border-radius: 25px;
+            margin-top: 40px;
+        }
+
+        .scene-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .scene-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .game-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hotspots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hotspot {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        .hotspot.correct {
+            background: rgba(76, 175, 80, 0.6);
+            border-color: #4caf50;
+            animation: none;
+        }
+
+        .game-controls {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .score-board {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .description-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            color: #1a237e;
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: move;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .card.dragging {
+            opacity: 0.5;
+        }
+
+        .game-feedback {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .stars {
+            margin-bottom: 15px;
+        }
+
+        .star {
+            font-size: 2em;
+            margin: 0 5px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .star.active {
+            opacity: 1;
+        }
+
+        .feedback-text {
+            font-size: 1.3em;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الوَصْف (٢)</h1>
+        <div class="exercise">
+            <h2>أَتَدَرَّبُ مَعَ زُمَلائي</h2>
+            <div class="words-bank" id="wordsBank">
+                <span class="word">المُعَبَّدَة</span>
+                <span class="word">الخَلابَة</span>
+                <span class="word">الصِّغار</span>
+                <span class="word">المُكْتَظَّة</span>
+                <span class="word">مُمْتِعَة</span>
+                <span class="word">الحَديثَة</span>
+                <span class="word">المُذْهِلَة</span>
+                <span class="word">المُلَوَّث</span>
+            </div>
+
+            <div class="sentences">
+                <div class="sentence">
+                    <span>قَضَتْ الأُسْرَةُ عُطْلَةً</span>
+                    <div class="dropzone" data-correct="مُمْتِعَة"></div>
+                    <span>بَيْنَ أَحْضانِ الطَّبيعَةِ</span>
+                </div>
+
+                <div class="sentence">
+                    <span>أُعْجِبَ الأَطْفالُ</span>
+                    <div class="dropzone" data-correct="الصِّغار"></div>
+                    <span>بِجَمالِ المآثِرِ التّاريخِيَّةِ</span>
+                </div>
+
+                <div class="sentence">
+                    <span>يُعاني سُكّانُ المُدُنِ مِنَ الهَواءِ</span>
+                    <div class="dropzone" data-correct="المُلَوَّث"></div>
+                    <span>وَالشَّوارِعِ</span>
+                    <div class="dropzone" data-correct="المُكْتَظَّة"></div>
+                </div>
+
+                <div class="sentence">
+                    <span>يَحْتاجُ سُكّانُ القُرى لِلطُّرُقِ</span>
+                    <div class="dropzone" data-correct="المُعَبَّدَة"></div>
+                    <span>وَالمُسْتَشْفَياتِ</span>
+                    <div class="dropzone" data-correct="الحَديثَة"></div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="checkAnswers()">تَحَقَّق من إجاباتك</button>
+        </div>
+
+        <div class="exercise image-exercise">
+            <h2>أَصِفُ المَكانَ</h2>
+            
+            <div class="image-container">
+                <img src="https://up6.cc/2025/01/173824941575151.png" alt="مسجد الكتبية" class="exercise-image">
+            </div>
+
+            <div class="description-form">
+                <div class="input-group">
+                    <label>مَسْجِدُ الكُتُبِيَّةِ</label>
+                    <input type="text" class="description-input" data-correct="مَسْجِدٌ تاريخيٌّ عَظيمٌ في مَدينَةِ مَراكِش" placeholder="أكمل الوصف...">
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>حَديقَة</label>
+                    <input type="text" class="description-input" data-correct="جَميلَةٌ تُحيطُ بِالمَسْجِدِ" placeholder="أكمل الوصف...">
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>أَشْجارُ النَّخيلِ</label>
+                    <input type="text" class="description-input" data-correct="باسِقَةٌ تُزَيِّنُ المَكانَ" placeholder="أكمل الوصف...">
+                    <div class="feedback"></div>
+                </div>
+
+                <button class="btn check-description">تَحَقَّق من الوَصْف</button>
+            </div>
+        </div>
+
+        <div class="exercise game-exercise">
+            <h2>لُعْبَة وَصْف المَشْهَد</h2>
+            
+            <div class="scene-container">
+                <div class="scene-image">
+                    <img src="https://up6.cc/2025/01/173824998576391.jpg" alt="مشهد طبيعي" class="game-image">
+                    <div class="hotspots">
+                        <div class="hotspot" style="top: 10%; left: 20%" data-description="السَّماء صافِيَة"></div>
+                        <div class="hotspot" style="top: 10%; left: 80%" data-description="الشَّجَرَة عالِيَة مُثْمِرَة"></div>
+                        <div class="hotspot" style="top: 50%; left: 80%" data-description="العُشْب أَخْضَر"></div>
+                        <div class="hotspot" style="top: 80%; left: 50%" data-description="البُحَيْرَة زَرْقاء"></div>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <div class="score-board">
+                        النقاط: <span class="score">0</span> / 4
+                    </div>
+                    <div class="description-cards">
+                        <div class="card" draggable="true" data-target="السَّماء">السَّماء صافِيَة</div>
+                        <div class="card" draggable="true" data-target="الشَّجَرَة">الشَّجَرَة عالِيَة مُثْمِرَة</div>
+                        <div class="card" draggable="true" data-target="العُشْب">العُشْب أَخْضَر</div>
+                        <div class="card" draggable="true" data-target="البُحَيْرَة">البُحَيْرَة زَرْقاء</div>
+                    </div>
+                </div>
+
+                <div class="game-feedback">
+                    <div class="stars">
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                    </div>
+                    <p class="feedback-text">اسحب البطاقات إلى النقاط المضيئة في الصورة!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedWord = null;
+
+        document.querySelectorAll('.word').forEach(word => {
+            word.addEventListener('click', function() {
+                if (selectedWord === this) {
+                    this.style.opacity = '1';
+                    selectedWord = null;
+                } else {
+                    if (selectedWord) {
+                        selectedWord.style.opacity = '1';
+                    }
+                    this.style.opacity = '0.6';
+                    selectedWord = this;
+                }
+            });
+        });
+
+        document.querySelectorAll('.dropzone').forEach(dropzone => {
+            dropzone.addEventListener('click', function() {
+                if (selectedWord && !this.textContent) {
+                    this.textContent = selectedWord.textContent;
+                    this.classList.add('filled');
+                    selectedWord.style.display = 'none';
+                    selectedWord = null;
+                } else if (this.textContent) {
+                    const word = document.createElement('span');
+                    word.className = 'word';
+                    word.textContent = this.textContent;
+                    document.getElementById('wordsBank').appendChild(word);
+                    this.textContent = '';
+                    this.classList.remove('filled');
+                    
+                    word.addEventListener('click', function() {
+                        if (selectedWord === this) {
+                            this.style.opacity = '1';
+                            selectedWord = null;
+                        } else {
+                            if (selectedWord) {
+                                selectedWord.style.opacity = '1';
+                            }
+                            this.style.opacity = '0.6';
+                            selectedWord = this;
+                        }
+                    });
+                }
+            });
+        });
+
+        function checkAnswers() {
+            let allCorrect = true;
+            document.querySelectorAll('.dropzone').forEach(dropzone => {
+                const correct = dropzone.getAttribute('data-correct');
+                if (dropzone.textContent === correct) {
+                    dropzone.style.backgroundColor = '#d4edda';
+                } else {
+                    dropzone.style.backgroundColor = '#f8d7da';
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                alert('أحسنت! جميع الإجابات صحيحة! 🎉');
+            } else {
+                alert('حاول مرة أخرى! بعض الإجابات غير صحيحة');
+            }
+        }
+
+        // Add event listener for the description exercise
+        document.querySelector('.check-description').addEventListener('click', function() {
+            let allCorrect = true;
+            document.querySelectorAll('.description-input').forEach(input => {
+                const correct = input.getAttribute('data-correct');
+                const userInput = input.value.trim();
+                const feedbackEl = input.nextElementSibling;
+                
+                // Remove previous classes
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userInput === '') {
+                    feedbackEl.textContent = 'الرجاء إدخال وصف';
+                    feedbackEl.className = 'feedback error';
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                } else if (userInput === correct) {
+                    feedbackEl.textContent = 'إجابة صحيحة! أحسنت!';
+                    feedbackEl.className = 'feedback success';
+                    input.classList.add('correct');
+                } else {
+                    feedbackEl.textContent = 'حاول مرة أخرى';
+                    feedbackEl.className = 'feedback error';
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                alert('أحسنت! لقد أكملت جميع الأوصاف بشكل صحيح! 🎉');
+            }
+        });
+
+        // Game Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            let score = 0;
+            const cards = document.querySelectorAll('.card');
+            const hotspots = document.querySelectorAll('.hotspot');
+            const stars = document.querySelectorAll('.star');
+            const feedbackText = document.querySelector('.feedback-text');
+            const scoreElement = document.querySelector('.score');
+
+            cards.forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.dataset.target);
+                });
+
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+            });
+
+            hotspots.forEach(hotspot => {
+                hotspot.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+
+                hotspot.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const draggedTarget = e.dataTransfer.getData('text/plain');
+                    const card = document.querySelector(`[data-target="${draggedTarget}"]`);
+                    
+                    if (!this.classList.contains('correct')) {
+                        if (this.dataset.description.includes(draggedTarget)) {
+                            this.classList.add('correct');
+                            card.style.display = 'none';
+                            score++;
+                            scoreElement.textContent = score;
+                            updateStars();
+                            
+                            if (score === 4) {
+                                feedbackText.textContent = 'أحسنت! لقد أكملت جميع الأوصاف بنجاح! 🎉';
+                                setTimeout(() => {
+                                    confetti({
+                                        particleCount: 100,
+                                        spread: 70,
+                                        origin: { y: 0.6 }
+                                    });
+                                }, 300);
+                            }
+                        } else {
+                            feedbackText.textContent = 'حاول مرة أخرى!';
+                            setTimeout(() => {
+                                feedbackText.textContent = 'اسحب البطاقات إلى النقاط المضيئة في الصورة!';
+                            }, 1500);
+                        }
+                    }
+                });
+            });
+
+            function updateStars() {
+                stars.forEach((star, index) => {
+                    if (index < score) {
+                        star.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>
