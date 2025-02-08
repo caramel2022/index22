@@ -7,65 +7,104 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0ff, #cce0ff); /* خلفية بتدرج لوني هادئ */
             text-align: center;
+            color: #333;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 32px;
+            color: #0056b3; /* لون أزرق داكن */
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
         }
         .exercise-area {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
         }
         .word {
-            font-size: 24px;
-            margin: 10px;
-            padding: 10px;
-            background-color: #e9ecef;
-            border-radius: 5px;
+            font-size: 28px;
+            margin: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e9ecef, #dde1e5);
+            border-radius: 10px;
             display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
         }
         .options {
-            margin: 15px 0;
+            margin: 20px 0;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
-            background-color: #007bff;
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         button:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         .feedback {
-            margin-top: 15px;
-            font-size: 18px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
         }
         .correct {
-            color: green;
+            color: #28a745; /* لون أخضر للإجابة الصحيحة */
         }
         .incorrect {
-            color: red;
+            color: #dc3545; /* لون أحمر للإجابة الخاطئة */
         }
         .score {
-            font-size: 20px;
-            margin: 15px 0;
+            font-size: 22px;
+            margin: 20px 0;
+            color: #007bff;
         }
         #backButton {
-            background-color: #6c757d;
-            margin-top: 20px;
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            margin-top: 30px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #007bff;
+            transition: width 0.5s ease;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .bounce {
+            animation: bounce 0.5s;
         }
     </style>
 </head>
@@ -75,6 +114,9 @@
         <p>حدد نوع "ال" في الكلمات التالية: هل هي شمسية أم قمرية؟</p>
         
         <div class="exercise-area">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
             <div id="currentWord" class="word"></div>
             <div class="options">
                 <button onclick="checkAnswer('شمسية')">ال الشمسية</button>
@@ -90,16 +132,16 @@
 
     <script>
         const words = [
-            { word: "الشَّمس", type: "شمسية" },
+            { word: "الشَّمْس", type: "شمسية" },
             { word: "القَمَر", type: "قمرية" },
-            { word: "النَّاس", type: "شمسية" },
-            { word: "الكِتاب", type: "قمرية" },
-            { word: "الطَّعام", type: "شمسية" },
-            { word: "السَّماء", type: "شمسية" },
-            { word: "المَدرَسة", type: "قمرية" },
-            { word: "الرَّحمن", type: "شمسية" },
-            { word: "البَيت", type: "قمرية" },
-            { word: "الذِّكر", type: "شمسية" }
+            { word: "النَّاس", type: "شمسية" },
+            { word: "الكِتَاب", type: "قمرية" },
+            { word: "الطَّعَام", type: "شمسية" },
+            { word: "السَّمَاء", type: "شمسية" },
+            { word: "المَدْرَسَة", type: "قمرية" },
+            { word: "الرَّحْمَن", type: "شمسية" },
+            { word: "البَيْت", type: "قمرية" },
+            { word: "الذِّكْر", type: "شمسية" }
         ];
 
         let currentIndex = 0;
@@ -110,16 +152,19 @@
             document.getElementById('score').textContent = score;
             document.getElementById('total').textContent = currentIndex;
             document.getElementById('feedback').textContent = '';
+            updateProgressBar();
         }
 
         function checkAnswer(answer) {
             const correctType = words[currentIndex].type;
             const feedbackElement = document.getElementById('feedback');
+            const wordElement = document.getElementById('currentWord');
             
             if (answer === correctType) {
                 score++;
                 feedbackElement.textContent = "أحسنت! إجابة صحيحة";
                 feedbackElement.className = "feedback correct";
+                wordElement.classList.add('bounce');
             } else {
                 feedbackElement.textContent = `غير صحيح. الإجابة الصحيحة هي: ${correctType}`;
                 feedbackElement.className = "feedback incorrect";
@@ -128,6 +173,7 @@
             currentIndex++;
             
             setTimeout(() => {
+                wordElement.classList.remove('bounce');
                 if (currentIndex < words.length) {
                     displayWord();
                 } else {
@@ -140,10 +186,27 @@
             }, 1500);
         }
 
+        function updateProgressBar() {
+            const progress = ((currentIndex + 1) / words.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
         function restartExercise() {
             currentIndex = 0;
             score = 0;
             words.sort(() => Math.random() - 0.5);
+            displayWord();
+            document.querySelector('.exercise-area').innerHTML = `
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <div id="currentWord" class="word"></div>
+                <div class="options">
+                    <button onclick="checkAnswer('شمسية')">ال الشمسية</button>
+                    <button onclick="checkAnswer('قمرية')">ال القمرية</button>
+                </div>
+                <div id="feedback" class="feedback"></div>
+            `;
             displayWord();
         }
 

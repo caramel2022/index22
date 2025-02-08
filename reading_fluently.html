@@ -150,6 +150,12 @@
         </div>
 
         <a href="#" class="back-button">عودة إلى الصفحة السابقة</a>
+        <script>
+            document.querySelector('.back-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = 'activities.html';
+            });
+        </script>
     </div>
 
     <script>

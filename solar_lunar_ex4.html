@@ -4,73 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تمرين 4 - استمع وحدد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #f0f8ff;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 90%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2575fc;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
         }
         .exercise-area {
             margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 20px;
+            border: 2px solid #2575fc;
+            border-radius: 10px;
+            background: #fff;
         }
         .word {
-            font-size: 24px;
-            margin: 10px;
-            padding: 10px;
-            background-color: #e9ecef;
-            border-radius: 5px;
+            font-size: 2rem;
+            margin: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 10px;
             display: inline-block;
+            color: #333;
         }
         .options {
-            margin: 15px 0;
+            margin: 20px 0;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
-            background-color: #007bff;
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 1.1rem;
+            background-color: #2575fc;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #1a5bbf;
         }
         .feedback {
-            margin-top: 15px;
-            font-size: 18px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
         .correct {
-            color: green;
+            color: #28a745;
         }
         .incorrect {
-            color: red;
+            color: #dc3545;
         }
         .score {
-            font-size: 20px;
-            margin: 15px 0;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: #2575fc;
         }
         #backButton {
             background-color: #6c757d;
         }
+        #backButton:hover {
+            background-color: #5a6268;
+        }
         .play-button {
-            font-size: 24px;
+            font-size: 1.5rem;
             padding: 15px 30px;
             margin: 20px;
             background-color: #28a745;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .play-button:hover {
+            background-color: #218838;
+        }
+        .final-score {
+            font-size: 1.5rem;
+            color: #2575fc;
+            margin: 20px 0;
         }
     </style>
 </head>
@@ -151,8 +187,8 @@
         function showFinalScore() {
             const exerciseArea = document.querySelector('.exercise-area');
             exerciseArea.innerHTML = `
-                <h2>انتهى التمرين!</h2>
-                <p>نتيجتك النهائية: ${score} من ${words.length}</p>
+                <h2 class="final-score">انتهى التمرين!</h2>
+                <p class="final-score">نتيجتك النهائية: ${score} من ${words.length}</p>
                 <button onclick="resetExercise()">إعادة التمرين</button>
             `;
         }

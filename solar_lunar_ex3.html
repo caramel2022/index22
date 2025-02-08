@@ -3,169 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تمرين 3 - أكمل الكلمة</title>
+    <title>مغامرة اللام الشمسية واللام القمرية - 3D</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #f0f8ff;
-            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
+        #instructions {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.9);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 90%;
+            transition: opacity 1s ease;
         }
-        .exercise-area {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .word-container {
+        #instructions h1 {
             font-size: 24px;
-            margin: 20px;
-            direction: rtl;
+            margin: 0;
         }
-        .letter-input {
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-            text-align: center;
-            margin: 0 5px;
-            border: 2px solid #007bff;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .feedback {
-            margin-top: 15px;
-            font-size: 18px;
-        }
-        .correct {
-            color: green;
-        }
-        .incorrect {
-            color: red;
-        }
-        .score {
-            font-size: 20px;
-            margin: 15px 0;
-        }
-        #backButton {
-            background-color: #6c757d;
-        }
-        .hint {
-            color: #666;
+        #instructions p {
             font-size: 16px;
             margin: 10px 0;
+        }
+        #message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #ffcc00;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            #instructions h1 {
+                font-size: 20px;
+            }
+            #instructions p {
+                font-size: 14px;
+            }
+            #message {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>تمرين 3: أكمل الكلمة</h1>
-        <p>أكمل الكلمات التالية بإضافة "ال" المناسبة</p>
-        
-        <div class="exercise-area">
-            <div id="currentWord" class="word-container"></div>
-            <div class="hint">اكتب "ل" فقط. سيتم إضافة "ا" تلقائياً</div>
-            <input type="text" class="letter-input" maxlength="1" id="letterInput">
-            <button onclick="checkAnswer()">تحقق</button>
-            <div id="feedback" class="feedback"></div>
-        </div>
-        
-        <div class="score">النتيجة: <span id="score">0</span> من <span id="total">0</span></div>
-        <button onclick="resetExercise()">إعادة التمرين</button>
-        <button id="backButton" onclick="window.location.href='apology_exercises.html'">العودة للقائمة الرئيسية</button>
+    <div id="instructions">
+        <h1>مرحبًا! 🌌</h1>
+        <p>أنت الآن في مهمة فضائية لتعلم اللام الشمسية واللام القمرية.</p>
+        <p>انقر على الكواكب لرؤية الكلمات، وأجب عن السؤال الذي يظهر.</p>
+        <p>إذا كانت الإجابة صحيحة، سيصبح الكوكب أخضر. إذا كانت خاطئة، سيصبح أحمر.</p>
+        <p>استمتع بالمغامرة! 🚀</p>
     </div>
-
+    <div id="message"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // إعداد المشهد
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // إضاءة
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        // إضافة النجوم
+        const starGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+        const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        for (let i = 0; i < 500; i++) {
+            const star = new THREE.Mesh(starGeometry, starMaterial);
+            star.position.set(
+                Math.random() * 600 - 300,
+                Math.random() * 600 - 300,
+                Math.random() * 600 - 300
+            );
+            scene.add(star);
+        }
+
+        // إضافة الكواكب
+        const planets = [];
         const words = [
-            { word: "شَّمس", type: "شمسية", complete: "الشَّمس" },
-            { word: "قَمَر", type: "قمرية", complete: "القَمَر" },
-            { word: "طَّائِر", type: "شمسية", complete: "الطَّائِر" },
-            { word: "كِتاب", type: "قمرية", complete: "الكِتاب" },
-            { word: "سَّيّارَة", type: "شمسية", complete: "السَّيّارَة" },
-            { word: "مَدينَة", type: "قمرية", complete: "المَدينَة" },
-            { word: "نَّجم", type: "شمسية", complete: "النَّجم" },
-            { word: "بَيت", type: "قمرية", complete: "البَيت" },
-            { word: "ذَّهَب", type: "شمسية", complete: "الذَّهَب" },
-            { word: "عِلم", type: "قمرية", complete: "العِلم" }
+            { word: "الشَّمْس", type: "شمسية", color: 0xffcc00 },
+            { word: "القَمَر", type: "قمرية", color: 0xcccccc },
+            { word: "الكِتَاب", type: "قمرية", color: 0x88b04b },
+            { word: "الصَّحْرَاء", type: "شمسية", color: 0xff6f61 },
+            { word: "النَّجْم", type: "شمسية", color: 0x6b5b95 },
+            { word: "البَحْر", type: "قمرية", color: 0x00a8e8 },
+            { word: "السَّمَاء", type: "شمسية", color: 0x87CEEB },
+            { word: "الجَبَل", type: "قمرية", color: 0x8B4513 },
+            { word: "الشَّجَر", type: "شمسية", color: 0x228B22 },
+            { word: "الفَجْر", type: "قمرية", color: 0xFFD700 }
         ];
 
-        let currentIndex = 0;
-        let score = 0;
+        words.forEach((item, index) => {
+            const geometry = new THREE.SphereGeometry(5, 32, 32);
+            const material = new THREE.MeshPhongMaterial({ color: item.color });
+            const planet = new THREE.Mesh(geometry, material);
+            planet.position.set(
+                Math.random() * 100 - 50,
+                Math.random() * 100 - 50,
+                Math.random() * 100 - 50
+            );
+            planet.userData = item; // تخزين الكلمة ونوعها
+            scene.add(planet);
+            planets.push(planet);
+        });
 
-        function displayWord() {
-            if (currentIndex >= words.length) {
-                showFinalScore();
-                return;
-            }
-            document.getElementById('currentWord').textContent = words[currentIndex].word;
-            document.getElementById('letterInput').value = '';
-            document.getElementById('feedback').textContent = '';
-            document.getElementById('score').textContent = score;
-            document.getElementById('total').textContent = currentIndex;
+        // إخفاء التعليمات بعد 6 ثوانٍ
+        setTimeout(() => {
+            document.getElementById("instructions").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("instructions").style.display = "none";
+            }, 1000);
+        }, 6000);
+
+        // إعداد الكاميرا
+        camera.position.z = 50;
+
+        // تحريك المشهد
+        function animate() {
+            requestAnimationFrame(animate);
+            planets.forEach(planet => {
+                planet.rotation.x += 0.01;
+                planet.rotation.y += 0.01;
+            });
+            renderer.render(scene, camera);
         }
+        animate();
 
-        function checkAnswer() {
-            const input = document.getElementById('letterInput').value;
-            const currentWord = words[currentIndex];
-            const feedbackElement = document.getElementById('feedback');
-            
-            if (input === 'ل') {
-                if (currentWord.type === 'شمسية') {
-                    score++;
-                    feedbackElement.textContent = `أحسنت! الإجابة صحيحة. الكلمة الكاملة هي: ${currentWord.complete}`;
-                    feedbackElement.className = 'feedback correct';
+        // تفاعل النقر على الكواكب
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        window.addEventListener('click', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(planets);
+            if (intersects.length > 0) {
+                const planet = intersects[0].object;
+                const wordData = planet.userData;
+                const answer = prompt(`ما نوع اللام في كلمة "${wordData.word}"؟ (شمسية/قمرية)`);
+                if (answer && answer.toLowerCase() === wordData.type) {
+                    document.getElementById("message").textContent = "أحسنت! الإجابة صحيحة.";
+                    planet.material.color.set(0x00ff00); // تغيير لون الكوكب إلى الأخضر
                 } else {
-                    feedbackElement.textContent = `غير صحيح. هذه "ال" قمرية. الكلمة الكاملة هي: ${currentWord.complete}`;
-                    feedbackElement.className = 'feedback incorrect';
+                    document.getElementById("message").textContent = "حاول مرة أخرى!";
+                    planet.material.color.set(0xff0000); // تغيير لون الكوكب إلى الأحمر
                 }
-            } else {
-                feedbackElement.textContent = 'الرجاء إدخال "ل" فقط';
-                feedbackElement.className = 'feedback incorrect';
-                return;
             }
+        });
 
-            currentIndex++;
-            setTimeout(displayWord, 2000);
-        }
+        // إضافة أصوات الفضاء
+        const backgroundSound = new Audio('https://www.soundjay.com/space/sounds/space-ambience-1.mp3');
+        backgroundSound.loop = true;
+        backgroundSound.play();
 
-        function showFinalScore() {
-            const exerciseArea = document.querySelector('.exercise-area');
-            exerciseArea.innerHTML = `
-                <h2>انتهى التمرين!</h2>
-                <p>نتيجتك النهائية: ${score} من ${words.length}</p>
-                <button onclick="resetExercise()">إعادة التمرين</button>
-            `;
-        }
-
-        function resetExercise() {
-            currentIndex = 0;
-            score = 0;
-            words.sort(() => Math.random() - 0.5);
-            displayWord();
-        }
-
-        // Start the exercise
-        words.sort(() => Math.random() - 0.5);
-        displayWord();
+        const clickSound = new Audio('https://www.soundjay.com/button/sounds/button-3.mp3');
+        window.addEventListener('click', () => clickSound.play());
     </script>
 </body>
 </html>

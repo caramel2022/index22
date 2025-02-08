@@ -383,6 +383,30 @@
         .order-check-button:hover {
             background-color: #7b1fa2;
         }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+
+        .back-button:hover {
+            background-color: #3e8e41;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -694,5 +718,7 @@
             </div>
         </div>
     </div>
+
+    <a href="javascript:history.back()" class="back-button">عودة</a>
 </body>
 </html>

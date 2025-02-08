@@ -3,31 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>الصديق الجديد - الجزء 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff;
-            margin: 40px;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
             line-height: 1.8;
+            color: #333;
         }
         .container {
             background-color: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
             margin: 0 auto;
         }
         h1, h2 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        .reading-section {
+            background-color: #e8f4f8;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        .text-content {
+            font-size: 1.1em;
+            color: #34495e;
+            line-height: 1.8;
         }
         .exercise-section {
-            background-color: #e8f4f8;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            background-color: #f7f9fc;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .vocabulary-table {
             width: 100%;
@@ -37,28 +62,38 @@
         .vocabulary-table th {
             background-color: #3498db;
             color: white;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
+            font-size: 1.1em;
         }
         .vocabulary-table td {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
+            text-align: center;
         }
         .vocabulary-input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        .vocabulary-input:focus {
+            border-color: #3498db;
+            outline: none;
         }
         .check-button {
             background-color: #2ecc71;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
             margin: 20px auto;
             display: block;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
         }
         .check-button:hover {
             background-color: #27ae60;
@@ -69,97 +104,38 @@
         .incorrect {
             background-color: #f8d7da;
         }
-        .reading-section {
-            background-color: #e8f4f8;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-        }
-        .text-content {
-            font-size: 18px;
-            color: #34495e;
-        }
-        .exercise {
-            background-color: #f7f9fc;
-            padding: 15px;
-            border-right: 4px solid #3498db;
-            margin: 20px 0;
-        }
-        .comprehension-exercise {
-            font-size: 1.2em;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            transition: transform 0.3s ease;
-        }
-        .comprehension-exercise:nth-child(odd) {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        }
-        .comprehension-exercise:nth-child(even) {
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-        }
-        .comprehension-exercise:hover {
-            transform: scale(1.02);
-        }
-        .comprehension-exercise h4 {
-            color: #007acc;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-        .comprehension-exercise ol {
-            list-style-type: decimal;
-            padding-left: 20px;
-        }
-        .comprehension-exercise li {
-            margin-bottom: 10px;
-        }
-        .comprehension-exercise input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .comprehension-exercise button {
-            background-color: #007acc;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .comprehension-exercise button:hover {
-            background-color: #005f99;
-        }
         .qa-pair {
             margin-bottom: 25px;
             background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         .answer {
             font-weight: bold;
             margin-bottom: 10px;
             color: #2c3e50;
+            font-size: 1.1em;
         }
         .question-input {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
-            border-radius: 5px;
+            border-radius: 6px;
             margin-top: 5px;
-            font-size: 16px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        .question-input:focus {
+            border-color: #3498db;
+            outline: none;
         }
         .feedback {
-            margin-top: 5px;
-            padding: 5px;
-            border-radius: 4px;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 6px;
             display: none;
+            font-size: 1em;
         }
         .feedback.correct {
             display: block;
@@ -171,30 +147,67 @@
             background-color: #f8d7da;
             color: #721c24;
         }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
+        .comprehension-exercise {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            transition: transform 0.3s ease;
         }
-        h1 {
-            color: #333;
+        .comprehension-exercise:hover {
+            transform: translateY(-5px);
         }
-        p {
-            line-height: 1.6;
-            color: #666;
+        .comprehension-exercise h4 {
+            color: #007acc;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
-        .button {
-            background-color: #5cb85c;
+        .comprehension-exercise ol {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        .comprehension-exercise li {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .comprehension-exercise input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .comprehension-exercise button {
+            background-color: #007acc;
             color: white;
-            padding: 10px 15px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
         }
-        .button:hover {
-            background-color: #4cae4c;
+        .comprehension-exercise button:hover {
+            background-color: #005f99;
+        }
+        #backButton {
+            background-color: #3498db; /* Blue color */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        #backButton:hover {
+            background-color: #2980b9; /* Darker blue on hover */
         }
     </style>
 </head>
@@ -204,30 +217,25 @@
         
         <div class="reading-section">
             <h2>ورشة القراءة</h2>
-            <div class="exercise">
-                <h3>استعد لفهم النص:</h3>
-                <p>أضع كل كلمة أمام المعنى المناسب لها: تعاطف - الأسى - تئن - ملامح</p>
-                <p>حزن عميق وألم شديد: .........................</p>
-                <p>ما يظهر من علامات الوجه وأوصافه: .........................</p>
-            </div>
-            
-            <div class="text-content">
-                <p>تسمَّر ياسين في مكانه منتحباً، وقد بدت على ملامحه آثار الاستغراب. فلم يكن يتوقع أن يتعاطف زملاؤه مع هذا الطفل الغريب، ثم صاح غاضباً:</p>
-                <p>- لماذا تدافعون عنه؟ أنسيتم أنني أنا من يكون صديقكم؟</p>
-                <p>خيَّم الصمت ولم يُجب أحد كلمته، فتقدم ياسين نحو زملائه، وهو يسألهم من جديد:</p>
-                <p>- أجيبوني، ألستُ صديقكم؟ ألم نتعاهد أن نظل متحدين؟</p>
-                <p>اقترب محمود من ياسين، ثم أحاطه بذراعه في رفق، وهمس قائلاً:</p>
-                <p>- بلى، لكنك أسأت التصرف يا ياسين. هل نسيت أن كل الأطفال إخوة؟</p>
-                <p>وأضاف عمران قائلاً:</p>
-                <p>- ينبغي أن نحترم الآخرين يا ياسين، حتى نكسب محبتهم وصداقتهم.</p>
-                <p>أطرق ياسين برأسه في صمت، ثم التفت إلى مراد. وحين رأى ملامح الأسى التي تعلو وجهه، وقد تلطخت ملابسه بالوحل، شعر بالأسف والندم. فخطا نحوه بإيمانه معتذراً، وعلامات الخجل ترتسم على محياه، بعدما أدرك الخطأ الفادح الذي ارتكبه.</p>
-                <p>فيما تعالت تصفيقات وهتافات بقية الأطفال.</p>
-                <p>وقبل أن يتفرقوا في أرجاء الملعب مرة أخرى، مد ياسين يده إلى مراد، ثم قال مبتسماً:</p>
-                <p>- ماذا تنتظر يا صديقي؟</p>
-                <p>- هيا لنشاركك اللعب!</p>
-            </div>
-        </div>
-        
+          
+            <div class="reading-section">
+                <h2>وَرْشَةُ القِرَاءَةِ</h2>
+                <div class="text-content">
+                    <p>تَسَمَّرَ يَاسِينُ فِي مَكَانِهِ مُنْتَحِبًا، وَقَدْ بَدَتْ عَلَى مَلَامِحِهِ آثَارُ الِاسْتِغْرَابِ. فَلَمْ يَكُنْ يَتَوَقَّعُ أَنْ يَتَعَاطَفَ زُمَلَاؤُهُ مَعَ هَذَا الطِّفْلِ الغَرِيبِ، ثُمَّ صَاحَ غَاضِبًا:</p>
+                    <p>- لِمَاذَا تُدَافِعُونَ عَنْهُ؟ أَنَسِيتُمْ أَنِّي أَنَا مَنْ يَكُونُ صَدِيقَكُمْ؟</p>
+                    <p>خَيَّمَ الصَّمْتُ وَلَمْ يُجِبْ أَحَدٌ كَلِمَتَهُ، فَتَقَدَّمَ يَاسِينُ نَحْوَ زُمَلَائِهِ، وَهُوَ يَسْأَلُهُمْ مِنْ جَدِيدٍ:</p>
+                    <p>- أَجِيبُونِي، أَلَسْتُ صَدِيقَكُمْ؟ أَلَمْ نَتَعَاهَدْ أَنْ نَظَلَّ مُتَّحِدِينَ؟</p>
+                    <p>اقْتَرَبَ مَحْمُودُ مِنْ يَاسِينَ، ثُمَّ أَحَاطَهُ بِذِرَاعِهِ فِي رِفْقٍ، وَهَمَسَ قَائِلًا:</p>
+                    <p>- بَلَى، لَكِنَّكَ أَسَأْتَ التَّصَرُّفَ يَا يَاسِينُ. هَلْ نَسِيتَ أَنَّ كُلَّ الأَطْفَالِ إِخْوَةٌ؟</p>
+                    <p>وَأَضَافَ عِمْرَانُ قَائِلًا:</p>
+                    <p>- يَنْبَغِي أَنْ نُحْتَرِمَ الآخَرِينَ يَا يَاسِينُ، حَتَّى نَكْسَبَ مَحَبَّتَهُمْ وَصَدَاقَتَهُمْ.</p>
+                    <p>أَطْرَقَ يَاسِينُ بِرَأْسِهِ فِي صَمْتٍ، ثُمَّ الْتَفَتَ إِلَى مُرَادٍ. وَحِينَ رَأَى مَلَامِحَ الأَسَى الَّتِي تَعْلُو وَجْهَهُ، وَقَدْ تَلَطَّخَتْ مَلَابِسُهُ بِالْوَحْلِ، شَعَرَ بِالْأَسَفِ وَالنَّدَمِ. فَخَطَا نَحْوَهُ بِإِيمَاءَةِ اعْتِذَارٍ، وَعَلَامَاتُ الْخَجَلِ تَرْتَسِمُ عَلَى مَحْيَاهُ، بَعْدَمَا أَدْرَكَ الْخَطَأَ الْفَادِحَ الَّذِي ارْتَكَبَهُ.</p>
+                    <p>فِيمَا تَعَالَتْ تَصْفِيقَاتُ وَهْتِفَاتُ بَقِيَّةِ الْأَطْفَالِ.</p>
+                    <p>وَقَبْلَ أَنْ يَتَفَرَّقُوا فِي أَرْجَاءِ الْمَلْعَبِ مَرَّةً أُخْرَى، مَدَّ يَاسِينُ يَدَهُ إِلَى مُرَادٍ، ثُمَّ قَالَ مُبْتَسِمًا:</p>
+                    <p>- مَاذَا تَنْتَظِرُ يَا صَدِيقِي؟</p>
+                    <p>- هَيَّا لِنُشَارِكَكَ اللَّعِبَ!</p>
+                </div>
+            </div>  
         <div class="exercise-section">
             <h2>أستثمر معجم النص</h2>
             <div class="vocabulary-exercise">
@@ -310,90 +318,88 @@
                 </li>
             </ol>
             <button onclick="checkComprehensionAnswers()">تحقق من الإجابات</button>
-
-            <script>
-            function checkComprehensionAnswers() {
-                const answer1 = document.getElementById('answer1').value.trim();
-                const answer2 = document.getElementById('answer2').value.trim();
-
-                let correct = true;
-
-                if (answer1.toLowerCase() !== 'الاحترام يجلب الاحترام') {
-                    correct = false;
-                    alert('إجابة السؤال الأول غير صحيحة. حاول مرة أخرى!');
-                }
-
-                if (answer2.toLowerCase() !== 'النصيحة كانت التحلي بالصبر') {
-                    correct = false;
-                    alert('إجابة السؤال الثاني غير صحيحة. حاول مرة أخرى!');
-                }
-
-                if (correct) {
-                    alert('كل الإجابات صحيحة! أحسنت!');
-                }
-            }
-            </script>
         </div>
-        
+        <button id='backButton'>عودة</button>
         <script>
-            function checkAnswers() {
-                const inputs = document.querySelectorAll('.vocabulary-input');
-                let allCorrect = true;
-                
-                inputs.forEach(input => {
-                    const userAnswer = input.value.trim();
-                    const correctAnswer = input.dataset.correct;
-                    
-                    if (userAnswer === correctAnswer) {
-                        input.parentElement.classList.remove('incorrect');
-                        input.parentElement.classList.add('correct');
-                    } else {
-                        input.parentElement.classList.remove('correct');
-                        input.parentElement.classList.add('incorrect');
-                        allCorrect = false;
-                    }
-                });
-
-                if (allCorrect) {
-                    alert('أحسنت! جميع إجاباتك صحيحة');
-                } else {
-                    alert('حاول مرة أخرى! بعض الإجابات غير صحيحة');
-                }
-            }
-        </script>
-
-        <script>
-            function checkQuestions() {
-                const qaPairs = document.querySelectorAll('.qa-pair');
-                let allCorrect = true;
-                
-                qaPairs.forEach(pair => {
-                    const input = pair.querySelector('.question-input');
-                    const feedback = pair.querySelector('.feedback');
-                    const userQuestion = input.value.trim();
-                    const correctQuestion = input.dataset.correct;
-                    
-                    // Remove previous feedback classes
-                    feedback.classList.remove('correct', 'incorrect');
-                    
-                    if (userQuestion === correctQuestion) {
-                        feedback.textContent = 'إجابة صحيحة! أحسنت';
-                        feedback.classList.add('correct');
-                    } else {
-                        feedback.textContent = 'حاول مرة أخرى. السؤال الصحيح هو: ' + correctQuestion;
-                        feedback.classList.add('incorrect');
-                        allCorrect = false;
-                    }
-                });
-
-                if (allCorrect) {
-                    alert('أحسنت! جميع أسئلتك صحيحة');
-                }
-            }
+            document.getElementById('backButton').addEventListener('click', function() {
+                window.location.href = 'reading_activities.html';
+            });
         </script>
     </div>
 
     <script>
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.vocabulary-input');
+            let allCorrect = true;
+            
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.correct;
+                
+                if (userAnswer === correctAnswer) {
+                    input.parentElement.classList.remove('incorrect');
+                    input.parentElement.classList.add('correct');
+                } else {
+                    input.parentElement.classList.remove('correct');
+                    input.parentElement.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                alert('أحسنت! جميع إجاباتك صحيحة');
+            } else {
+                alert('حاول مرة أخرى! بعض الإجابات غير صحيحة');
+            }
+        }
+
+        function checkQuestions() {
+            const qaPairs = document.querySelectorAll('.qa-pair');
+            let allCorrect = true;
+            
+            qaPairs.forEach(pair => {
+                const input = pair.querySelector('.question-input');
+                const feedback = pair.querySelector('.feedback');
+                const userQuestion = input.value.trim();
+                const correctQuestion = input.dataset.correct;
+                
+                feedback.classList.remove('correct', 'incorrect');
+                
+                if (userQuestion === correctQuestion) {
+                    feedback.textContent = 'إجابة صحيحة! أحسنت';
+                    feedback.classList.add('correct');
+                } else {
+                    feedback.textContent = 'حاول مرة أخرى. السؤال الصحيح هو: ' + correctQuestion;
+                    feedback.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                alert('أحسنت! جميع أسئلتك صحيحة');
+            }
+        }
+
+        function checkComprehensionAnswers() {
+            const answer1 = document.getElementById('answer1').value.trim();
+            const answer2 = document.getElementById('answer2').value.trim();
+
+            let correct = true;
+
+            if (answer1.toLowerCase() !== 'الاحترام يجلب الاحترام') {
+                correct = false;
+                alert('إجابة السؤال الأول غير صحيحة. حاول مرة أخرى!');
+            }
+
+            if (answer2.toLowerCase() !== 'النصيحة كانت التحلي بالصبر') {
+                correct = false;
+                alert('إجابة السؤال الثاني غير صحيحة. حاول مرة أخرى!');
+            }
+
+            if (correct) {
+                alert('كل الإجابات صحيحة! أحسنت!');
+            }
+        }
     </script>
 </body>
 </html>

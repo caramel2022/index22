@@ -7,17 +7,33 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2575fc;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
         }
         .categories {
             display: flex;
@@ -29,36 +45,44 @@
             min-height: 200px;
             border: 2px dashed #007bff;
             border-radius: 10px;
-            padding: 10px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .category h3 {
+            font-size: 1.5em;
+            color: #007bff;
         }
         .word-bank {
             margin: 20px 0;
         }
         .word {
             display: inline-block;
-            padding: 10px;
-            margin: 5px;
+            padding: 15px;
+            margin: 10px;
             background-color: #e9ecef;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: move;
-            font-size: 18px;
+            font-size: 1.2em;
+            color: #333;
         }
         .draggable {
             cursor: move;
         }
         .score {
-            font-size: 20px;
-            margin: 15px 0;
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #2575fc;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.1em;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #0056b3;
@@ -66,9 +90,13 @@
         #backButton {
             background-color: #6c757d;
         }
+        #backButton:hover {
+            background-color: #5a6268;
+        }
         .feedback {
-            margin-top: 15px;
-            font-size: 18px;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #2575fc;
         }
     </style>
 </head>
@@ -78,7 +106,7 @@
         <p>اسحب الكلمات إلى المجموعة المناسبة: ال الشمسية أو ال القمرية</p>
 
         <div class="word-bank" id="wordBank">
-            <!-- Words will be added here by JavaScript -->
+            <!-- الكلمات ستضاف هنا بواسطة الجافا سكريبت -->
         </div>
 
         <div class="categories">
