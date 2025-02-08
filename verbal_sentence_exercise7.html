@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين السابع - تحويل الجمل الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .game-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .transformation-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .original-sentence {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            border-right: 4px solid #3498db;
+        }
+
+        .transformation-type {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .sentence-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            direction: rtl;
+        }
+
+        .sentence-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hint-button {
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .hint-button:hover {
+            color: #2c3e50;
+        }
+
+        .hint {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            color: #856404;
+        }
+
+        .progress-bar-container {
+            background: #f1f1f1;
+            border-radius: 20px;
+            height: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3498db;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .streak {
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f39c12;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين السابع - تحويل الجمل الفعلية</h1>
+
+        <div class="score-panel">
+            <div class="score">النقاط: <span class="score-value">0</span></div>
+            <div class="streak">التتابع: <span class="streak-value">0</span></div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <div class="game-container">
+            <div class="transformation-card">
+                <div class="transformation-type"></div>
+                <div class="original-sentence"></div>
+                <div class="input-container">
+                    <input type="text" class="sentence-input" placeholder="اكتب الجملة المحولة هنا...">
+                </div>
+                <div class="feedback"></div>
+                <button class="hint-button">
+                    <i class="fas fa-lightbulb"></i> تلميح
+                </button>
+                <div class="hint"></div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-primary btn-check">
+                    <i class="fas fa-check ml-2"></i> تحقق
+                </button>
+                <button class="btn btn-secondary btn-next" disabled>
+                    التالي <i class="fas fa-arrow-left mr-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="celebration"></div>
+
+    <script>
+        class SentenceTransformationGame {
+            constructor(exercises) {
+                this.exercises = exercises;
+                this.currentExercise = 0;
+                this.score = 0;
+                this.streak = 0;
+                this.init();
+            }
+
+            init() {
+                this.displayExercise();
+                this.attachEventListeners();
+                this.updateProgress();
+            }
+
+            displayExercise() {
+                const exercise = this.exercises[this.currentExercise];
+                document.querySelector('.transformation-type').textContent = exercise.transformationType;
+                document.querySelector('.original-sentence').textContent = exercise.originalSentence;
+                document.querySelector('.sentence-input').value = '';
+                document.querySelector('.feedback').style.display = 'none';
+                document.querySelector('.hint').style.display = 'none';
+                document.querySelector('.btn-next').disabled = true;
+                
+                this.updateScore();
+            }
+
+            attachEventListeners() {
+                document.querySelector('.btn-check').addEventListener('click', () => this.checkAnswer());
+                document.querySelector('.btn-next').addEventListener('click', () => this.nextExercise());
+                document.querySelector('.hint-button').addEventListener('click', () => this.showHint());
+                
+                document.querySelector('.sentence-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.checkAnswer();
+                    }
+                });
+            }
+
+            checkAnswer() {
+                const input = document.querySelector('.sentence-input').value.trim();
+                const exercise = this.exercises[this.currentExercise];
+                const feedback = document.querySelector('.feedback');
+                
+                if (this.isCorrectAnswer(input, exercise.correctAnswers)) {
+                    this.handleCorrectAnswer(feedback);
+                } else {
+                    this.handleIncorrectAnswer(feedback);
+                }
+            }
+
+            isCorrectAnswer(input, correctAnswers) {
+                return correctAnswers.some(answer => 
+                    this.normalizeArabic(input) === this.normalizeArabic(answer)
+                );
+            }
+
+            normalizeArabic(text) {
+                return text.replace(/[ًٌٍَُِّْ]/g, '')  // Remove tashkeel
+                           .replace(/[إأآا]/g, 'ا')    // Normalize alef
+                           .replace(/[ىي]/g, 'ي')     // Normalize yaa
+                           .replace(/ة/g, 'ه')        // Normalize taa marbouta
+                           .trim();
+            }
+
+            handleCorrectAnswer(feedback) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = 'أحسنت! إجابة صحيحة';
+                feedback.style.display = 'block';
+                
+                this.score += 10;
+                this.streak++;
+                this.updateScore();
+                this.celebrate();
+                
+                document.querySelector('.btn-next').disabled = false;
+            }
+
+            handleIncorrectAnswer(feedback) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = 'حاول مرة أخرى';
+                feedback.style.display = 'block';
+                
+                document.querySelector('.sentence-input').classList.add('shake');
+                setTimeout(() => {
+                    document.querySelector('.sentence-input').classList.remove('shake');
+                }, 500);
+                
+                this.streak = 0;
+                this.updateScore();
+            }
+
+            nextExercise() {
+                if (this.currentExercise < this.exercises.length - 1) {
+                    this.currentExercise++;
+                    this.displayExercise();
+                    this.updateProgress();
+                } else {
+                    this.showGameComplete();
+                }
+            }
+
+            showHint() {
+                const hint = document.querySelector('.hint');
+                hint.textContent = this.exercises[this.currentExercise].hint;
+                hint.style.display = 'block';
+            }
+
+            updateScore() {
+                document.querySelector('.score-value').textContent = this.score;
+                document.querySelector('.streak-value').textContent = this.streak;
+            }
+
+            updateProgress() {
+                const progress = ((this.currentExercise) / this.exercises.length) * 100;
+                document.querySelector('.progress-bar').style.width = `${progress}%`;
+            }
+
+            celebrate() {
+                const celebration = document.querySelector('.celebration');
+                celebration.innerHTML = '';
+                celebration.style.display = 'block';
+
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.animationDelay = `${Math.random() * 3}s`;
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 50%, 50%)`;
+                    celebration.appendChild(confetti);
+                }
+
+                setTimeout(() => {
+                    celebration.style.display = 'none';
+                }, 3000);
+            }
+
+            showGameComplete() {
+                const container = document.querySelector('.game-container');
+                container.innerHTML = `
+                    <div class="text-center p-5">
+                        <h3>مبروك! أكملت جميع التمارين</h3>
+                        <p>مجموع نقاطك: ${this.score}</p>
+                        <button class="btn btn-primary mt-3" onclick="location.reload()">العب مرة أخرى</button>
+                    </div>
+                `;
+            }
+        }
+
+        const exercises = [
+            {
+                transformationType: "حول الجملة من الماضي إلى المضارع",
+                originalSentence: "كَتَبَ الطالبُ الدرسَ",
+                correctAnswers: ["يكتبُ الطالبُ الدرسَ"],
+                hint: "استبدل الفعل الماضي (كتب) بالفعل المضارع (يكتب) مع الحفاظ على الحركات"
+            },
+            {
+                transformationType: "حول الجملة من المضارع إلى الماضي",
+                originalSentence: "يلعبُ الأولادُ في الحديقةِ",
+                correctAnswers: ["لعبَ الأولادُ في الحديقةِ"],
+                hint: "استبدل الفعل المضارع (يلعب) بالفعل الماضي (لعب) مع الحفاظ على الحركات"
+            },
+            {
+                transformationType: "حول الجملة من المفرد إلى الجمع",
+                originalSentence: "يقرأُ الطالبُ الكتابَ",
+                correctAnswers: ["يقرأُ الطلابُ الكتابَ", "يقرأُ الطلّابُ الكتابَ"],
+                hint: "حول الفاعل المفرد (الطالب) إلى الجمع (الطلاب) مع الحفاظ على الحركات"
+            },
+            {
+                transformationType: "حول الجملة من المذكر إلى المؤنث",
+                originalSentence: "كتبَ المعلمُ الدرسَ",
+                correctAnswers: ["كتبَت المعلمةُ الدرسَ"],
+                hint: "أضف تاء التأنيث للفعل وحول الفاعل إلى المؤنث"
+            },
+            {
+                transformationType: "حول الجملة من المثنى إلى الجمع",
+                originalSentence: "يكتبُ الطالبانِ الواجبَ",
+                correctAnswers: ["يكتبُ الطلابُ الواجبَ", "يكتبُ الطلّابُ الواجبَ"],
+                hint: "حول الفاعل المثنى (الطالبان) إلى الجمع (الطلاب)"
+            },
+            {
+                transformationType: "حول الجملة من المفرد إلى المثنى",
+                originalSentence: "يلعبُ الولدُ بالكرةِ",
+                correctAnswers: ["يلعبُ الولدانِ بالكرةِ"],
+                hint: "حول الفاعل المفرد (الولد) إلى المثنى (الولدان) مع إضافة الألف والنون"
+            },
+            {
+                transformationType: "حول الجملة من الإثبات إلى النفي",
+                originalSentence: "يكتبُ الطالبُ الدرسَ",
+                correctAnswers: ["لا يكتبُ الطالبُ الدرسَ"],
+                hint: "أضف أداة النفي (لا) قبل الفعل المضارع"
+            },
+            {
+                transformationType: "حول الجملة من الماضي إلى المستقبل",
+                originalSentence: "درسَ الطالبُ الدرسَ",
+                correctAnswers: ["سيدرسُ الطالبُ الدرسَ"],
+                hint: "أضف حرف السين (س) قبل الفعل المضارع"
+            }
+        ];
+
+        // Initialize the game
+        const game = new SentenceTransformationGame(exercises);
+    </script>
+</body>
+</html>

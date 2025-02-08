@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين الخامس - تصحيح الجمل الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .sentence-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .word-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .word {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .word:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .word.error {
+            border-color: #e74c3c;
+            background: #fdf1f0;
+        }
+
+        .word.corrected {
+            border-color: #2ecc71;
+            background: #eafaf1;
+        }
+
+        .correction-options {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+            min-width: 150px;
+        }
+
+        .correction-option {
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .correction-option:hover {
+            background: #f8f9fa;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .errors-found {
+            color: #e74c3c;
+        }
+
+        .corrections-made {
+            color: #2ecc71;
+        }
+
+        .hint-button {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hint-button:hover {
+            background: #7f8c8d;
+        }
+
+        .hint {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f1f9fe;
+            border-radius: 8px;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين الخامس - تصحيح الجمل الفعلية</h1>
+
+        <div class="progress-info">
+            <span class="errors-found">الأخطاء المكتشفة: 0</span>
+            <span class="corrections-made">التصحيحات: 0 من 0</span>
+        </div>
+
+        <div class="sentence-card">
+            <div class="word-container">
+                <!-- Words will be added here -->
+            </div>
+            <div class="explanation"></div>
+            <button class="hint-button">
+                <i class="fas fa-lightbulb"></i> تلميح
+            </button>
+            <div class="hint"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary btn-prev" disabled>
+                <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button class="btn btn-primary btn-check">
+                <i class="fas fa-check ml-2"></i> تحقق من الإجابة
+            </button>
+            <button class="btn btn-secondary btn-next" disabled>
+                التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class SentenceCorrectionExercise {
+            constructor(sentences) {
+                this.sentences = sentences;
+                this.currentSentence = 0;
+                this.errorsFound = 0;
+                this.correctionsMade = 0;
+                this.init();
+            }
+
+            init() {
+                this.displaySentence();
+                this.attachEventListeners();
+            }
+
+            displaySentence() {
+                const sentence = this.sentences[this.currentSentence];
+                const container = document.querySelector('.word-container');
+                container.innerHTML = '';
+
+                sentence.words.forEach((word, index) => {
+                    const wordDiv = document.createElement('div');
+                    wordDiv.className = 'word';
+                    wordDiv.textContent = word;
+                    wordDiv.dataset.index = index;
+                    if (sentence.errors.includes(index)) {
+                        wordDiv.classList.add('error');
+                    }
+                    container.appendChild(wordDiv);
+                });
+
+                document.querySelector('.explanation').style.display = 'none';
+                document.querySelector('.hint').style.display = 'none';
+                this.updateProgress();
+                this.updateNavigationButtons();
+            }
+
+            attachEventListeners() {
+                document.querySelector('.word-container').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('word')) {
+                        this.handleWordClick(e.target);
+                    }
+                });
+
+                document.querySelector('.btn-check').addEventListener('click', () => this.checkAnswers());
+                document.querySelector('.btn-prev').addEventListener('click', () => this.previousSentence());
+                document.querySelector('.btn-next').addEventListener('click', () => this.nextSentence());
+                document.querySelector('.hint-button').addEventListener('click', () => this.showHint());
+            }
+
+            handleWordClick(wordElement) {
+                const index = parseInt(wordElement.dataset.index);
+                const sentence = this.sentences[this.currentSentence];
+
+                if (sentence.errors.includes(index)) {
+                    const options = document.createElement('div');
+                    options.className = 'correction-options';
+                    
+                    sentence.corrections[index].forEach(correction => {
+                        const option = document.createElement('div');
+                        option.className = 'correction-option';
+                        option.textContent = correction;
+                        option.addEventListener('click', () => {
+                            wordElement.textContent = correction;
+                            wordElement.classList.remove('error');
+                            wordElement.classList.add('corrected');
+                            options.remove();
+                            this.correctionsMade++;
+                            this.updateProgress();
+                        });
+                        options.appendChild(option);
+                    });
+
+                    // Remove any existing correction options
+                    document.querySelectorAll('.correction-options').forEach(el => el.remove());
+                    
+                    wordElement.appendChild(options);
+                    options.style.display = 'block';
+                }
+            }
+
+            checkAnswers() {
+                const sentence = this.sentences[this.currentSentence];
+                const words = document.querySelectorAll('.word');
+                let allCorrect = true;
+
+                words.forEach((word, index) => {
+                    if (sentence.errors.includes(index)) {
+                        if (!word.classList.contains('corrected')) {
+                            allCorrect = false;
+                            word.classList.add('error');
+                        }
+                    }
+                });
+
+                if (allCorrect) {
+                    this.showExplanation('أحسنت! لقد صححت جميع الأخطاء في الجملة.');
+                    document.querySelector('.btn-next').disabled = false;
+                } else {
+                    this.showExplanation('هناك بعض الأخطاء التي لم يتم تصحيحها بعد.');
+                }
+            }
+
+            showExplanation(message) {
+                const explanation = document.querySelector('.explanation');
+                explanation.textContent = message;
+                explanation.classList.add('visible');
+            }
+
+            showHint() {
+                const sentence = this.sentences[this.currentSentence];
+                const hint = document.querySelector('.hint');
+                hint.textContent = sentence.hint;
+                hint.style.display = 'block';
+            }
+
+            nextSentence() {
+                if (this.currentSentence < this.sentences.length - 1) {
+                    this.currentSentence++;
+                    this.displaySentence();
+                }
+            }
+
+            previousSentence() {
+                if (this.currentSentence > 0) {
+                    this.currentSentence--;
+                    this.displaySentence();
+                }
+            }
+
+            updateProgress() {
+                document.querySelector('.errors-found').textContent = 
+                    `الأخطاء المكتشفة: ${this.errorsFound}`;
+                document.querySelector('.corrections-made').textContent = 
+                    `التصحيحات: ${this.correctionsMade} من ${this.getTotalErrors()}`;
+            }
+
+            getTotalErrors() {
+                return this.sentences.reduce((total, sentence) => total + sentence.errors.length, 0);
+            }
+
+            updateNavigationButtons() {
+                document.querySelector('.btn-prev').disabled = this.currentSentence === 0;
+                document.querySelector('.btn-next').disabled = true; // Enable only after correct answers
+            }
+        }
+
+        const sentences = [
+            {
+                words: ["كتب", "الطالب", "الدرس"],
+                errors: [0, 1],
+                corrections: {
+                    0: ["كتبَ"],
+                    1: ["الطالبُ"]
+                },
+                hint: "تذكر أن الفعل يحتاج إلى حركة، والفاعل مرفوع دائماً"
+            },
+            {
+                words: ["يلعب", "الاولاد", "في", "الحديقة"],
+                errors: [0, 1],
+                corrections: {
+                    0: ["يلعبُ"],
+                    1: ["الأولادُ"]
+                },
+                hint: "الفعل المضارع مرفوع، والفاعل مرفوع أيضاً"
+            },
+            {
+                words: ["قرا", "التلميذ", "القصة"],
+                errors: [0, 1, 2],
+                corrections: {
+                    0: ["قرأَ"],
+                    1: ["التلميذُ"],
+                    2: ["القصةَ"]
+                },
+                hint: "انتبه لهمزة الفعل وحركات الإعراب"
+            },
+            {
+                words: ["تكتب", "البنت", "واجباتها"],
+                errors: [0, 1, 2],
+                corrections: {
+                    0: ["تكتبُ"],
+                    1: ["البنتُ"],
+                    2: ["واجباتِها"]
+                },
+                hint: "لا تنس حركات الإعراب للفعل والفاعل والمفعول به"
+            },
+            {
+                words: ["شرب", "محمد", "الماء"],
+                errors: [0, 1, 2],
+                corrections: {
+                    0: ["شربَ"],
+                    1: ["محمدٌ"],
+                    2: ["الماءَ"]
+                },
+                hint: "تأكد من حركات الإعراب لكل كلمة في الجملة"
+            }
+        ];
+
+        // Initialize the exercise
+        const exercise = new SentenceCorrectionExercise(sentences);
+    </script>
+</body>
+</html>

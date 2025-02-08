@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تمرين الجملة الفعلية - تحديد الفاعل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">تمرين الجملة الفعلية - تحديد الفاعل</h1>
+        
+        <div class="score-display">
+            <span class="score">النتيجة: 0 من 0</span>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        
+        <div class="question-number text-center mb-3">
+            السؤال 1 من 10
+        </div>
+
+        <div class="exercise-card">
+            <div class="question">
+                <p class="question-text"></p>
+            </div>
+            
+            <div class="options">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+            
+            <div class="feedback"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary btn-prev" disabled>
+                <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button class="btn btn-primary btn-retry">
+                <i class="fas fa-redo ml-2"></i> إعادة المحاولة
+            </button>
+            <button class="btn btn-secondary btn-next">
+                التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/exercise.js"></script>
+    <script>
+        const questions = [
+            {
+                question: "حدد الفاعل في الجملة: 'كتب الطالبُ الدرسَ'",
+                options: ["كتب", "الطالبُ", "الدرسَ"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'يلعب الأطفالُ في الحديقة'",
+                options: ["يلعب", "الأطفالُ", "في الحديقة"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'شرب محمدٌ الماءَ'",
+                options: ["شرب", "محمدٌ", "الماءَ"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'قرأت زينبُ القصةَ'",
+                options: ["قرأت", "زينبُ", "القصةَ"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'يطير العصفورُ في السماء'",
+                options: ["يطير", "العصفورُ", "في السماء"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'أكل القطُ الطعامَ'",
+                options: ["أكل", "القطُ", "الطعامَ"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'يزرع الفلاحُ الأرضَ'",
+                options: ["يزرع", "الفلاحُ", "الأرضَ"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'تغرد البلابلُ على الأغصان'",
+                options: ["تغرد", "البلابلُ", "على الأغصان"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'يرسم الفنانُ لوحةً جميلةً'",
+                options: ["يرسم", "الفنانُ", "لوحةً جميلةً"],
+                correctAnswer: 1,
+                answered: false
+            },
+            {
+                question: "حدد الفاعل في الجملة: 'تشرق الشمسُ كل صباح'",
+                options: ["تشرق", "الشمسُ", "كل صباح"],
+                correctAnswer: 1,
+                answered: false
+            }
+        ];
+
+        // Initialize the exercise
+        const exercise = new Exercise(questions);
+    </script>
+</body>
+</html>

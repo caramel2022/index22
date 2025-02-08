@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين الثاني - مكونات الجملة الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .word-item {
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .word-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .word-item.selected {
+            background: #2ecc71;
+        }
+        
+        .sentence-area {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            min-height: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .sentence-slot {
+            min-width: 100px;
+            height: 40px;
+            border: 2px dashed #bdc3c7;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            margin: 5px;
+        }
+        
+        .sentence-slot.filled {
+            border-style: solid;
+            border-color: #3498db;
+            background: #f7f9fc;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebration {
+            animation: celebrate 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين الثاني - مكونات الجملة الفعلية</h1>
+        
+        <div class="score-display">
+            <span class="score">النتيجة: 0 من 0</span>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        
+        <div class="question-number text-center mb-3">
+            السؤال 1 من 8
+        </div>
+
+        <div class="exercise-card">
+            <div class="question">
+                <p class="question-text mb-3"></p>
+                <div class="word-bank"></div>
+                <div class="sentence-area"></div>
+            </div>
+            
+            <div class="feedback mt-3"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary btn-prev" disabled>
+                <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button class="btn btn-primary btn-retry">
+                <i class="fas fa-redo ml-2"></i> إعادة المحاولة
+            </button>
+            <button class="btn btn-secondary btn-next">
+                التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class DragDropExercise {
+            constructor(questions) {
+                this.questions = questions;
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.init();
+            }
+
+            init() {
+                this.updateProgress();
+                this.displayQuestion();
+                this.attachEventListeners();
+            }
+
+            displayQuestion() {
+                const question = this.questions[this.currentQuestion];
+                document.querySelector('.question-text').textContent = question.question;
+                
+                // Setup word bank
+                const wordBank = document.querySelector('.word-bank');
+                wordBank.innerHTML = '';
+                question.words.forEach(word => {
+                    const wordItem = document.createElement('div');
+                    wordItem.className = 'word-item';
+                    wordItem.textContent = word;
+                    wordItem.draggable = true;
+                    wordBank.appendChild(wordItem);
+                });
+
+                // Setup sentence area
+                const sentenceArea = document.querySelector('.sentence-area');
+                sentenceArea.innerHTML = '';
+                question.slots.forEach(slot => {
+                    const slotDiv = document.createElement('div');
+                    slotDiv.className = 'sentence-slot';
+                    slotDiv.dataset.type = slot;
+                    slotDiv.textContent = slot;
+                    sentenceArea.appendChild(slotDiv);
+                });
+
+                document.querySelector('.feedback').style.display = 'none';
+                this.updateNavigationButtons();
+            }
+
+            attachEventListeners() {
+                const wordItems = document.querySelectorAll('.word-item');
+                const slots = document.querySelectorAll('.sentence-slot');
+
+                wordItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        if (item.classList.contains('selected')) {
+                            item.classList.remove('selected');
+                            return;
+                        }
+
+                        const selectedSlot = document.querySelector('.sentence-slot.highlighted');
+                        if (selectedSlot) {
+                            this.placeWord(item, selectedSlot);
+                        }
+                    });
+                });
+
+                slots.forEach(slot => {
+                    slot.addEventListener('click', () => {
+                        slots.forEach(s => s.classList.remove('highlighted'));
+                        if (!slot.classList.contains('filled')) {
+                            slot.classList.add('highlighted');
+                        }
+                    });
+                });
+
+                document.querySelector('.btn-next').addEventListener('click', () => this.nextQuestion());
+                document.querySelector('.btn-prev').addEventListener('click', () => this.previousQuestion());
+                document.querySelector('.btn-retry').addEventListener('click', () => this.retryExercise());
+            }
+
+            placeWord(wordItem, slot) {
+                const question = this.questions[this.currentQuestion];
+                const wordType = question.wordTypes[wordItem.textContent];
+                
+                if (wordType === slot.dataset.type) {
+                    slot.textContent = wordItem.textContent;
+                    slot.classList.add('filled');
+                    slot.classList.remove('highlighted');
+                    wordItem.classList.add('selected');
+                    
+                    // Check if all slots are filled correctly
+                    const allSlotsFilled = [...document.querySelectorAll('.sentence-slot')]
+                        .every(s => s.classList.contains('filled'));
+                    
+                    if (allSlotsFilled) {
+                        this.handleCorrectAnswer();
+                    }
+                } else {
+                    this.showFeedback('حاول مرة أخرى - هذه الكلمة لا تناسب هذا الموقع', 'incorrect');
+                }
+            }
+
+            handleCorrectAnswer() {
+                if (!this.questions[this.currentQuestion].answered) {
+                    this.score++;
+                    this.questions[this.currentQuestion].answered = true;
+                }
+                this.showFeedback('أحسنت! لقد كوّنت الجملة بشكل صحيح', 'correct');
+                this.updateScore();
+                
+                // Add celebration animation
+                document.querySelector('.exercise-card').classList.add('celebration');
+                setTimeout(() => {
+                    document.querySelector('.exercise-card').classList.remove('celebration');
+                }, 500);
+            }
+
+            showFeedback(message, type) {
+                const feedback = document.querySelector('.feedback');
+                feedback.textContent = message;
+                feedback.className = `feedback ${type}`;
+                feedback.style.display = 'block';
+            }
+
+            nextQuestion() {
+                if (this.currentQuestion < this.questions.length - 1) {
+                    this.currentQuestion++;
+                    this.displayQuestion();
+                }
+            }
+
+            previousQuestion() {
+                if (this.currentQuestion > 0) {
+                    this.currentQuestion--;
+                    this.displayQuestion();
+                }
+            }
+
+            retryExercise() {
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.questions.forEach(q => q.answered = false);
+                this.displayQuestion();
+                this.updateScore();
+                this.updateProgress();
+            }
+
+            updateScore() {
+                document.querySelector('.score').textContent = 
+                    `النتيجة: ${this.score} من ${this.questions.length}`;
+            }
+
+            updateProgress() {
+                const progress = ((this.currentQuestion + 1) / this.questions.length) * 100;
+                document.querySelector('.progress-bar').style.width = `${progress}%`;
+                document.querySelector('.question-number').textContent = 
+                    `السؤال ${this.currentQuestion + 1} من ${this.questions.length}`;
+            }
+
+            updateNavigationButtons() {
+                document.querySelector('.btn-prev').disabled = this.currentQuestion === 0;
+                document.querySelector('.btn-next').disabled = 
+                    this.currentQuestion === this.questions.length - 1;
+            }
+        }
+
+        const questions = [
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["الطالبُ", "كتبَ", "الدرسَ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "كتبَ": "فعل",
+                    "الطالبُ": "فاعل",
+                    "الدرسَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["التفاحةَ", "أكلَ", "الولدُ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "أكلَ": "فعل",
+                    "الولدُ": "فاعل",
+                    "التفاحةَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["المعلمُ", "شرحَ", "القاعدةَ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "شرحَ": "فعل",
+                    "المعلمُ": "فاعل",
+                    "القاعدةَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["القصةَ", "قرأتْ", "البنتُ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "قرأتْ": "فعل",
+                    "البنتُ": "فاعل",
+                    "القصةَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["الطعامَ", "طبخَ", "الطباخُ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "طبخَ": "فعل",
+                    "الطباخُ": "فاعل",
+                    "الطعامَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["اللاعبُ", "سجلَ", "الهدفَ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "سجلَ": "فعل",
+                    "اللاعبُ": "فاعل",
+                    "الهدفَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["السيارةَ", "غسلَ", "العاملُ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "غسلَ": "فعل",
+                    "العاملُ": "فاعل",
+                    "السيارةَ": "مفعول به"
+                },
+                answered: false
+            },
+            {
+                question: "رتب الكلمات لتكوين جملة فعلية صحيحة",
+                words: ["الفلاحُ", "زرعَ", "القمحَ"],
+                slots: ["فعل", "فاعل", "مفعول به"],
+                wordTypes: {
+                    "زرعَ": "فعل",
+                    "الفلاحُ": "فاعل",
+                    "القمحَ": "مفعول به"
+                },
+                answered: false
+            }
+        ];
+
+        // Initialize the exercise
+        const exercise = new DragDropExercise(questions);
+    </script>
+</body>
+</html>

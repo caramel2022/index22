@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين الثالث - تحليل الجملة الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .sentence-analysis {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .word-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .word {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .word.selected {
+            border-color: #3498db;
+            background: #e8f4fc;
+        }
+
+        .analysis-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .analysis-option {
+            padding: 10px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-option:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .analysis-option.correct {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .analysis-option.incorrect {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .hint {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين الثالث - تحليل الجملة الفعلية</h1>
+        
+        <div class="score-display">
+            <span class="score">النتيجة: 0 من 0</span>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        
+        <div class="question-number text-center mb-3">
+            السؤال 1 من 8
+        </div>
+
+        <div class="exercise-card">
+            <div class="question">
+                <p class="question-text mb-3"></p>
+                
+                <div class="sentence-analysis">
+                    <div class="word-container">
+                        <!-- Words will be added here -->
+                    </div>
+                    
+                    <div class="analysis-options">
+                        <!-- Analysis options will be added here -->
+                    </div>
+                    
+                    <div class="hint"></div>
+                </div>
+            </div>
+            
+            <div class="feedback mt-3"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary btn-prev" disabled>
+                <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button class="btn btn-primary btn-retry">
+                <i class="fas fa-redo ml-2"></i> إعادة المحاولة
+            </button>
+            <button class="btn btn-secondary btn-next">
+                التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class SentenceAnalysisExercise {
+            constructor(questions) {
+                this.questions = questions;
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.selectedWord = null;
+                this.init();
+            }
+
+            init() {
+                this.updateProgress();
+                this.displayQuestion();
+                this.attachEventListeners();
+            }
+
+            displayQuestion() {
+                const question = this.questions[this.currentQuestion];
+                document.querySelector('.question-text').textContent = question.instruction;
+                
+                // Setup words
+                const wordContainer = document.querySelector('.word-container');
+                wordContainer.innerHTML = '';
+                question.sentence.forEach(word => {
+                    const wordDiv = document.createElement('div');
+                    wordDiv.className = 'word';
+                    wordDiv.textContent = word;
+                    wordContainer.appendChild(wordDiv);
+                });
+
+                // Setup analysis options
+                const optionsContainer = document.querySelector('.analysis-options');
+                optionsContainer.innerHTML = '';
+                question.options.forEach(option => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'analysis-option';
+                    optionDiv.textContent = option;
+                    optionsContainer.appendChild(optionDiv);
+                });
+
+                document.querySelector('.hint').style.display = 'none';
+                document.querySelector('.feedback').style.display = 'none';
+                this.updateNavigationButtons();
+            }
+
+            attachEventListeners() {
+                document.querySelector('.word-container').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('word')) {
+                        this.handleWordSelection(e.target);
+                    }
+                });
+
+                document.querySelector('.analysis-options').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('analysis-option')) {
+                        this.handleAnalysisSelection(e.target);
+                    }
+                });
+
+                document.querySelector('.btn-next').addEventListener('click', () => this.nextQuestion());
+                document.querySelector('.btn-prev').addEventListener('click', () => this.previousQuestion());
+                document.querySelector('.btn-retry').addEventListener('click', () => this.retryExercise());
+            }
+
+            handleWordSelection(wordElement) {
+                const words = document.querySelectorAll('.word');
+                words.forEach(w => w.classList.remove('selected'));
+                wordElement.classList.add('selected');
+                this.selectedWord = wordElement.textContent;
+                
+                // Reset analysis options
+                const options = document.querySelectorAll('.analysis-option');
+                options.forEach(o => {
+                    o.classList.remove('correct', 'incorrect');
+                });
+                
+                // Show hint
+                const hint = document.querySelector('.hint');
+                hint.textContent = 'اختر التحليل المناسب لهذه الكلمة';
+                hint.style.display = 'block';
+            }
+
+            handleAnalysisSelection(optionElement) {
+                if (!this.selectedWord) {
+                    this.showFeedback('الرجاء اختيار كلمة أولاً', 'incorrect');
+                    return;
+                }
+
+                const question = this.questions[this.currentQuestion];
+                const correctAnalysis = question.analysis[this.selectedWord];
+
+                if (optionElement.textContent === correctAnalysis) {
+                    optionElement.classList.add('correct');
+                    this.showFeedback('أحسنت! تحليل صحيح', 'correct');
+                    
+                    if (!question.answered) {
+                        this.score++;
+                        question.answered = true;
+                    }
+                    
+                    this.updateScore();
+                    document.querySelector('.exercise-card').classList.add('pulse');
+                    setTimeout(() => {
+                        document.querySelector('.exercise-card').classList.remove('pulse');
+                    }, 500);
+                } else {
+                    optionElement.classList.add('incorrect');
+                    this.showFeedback('حاول مرة أخرى', 'incorrect');
+                }
+            }
+
+            showFeedback(message, type) {
+                const feedback = document.querySelector('.feedback');
+                feedback.textContent = message;
+                feedback.className = `feedback ${type}`;
+                feedback.style.display = 'block';
+            }
+
+            nextQuestion() {
+                if (this.currentQuestion < this.questions.length - 1) {
+                    this.currentQuestion++;
+                    this.displayQuestion();
+                }
+            }
+
+            previousQuestion() {
+                if (this.currentQuestion > 0) {
+                    this.currentQuestion--;
+                    this.displayQuestion();
+                }
+            }
+
+            retryExercise() {
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.questions.forEach(q => q.answered = false);
+                this.displayQuestion();
+                this.updateScore();
+                this.updateProgress();
+            }
+
+            updateScore() {
+                document.querySelector('.score').textContent = 
+                    `النتيجة: ${this.score} من ${this.questions.length}`;
+            }
+
+            updateProgress() {
+                const progress = ((this.currentQuestion + 1) / this.questions.length) * 100;
+                document.querySelector('.progress-bar').style.width = `${progress}%`;
+                document.querySelector('.question-number').textContent = 
+                    `السؤال ${this.currentQuestion + 1} من ${this.questions.length}`;
+            }
+
+            updateNavigationButtons() {
+                document.querySelector('.btn-prev').disabled = this.currentQuestion === 0;
+                document.querySelector('.btn-next').disabled = 
+                    this.currentQuestion === this.questions.length - 1;
+            }
+        }
+
+        const questions = [
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["كتبَ", "الطالبُ", "الدرسَ"],
+                options: ["فعل ماضٍ", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "كتبَ": "فعل ماضٍ",
+                    "الطالبُ": "فاعل مرفوع",
+                    "الدرسَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["يقرأُ", "التلميذُ", "الكتابَ"],
+                options: ["فعل مضارع", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "يقرأُ": "فعل مضارع",
+                    "التلميذُ": "فاعل مرفوع",
+                    "الكتابَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["شربَ", "محمدٌ", "الماءَ"],
+                options: ["فعل ماضٍ", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "شربَ": "فعل ماضٍ",
+                    "محمدٌ": "فاعل مرفوع",
+                    "الماءَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["يلعبُ", "الأولادُ", "الكرةَ"],
+                options: ["فعل مضارع", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "يلعبُ": "فعل مضارع",
+                    "الأولادُ": "فاعل مرفوع",
+                    "الكرةَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["أكلَ", "القطُ", "السمكَ"],
+                options: ["فعل ماضٍ", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "أكلَ": "فعل ماضٍ",
+                    "القطُ": "فاعل مرفوع",
+                    "السمكَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["تطبخُ", "الأمُ", "الطعامَ"],
+                options: ["فعل مضارع", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "تطبخُ": "فعل مضارع",
+                    "الأمُ": "فاعل مرفوع",
+                    "الطعامَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["رسمَ", "الفنانُ", "اللوحةَ"],
+                options: ["فعل ماضٍ", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "رسمَ": "فعل ماضٍ",
+                    "الفنانُ": "فاعل مرفوع",
+                    "اللوحةَ": "مفعول به منصوب"
+                },
+                answered: false
+            },
+            {
+                instruction: "اختر كل كلمة وحدد موقعها الإعرابي في الجملة",
+                sentence: ["يزرعُ", "الفلاحُ", "القمحَ"],
+                options: ["فعل مضارع", "فاعل مرفوع", "مفعول به منصوب"],
+                analysis: {
+                    "يزرعُ": "فعل مضارع",
+                    "الفلاحُ": "فاعل مرفوع",
+                    "القمحَ": "مفعول به منصوب"
+                },
+                answered: false
+            }
+        ];
+
+        // Initialize the exercise
+        const exercise = new SentenceAnalysisExercise(questions);
+    </script>
+</body>
+</html>

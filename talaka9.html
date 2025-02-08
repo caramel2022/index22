@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -15,35 +16,42 @@
             direction: rtl;
         }
         header {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 15px 0;
+            padding: 25px 0;
             text-align: center;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             max-width: 800px;
-            margin: auto;
+            margin: 20px auto;
         }
         .container {
             max-width: 800px;
-            margin: auto;
-            padding: 20px;
+            margin: 20px auto;
+            padding: 25px;
             background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
+        h1, h2 {
             color: #3498db;
+            margin-bottom: 20px;
         }
         p {
-            line-height: 1.6;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #555;
         }
         .table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             max-width: 800px;
-            margin: auto;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .table-header {
             background: #3498db;
@@ -58,37 +66,61 @@
         .table-cell {
             border: 1px solid #ddd;
             padding: 15px;
-            font-size: 20px;
+            font-size: 18px;
+            text-align: center;
         }
         .btn {
             background-color: #4caf50;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 18px;
+            margin: 5px;
         }
         .btn:hover {
             background-color: #45a049;
         }
-
-        /* Styles for dropdowns in the table */
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        .btn-primary {
+            background-color: #3498db;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
         input[type='number'] {
             width: 100%;
             padding: 10px;
             font-size: 18px;
             border: 2px solid #3498db;
             border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: border-color 0.3s;
         }
         input[type='number']:focus {
             border-color: #2980b9;
             outline: none;
         }
-
-        /* Media Queries */
+        #timer {
+            font-size: 48px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 20px 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        .button-group button {
+            margin: 0 10px;
+        }
         @media (max-width: 768px) {
             body {
                 font-size: 18px;
@@ -97,7 +129,10 @@
                 padding: 15px;
             }
             .table-cell {
-                font-size: 18px;
+                font-size: 16px;
+            }
+            #timer {
+                font-size: 36px;
             }
         }
         @media (max-width: 480px) {
@@ -105,7 +140,10 @@
                 font-size: 16px;
             }
             .table-cell {
-                font-size: 16px;
+                font-size: 14px;
+            }
+            #timer {
+                font-size: 28px;
             }
         }
         @media (max-width: 320px) {
@@ -113,7 +151,10 @@
                 font-size: 14px;
             }
             .table-cell {
-                font-size: 14px;
+                font-size: 12px;
+            }
+            #timer {
+                font-size: 24px;
             }
         }
     </style>
@@ -133,10 +174,10 @@
 </div>
 
 <div style="text-align: center; margin: 20px;">
-    <div id="timer" style="font-size: 48px; font-weight: bold; color: #3498db;">00:00</div>
-    <div style="margin-top: 10px;">
-        <button id="startButton" onclick="startTimer()" style="font-size: 18px; padding: 10px 15px; background-color: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">تشغيل</button>
-        <button id="stopButton" onclick="stopTimer()" style="font-size: 18px; padding: 10px 15px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">إيقاف</button>
+    <div id="timer">00:00</div>
+    <div class="button-group">
+        <button id="startButton" onclick="startTimer()" class="btn btn-primary">تشغيل</button>
+        <button id="stopButton" onclick="stopTimer()" class="btn btn-danger">إيقاف</button>
     </div>
 </div>
 
@@ -177,6 +218,10 @@
     </tbody>
 </table>
 
+<div style="text-align: center; margin: 20px;">
+    <button onclick="window.location.href='reading_fluently.html'" class="btn btn-primary">عودة</button>
+</div>
+
 <script>
     let timerInterval;
     let seconds = 0;
@@ -196,7 +241,5 @@
         clearInterval(timerInterval);
     }
 </script>
-
-<div style="text-align: center; margin: 20px;">
-    <button onclick="window.location.href='reading_fluently.html'" style="font-size: 18px; padding: 10px 15px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">عودة</button>
-</div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تمرين المفعول به - بناء الجمل</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .game-area {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 8px;
+        }
+        .word {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        .word:hover {
+            transform: translateY(-2px);
+            background-color: #2980b9;
+        }
+        .sentence-builder {
+            min-height: 60px;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .check-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .check-btn:hover {
+            background-color: #27ae60;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .return-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .feedback {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #a8e6cf;
+            color: #1b5e20;
+        }
+        .incorrect {
+            background-color: #ffb3b3;
+            color: #c62828;
+        }
+        .instructions {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تمرين المفعول به - بناء الجمل</h1>
+        <div class="score">النقاط: <span id="score">0</span></div>
+        <div class="instructions">رتب الكلمات لتكوين جملة صحيحة، وتأكد من وضع المفعول به في المكان الصحيح</div>
+        <div class="game-area">
+            <div class="word-bank" id="wordBank"></div>
+            <div class="sentence-builder" id="sentenceBuilder"></div>
+            <button class="check-btn" onclick="checkSentence()">تحقق من الجملة</button>
+            <div id="feedback" class="feedback"></div>
+        </div>
+        <button class="return-btn" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                words: ["التلميذُ", "كتبَ", "الواجبَ", "بإتقانٍ"],
+                correct: "كتبَ التلميذُ الواجبَ بإتقانٍ",
+                object: "الواجبَ"
+            },
+            {
+                words: ["الطعامَ", "طبخَ", "الطباخُ", "بمهارةٍ"],
+                correct: "طبخَ الطباخُ الطعامَ بمهارةٍ",
+                object: "الطعامَ"
+            },
+            {
+                words: ["بسرعةٍ", "السيارةَ", "السائقُ", "قادَ"],
+                correct: "قادَ السائقُ السيارةَ بسرعةٍ",
+                object: "السيارةَ"
+            },
+            {
+                words: ["المريضَ", "الطبيبُ", "بعنايةٍ", "فحصَ"],
+                correct: "فحصَ الطبيبُ المريضَ بعنايةٍ",
+                object: "المريضَ"
+            },
+            {
+                words: ["الحديقةَ", "البستانيُ", "جميلةً", "نظَّفَ"],
+                correct: "نظَّفَ البستانيُ الحديقةَ جميلةً",
+                object: "الحديقةَ"
+            }
+        ];
+
+        let currentScore = 0;
+        let currentSentence = 0;
+
+        function displaySentence() {
+            const sentence = sentences[currentSentence];
+            const wordBank = document.getElementById('wordBank');
+            const sentenceBuilder = document.getElementById('sentenceBuilder');
+            
+            wordBank.innerHTML = '';
+            sentenceBuilder.innerHTML = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            
+            // Shuffle words
+            const shuffledWords = [...sentence.words].sort(() => Math.random() - 0.5);
+            
+            shuffledWords.forEach(word => {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'word';
+                wordElement.textContent = word;
+                wordElement.draggable = true;
+                wordElement.addEventListener('dragstart', drag);
+                wordBank.appendChild(wordElement);
+            });
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+            ev.target.style.opacity = '0.5';
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const wordElement = document.createElement('div');
+            wordElement.className = 'word';
+            wordElement.textContent = data;
+            wordElement.draggable = true;
+            wordElement.addEventListener('dragstart', drag);
+            
+            if (ev.target.className === 'sentence-builder') {
+                ev.target.appendChild(wordElement);
+            }
+            
+            // Remove the original word from word bank
+            const draggedElement = document.querySelector(`.word[style*="opacity: 0.5"]`);
+            if (draggedElement) {
+                draggedElement.remove();
+            }
+        }
+
+        function checkSentence() {
+            const sentenceBuilder = document.getElementById('sentenceBuilder');
+            const builtSentence = Array.from(sentenceBuilder.children)
+                .map(word => word.textContent)
+                .join(' ');
+            
+            const currentSentenceObj = sentences[currentSentence];
+            const feedback = document.getElementById('feedback');
+            
+            if (builtSentence === currentSentenceObj.correct) {
+                currentScore += 20;
+                feedback.textContent = `أحسنت! الجملة صحيحة والمفعول به هو: ${currentSentenceObj.object}`;
+                feedback.className = 'feedback correct';
+                
+                setTimeout(() => {
+                    currentSentence = (currentSentence + 1) % sentences.length;
+                    displaySentence();
+                }, 2000);
+            } else {
+                feedback.textContent = 'حاول مرة أخرى! تأكد من ترتيب الكلمات بشكل صحيح';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            document.getElementById('score').textContent = currentScore;
+        }
+
+        // Set up drop zone
+        const sentenceBuilder = document.getElementById('sentenceBuilder');
+        sentenceBuilder.addEventListener('dragover', allowDrop);
+        sentenceBuilder.addEventListener('drop', drop);
+
+        // Start the game
+        displaySentence();
+    </script>
+</body>
+</html>

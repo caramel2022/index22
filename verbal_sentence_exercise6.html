@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين السادس - بناء الجمل الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .puzzle-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .word-piece {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .word-piece:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .word-piece.used {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .sentence-builder {
+            min-height: 100px;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sentence-builder.active {
+            border-color: #3498db;
+            background: #f7f9fc;
+        }
+
+        .built-word {
+            padding: 10px 20px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .built-word:hover {
+            transform: translateY(-2px);
+        }
+
+        .requirements {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f1f9fe;
+            border-radius: 10px;
+            color: #2c3e50;
+        }
+
+        .requirements ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .requirements li {
+            margin: 5px 0;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .requirements li:before {
+            content: '•';
+            position: absolute;
+            right: 0;
+            color: #3498db;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirement-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .requirement-status.met {
+            background: #2ecc71;
+        }
+
+        .hint {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 8px;
+            color: #856404;
+            display: none;
+        }
+
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .level {
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين السادس - بناء الجمل الفعلية</h1>
+
+        <div class="score-panel">
+            <div class="score">النقاط: <span class="score-value">0</span></div>
+            <div class="level">المستوى: <span class="level-value">1</span></div>
+        </div>
+
+        <div class="puzzle-container">
+            <div class="requirements">
+                <h5>متطلبات الجملة:</h5>
+                <ul class="requirements-list">
+                    <!-- Requirements will be added here -->
+                </ul>
+            </div>
+
+            <div class="word-bank">
+                <!-- Word pieces will be added here -->
+            </div>
+
+            <div class="sentence-builder">
+                <!-- Built sentence will appear here -->
+            </div>
+
+            <div class="hint"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary btn-clear">
+                <i class="fas fa-trash ml-2"></i> مسح
+            </button>
+            <button class="btn btn-primary btn-check">
+                <i class="fas fa-check ml-2"></i> تحقق
+            </button>
+            <button class="btn btn-secondary btn-hint">
+                <i class="fas fa-lightbulb ml-2"></i> تلميح
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class SentenceBuildingPuzzle {
+            constructor(levels) {
+                this.levels = levels;
+                this.currentLevel = 0;
+                this.score = 0;
+                this.builtSentence = [];
+                this.init();
+            }
+
+            init() {
+                this.displayLevel();
+                this.attachEventListeners();
+            }
+
+            displayLevel() {
+                const level = this.levels[this.currentLevel];
+                
+                // Display requirements
+                const requirementsList = document.querySelector('.requirements-list');
+                requirementsList.innerHTML = '';
+                level.requirements.forEach(req => {
+                    const li = document.createElement('li');
+                    li.className = 'requirement-item';
+                    li.innerHTML = `
+                        <span class="requirement-status"><i class="fas fa-check"></i></span>
+                        <span>${req}</span>
+                    `;
+                    requirementsList.appendChild(li);
+                });
+
+                // Display word bank
+                const wordBank = document.querySelector('.word-bank');
+                wordBank.innerHTML = '';
+                level.words.forEach(word => {
+                    const wordPiece = document.createElement('div');
+                    wordPiece.className = 'word-piece';
+                    wordPiece.textContent = word;
+                    wordBank.appendChild(wordPiece);
+                });
+
+                // Clear sentence builder
+                document.querySelector('.sentence-builder').innerHTML = '';
+                this.builtSentence = [];
+
+                // Update score and level display
+                document.querySelector('.score-value').textContent = this.score;
+                document.querySelector('.level-value').textContent = this.currentLevel + 1;
+
+                // Hide hint
+                document.querySelector('.hint').style.display = 'none';
+            }
+
+            attachEventListeners() {
+                document.querySelector('.word-bank').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('word-piece') && !e.target.classList.contains('used')) {
+                        this.addWordToSentence(e.target);
+                    }
+                });
+
+                document.querySelector('.sentence-builder').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('built-word')) {
+                        this.removeWordFromSentence(e.target);
+                    }
+                });
+
+                document.querySelector('.btn-check').addEventListener('click', () => this.checkSentence());
+                document.querySelector('.btn-clear').addEventListener('click', () => this.clearSentence());
+                document.querySelector('.btn-hint').addEventListener('click', () => this.showHint());
+            }
+
+            addWordToSentence(wordElement) {
+                const builtWord = document.createElement('div');
+                builtWord.className = 'built-word';
+                builtWord.textContent = wordElement.textContent;
+                document.querySelector('.sentence-builder').appendChild(builtWord);
+                
+                wordElement.classList.add('used');
+                this.builtSentence.push(wordElement.textContent);
+            }
+
+            removeWordFromSentence(wordElement) {
+                const wordBank = document.querySelectorAll('.word-piece');
+                wordBank.forEach(piece => {
+                    if (piece.textContent === wordElement.textContent && piece.classList.contains('used')) {
+                        piece.classList.remove('used');
+                    }
+                });
+
+                wordElement.remove();
+                this.builtSentence = this.builtSentence.filter(word => word !== wordElement.textContent);
+            }
+
+            checkSentence() {
+                const level = this.levels[this.currentLevel];
+                const builtSentenceStr = this.builtSentence.join(' ');
+
+                if (level.validSentences.includes(builtSentenceStr)) {
+                    this.handleCorrectSentence();
+                } else {
+                    this.handleIncorrectSentence();
+                }
+            }
+
+            handleCorrectSentence() {
+                this.score += 10;
+                document.querySelector('.score-value').textContent = this.score;
+                
+                const feedback = document.createElement('div');
+                feedback.className = 'alert alert-success';
+                feedback.textContent = 'أحسنت! الجملة صحيحة';
+                document.querySelector('.puzzle-container').prepend(feedback);
+
+                setTimeout(() => {
+                    feedback.remove();
+                    if (this.currentLevel < this.levels.length - 1) {
+                        this.currentLevel++;
+                        this.displayLevel();
+                    } else {
+                        this.showGameComplete();
+                    }
+                }, 1500);
+            }
+
+            handleIncorrectSentence() {
+                document.querySelector('.sentence-builder').classList.add('shake');
+                setTimeout(() => {
+                    document.querySelector('.sentence-builder').classList.remove('shake');
+                }, 500);
+
+                const feedback = document.createElement('div');
+                feedback.className = 'alert alert-danger';
+                feedback.textContent = 'حاول مرة أخرى';
+                document.querySelector('.puzzle-container').prepend(feedback);
+
+                setTimeout(() => feedback.remove(), 1500);
+            }
+
+            clearSentence() {
+                document.querySelector('.sentence-builder').innerHTML = '';
+                document.querySelectorAll('.word-piece').forEach(piece => {
+                    piece.classList.remove('used');
+                });
+                this.builtSentence = [];
+            }
+
+            showHint() {
+                const hint = document.querySelector('.hint');
+                hint.textContent = this.levels[this.currentLevel].hint;
+                hint.style.display = 'block';
+            }
+
+            showGameComplete() {
+                const container = document.querySelector('.puzzle-container');
+                container.innerHTML = `
+                    <div class="text-center p-5">
+                        <h3>مبروك! أكملت جميع المستويات</h3>
+                        <p>مجموع نقاطك: ${this.score}</p>
+                        <button class="btn btn-primary mt-3" onclick="location.reload()">العب مرة أخرى</button>
+                    </div>
+                `;
+            }
+        }
+
+        const levels = [
+            {
+                requirements: [
+                    "يجب أن تبدأ الجملة بفعل",
+                    "يجب أن يكون الفاعل مرفوعاً",
+                    "يجب أن يكون المفعول به منصوباً"
+                ],
+                words: ["كتبَ", "الطالبُ", "الدرسَ", "في", "المدرسةِ", "بقلمٍ"],
+                validSentences: ["كتبَ الطالبُ الدرسَ"],
+                hint: "ابدأ بالفعل (كتبَ) ثم الفاعل المرفوع (الطالبُ) ثم المفعول به المنصوب (الدرسَ)"
+            },
+            {
+                requirements: [
+                    "يجب أن تبدأ الجملة بفعل مضارع",
+                    "يجب أن يكون الفاعل مرفوعاً",
+                    "يجب أن تنتهي الجملة بجار ومجرور"
+                ],
+                words: ["يلعبُ", "الأولادُ", "في", "الحديقةِ", "الكرةَ", "بسرعةٍ"],
+                validSentences: ["يلعبُ الأولادُ في الحديقةِ"],
+                hint: "ابدأ بالفعل المضارع (يلعبُ) ثم الفاعل (الأولادُ) ثم الجار والمجرور (في الحديقةِ)"
+            },
+            {
+                requirements: [
+                    "يجب أن تبدأ الجملة بفعل ماضٍ",
+                    "يجب أن يكون الفاعل مرفوعاً",
+                    "يجب أن يكون المفعول به منصوباً"
+                ],
+                words: ["قرأَ", "التلميذُ", "القصةَ", "في", "المكتبةِ", "بصوتٍ", "عالٍ"],
+                validSentences: ["قرأَ التلميذُ القصةَ"],
+                hint: "ابدأ بالفعل الماضي (قرأَ) ثم الفاعل (التلميذُ) ثم المفعول به (القصةَ)"
+            },
+            {
+                requirements: [
+                    "يجب أن تبدأ الجملة بفعل مضارع",
+                    "يجب أن يكون الفاعل مرفوعاً",
+                    "يجب أن يكون المفعول به منصوباً",
+                    "يجب أن تنتهي الجملة بجار ومجرور"
+                ],
+                words: ["تطبخُ", "الأمُ", "الطعامَ", "في", "المطبخِ", "بحبٍ"],
+                validSentences: ["تطبخُ الأمُ الطعامَ في المطبخِ"],
+                hint: "رتب الكلمات: الفعل ثم الفاعل ثم المفعول به ثم الجار والمجرور"
+            },
+            {
+                requirements: [
+                    "يجب أن تبدأ الجملة بفعل ماضٍ",
+                    "يجب أن يكون الفاعل مرفوعاً",
+                    "يجب أن يكون المفعول به منصوباً",
+                    "يجب أن تضيف ظرف مكان"
+                ],
+                words: ["زرعَ", "الفلاحُ", "القمحَ", "فوقَ", "الأرضِ", "في", "الصباحِ"],
+                validSentences: ["زرعَ الفلاحُ القمحَ فوقَ الأرضِ"],
+                hint: "رتب الكلمات: الفعل ثم الفاعل ثم المفعول به ثم ظرف المكان"
+            }
+        ];
+
+        // Initialize the game
+        const game = new SentenceBuildingPuzzle(levels);
+    </script>
+</body>
+</html>

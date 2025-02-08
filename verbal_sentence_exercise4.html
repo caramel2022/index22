@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>التمرين الرابع - تحليل الجمل الفعلية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sentence-card, .analysis-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sentence-card:hover, .analysis-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .sentence-card.selected, .analysis-card.selected {
+            border-color: #3498db;
+            background: #e8f4fc;
+        }
+
+        .sentence-card.matched, .analysis-card.matched {
+            border-color: #2ecc71;
+            background: #eafaf1;
+            cursor: default;
+        }
+
+        .card-content {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .match-line {
+            position: absolute;
+            background: #3498db;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .match-line.visible {
+            opacity: 1;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        .stars-container {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .star {
+            color: #f1c40f;
+            margin: 0 2px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .star.earned {
+            opacity: 1;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+
+        .hint-button {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hint-button:hover {
+            background: #7f8c8d;
+        }
+
+        .hint-text {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">التمرين الرابع - تحليل الجمل الفعلية</h1>
+        
+        <div class="stars-container">
+            <i class="fas fa-star star"></i>
+            <i class="fas fa-star star"></i>
+            <i class="fas fa-star star"></i>
+        </div>
+
+        <div class="timer">الوقت: 00:00</div>
+
+        <div class="game-container">
+            <div class="sentences-column">
+                <!-- Sentences will be added here -->
+            </div>
+            <div class="analysis-column">
+                <!-- Analysis cards will be added here -->
+            </div>
+        </div>
+
+        <div class="feedback mt-3"></div>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-primary btn-retry">
+                <i class="fas fa-redo ml-2"></i> إعادة المحاولة
+            </button>
+            <button class="btn btn-secondary btn-hint">
+                <i class="fas fa-lightbulb ml-2"></i> تلميح
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class MatchingGame {
+            constructor(pairs) {
+                this.pairs = pairs;
+                this.selectedSentence = null;
+                this.selectedAnalysis = null;
+                this.matches = 0;
+                this.attempts = 0;
+                this.startTime = null;
+                this.timerInterval = null;
+                this.init();
+            }
+
+            init() {
+                this.shuffleCards();
+                this.displayCards();
+                this.attachEventListeners();
+                this.startTimer();
+            }
+
+            shuffleCards() {
+                // Fisher-Yates shuffle
+                for (let i = this.pairs.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.pairs[i], this.pairs[j]] = [this.pairs[j], this.pairs[i]];
+                }
+            }
+
+            displayCards() {
+                const sentencesColumn = document.querySelector('.sentences-column');
+                const analysisColumn = document.querySelector('.analysis-column');
+                
+                sentencesColumn.innerHTML = '';
+                analysisColumn.innerHTML = '';
+
+                this.pairs.forEach((pair, index) => {
+                    const sentenceCard = this.createCard(pair.sentence, 'sentence', index);
+                    const analysisCard = this.createCard(pair.analysis, 'analysis', index);
+
+                    sentencesColumn.appendChild(sentenceCard);
+                    analysisColumn.appendChild(analysisCard);
+                });
+            }
+
+            createCard(content, type, index) {
+                const card = document.createElement('div');
+                card.className = `${type}-card`;
+                card.dataset.index = index;
+                card.dataset.type = type;
+
+                const cardContent = document.createElement('div');
+                cardContent.className = 'card-content';
+                cardContent.textContent = content;
+
+                card.appendChild(cardContent);
+                return card;
+            }
+
+            attachEventListeners() {
+                document.querySelectorAll('.sentence-card, .analysis-card').forEach(card => {
+                    card.addEventListener('click', () => this.handleCardClick(card));
+                });
+
+                document.querySelector('.btn-retry').addEventListener('click', () => this.resetGame());
+                document.querySelector('.btn-hint').addEventListener('click', () => this.showHint());
+            }
+
+            handleCardClick(card) {
+                if (card.classList.contains('matched')) return;
+
+                const type = card.dataset.type;
+                const index = card.dataset.index;
+
+                if (type === 'sentence') {
+                    if (this.selectedSentence) {
+                        this.selectedSentence.classList.remove('selected');
+                    }
+                    this.selectedSentence = card;
+                } else {
+                    if (this.selectedAnalysis) {
+                        this.selectedAnalysis.classList.remove('selected');
+                    }
+                    this.selectedAnalysis = card;
+                }
+
+                card.classList.add('selected');
+
+                if (this.selectedSentence && this.selectedAnalysis) {
+                    this.checkMatch();
+                }
+            }
+
+            checkMatch() {
+                const sentenceIndex = this.selectedSentence.dataset.index;
+                const analysisIndex = this.selectedAnalysis.dataset.index;
+
+                this.attempts++;
+
+                if (sentenceIndex === analysisIndex) {
+                    this.handleCorrectMatch();
+                } else {
+                    this.handleIncorrectMatch();
+                }
+
+                this.updateStars();
+            }
+
+            handleCorrectMatch() {
+                this.matches++;
+                this.selectedSentence.classList.remove('selected');
+                this.selectedAnalysis.classList.remove('selected');
+                this.selectedSentence.classList.add('matched', 'celebrate');
+                this.selectedAnalysis.classList.add('matched', 'celebrate');
+
+                setTimeout(() => {
+                    this.selectedSentence.classList.remove('celebrate');
+                    this.selectedAnalysis.classList.remove('celebrate');
+                }, 500);
+
+                this.showFeedback('أحسنت! إجابة صحيحة', 'correct');
+
+                if (this.matches === this.pairs.length) {
+                    this.handleGameComplete();
+                }
+
+                this.selectedSentence = null;
+                this.selectedAnalysis = null;
+            }
+
+            handleIncorrectMatch() {
+                setTimeout(() => {
+                    this.selectedSentence.classList.remove('selected');
+                    this.selectedAnalysis.classList.remove('selected');
+                    this.selectedSentence = null;
+                    this.selectedAnalysis = null;
+                }, 500);
+
+                this.showFeedback('حاول مرة أخرى', 'incorrect');
+            }
+
+            showFeedback(message, type) {
+                const feedback = document.querySelector('.feedback');
+                feedback.textContent = message;
+                feedback.className = `feedback ${type}`;
+                feedback.style.display = 'block';
+
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 2000);
+            }
+
+            updateStars() {
+                const stars = document.querySelectorAll('.star');
+                const accuracy = this.matches / this.attempts;
+                
+                if (accuracy >= 0.8) {
+                    stars[0].classList.add('earned');
+                    stars[1].classList.add('earned');
+                    stars[2].classList.add('earned');
+                } else if (accuracy >= 0.6) {
+                    stars[0].classList.add('earned');
+                    stars[1].classList.add('earned');
+                    stars[2].classList.remove('earned');
+                } else if (accuracy >= 0.4) {
+                    stars[0].classList.add('earned');
+                    stars[1].classList.remove('earned');
+                    stars[2].classList.remove('earned');
+                } else {
+                    stars.forEach(star => star.classList.remove('earned'));
+                }
+            }
+
+            startTimer() {
+                this.startTime = Date.now();
+                this.timerInterval = setInterval(() => {
+                    const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    document.querySelector('.timer').textContent = 
+                        `الوقت: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            handleGameComplete() {
+                clearInterval(this.timerInterval);
+                const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                const accuracy = Math.round((this.matches / this.attempts) * 100);
+
+                setTimeout(() => {
+                    this.showFeedback(
+                        `أحسنت! أكملت التمرين في ${minutes}:${seconds.toString().padStart(2, '0')} دقيقة بدقة ${accuracy}%`,
+                        'correct'
+                    );
+                }, 500);
+            }
+
+            resetGame() {
+                clearInterval(this.timerInterval);
+                this.selectedSentence = null;
+                this.selectedAnalysis = null;
+                this.matches = 0;
+                this.attempts = 0;
+                document.querySelectorAll('.star').forEach(star => star.classList.remove('earned'));
+                this.init();
+            }
+
+            showHint() {
+                const unmatched = document.querySelectorAll('.sentence-card:not(.matched)');
+                if (unmatched.length > 0) {
+                    const randomCard = unmatched[Math.floor(Math.random() * unmatched.length)];
+                    randomCard.classList.add('highlight');
+                    setTimeout(() => {
+                        randomCard.classList.remove('highlight');
+                    }, 1000);
+                }
+            }
+        }
+
+        const pairs = [
+            {
+                sentence: "كتبَ الطالبُ الدرسَ",
+                analysis: "فعل ماضٍ + فاعل مرفوع + مفعول به منصوب"
+            },
+            {
+                sentence: "يقرأُ المعلمُ القصةَ",
+                analysis: "فعل مضارع + فاعل مرفوع + مفعول به منصوب"
+            },
+            {
+                sentence: "لعبَ الأولادُ في الحديقةِ",
+                analysis: "فعل ماضٍ + فاعل مرفوع + جار ومجرور"
+            },
+            {
+                sentence: "تكتبُ البنتُ واجباتِها",
+                analysis: "فعل مضارع + فاعل مرفوع + مفعول به منصوب"
+            },
+            {
+                sentence: "شربَ محمدٌ العصيرَ",
+                analysis: "فعل ماضٍ + فاعل مرفوع + مفعول به منصوب"
+            },
+            {
+                sentence: "يزرعُ الفلاحُ الأرضَ",
+                analysis: "فعل مضارع + فاعل مرفوع + مفعول به منصوب"
+            }
+        ];
+
+        // Initialize the game
+        const game = new MatchingGame(pairs);
+    </script>
+</body>
+</html>

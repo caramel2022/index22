@@ -1,12 +1,273 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معمي الوحدة 2 الأسبوع 4</title>
+    <title>تمارين اللغة العربية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans Arabic', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Opposite words section */
+        .exercise-card.opposites {
+            background: linear-gradient(145deg, #fff, #ffe1e6);
+        }
+        .exercise-card.opposites h2 {
+            color: #e74c3c;
+        }
+        .exercise-card.opposites .option-btn {
+            border-color: #e74c3c;
+        }
+        .exercise-card.opposites .option-btn:hover {
+            background: #ffecef;
+        }
+
+        /* Synonyms section */
+        .exercise-card.synonyms {
+            background: linear-gradient(145deg, #fff, #e1f5e6);
+        }
+        .exercise-card.synonyms h2 {
+            color: #27ae60;
+        }
+        .exercise-card.synonyms .option-btn {
+            border-color: #27ae60;
+        }
+        .exercise-card.synonyms .option-btn:hover {
+            background: #ecfff2;
+        }
+
+        /* Singular forms section */
+        .exercise-card.singular {
+            background: linear-gradient(145deg, #fff, #e1effe);
+        }
+        .exercise-card.singular h2 {
+            color: #3498db;
+        }
+        .exercise-card.singular .option-btn {
+            border-color: #3498db;
+        }
+        .exercise-card.singular .option-btn:hover {
+            background: #ecf5ff;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin: 1rem 0;
+        }
+
+        .options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans Arabic', Arial, sans-serif;
+        }
+
+        .option-btn.correct {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .option-btn.incorrect {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .result {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            text-align: center;
+            min-height: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .exercise-card {
+                padding: 1rem;
+            }
+
+            .option-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>مرحبًا بكم في الأسبوع 4 من الوحدة 2</h1>
-    <p>هذه هي المحتويات الخاصة بالأسبوع 4.</p>
+    <div class="container">
+        <h1>تمارين اللغة العربية</h1>
+        <button id='backButton' onclick="window.history.back();" style="background-color: #3498db; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease;">عودة</button>
+        
+        <div class="exercise-card opposites">
+            <h2>اختر ضد الكلمة</h2>
+            <div class="question">ما هو ضد كلمة "نهاية"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'بداية', 1)">بداية</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'بداية', 1)">وسط</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'بداية', 1)">ختام</button>
+            </div>
+            <div class="result"></div>
+        </div>
+
+        <div class="exercise-card opposites">
+            <h2>اختر ضد الكلمة</h2>
+            <div class="question">ما هو ضد كلمة "نصغر"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'نكبر', 2)">نكبر</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'نكبر', 2)">نقل</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'نكبر', 2)">نخفض</button>
+            </div>
+            <div class="result"></div>
+        </div>
+
+        <div class="exercise-card synonyms">
+            <h2>اختر مرادف الكلمة</h2>
+            <div class="question">ما هو مرادف كلمة "أنصت"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'أصغى', 3)">أصغى</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'أصغى', 3)">تكلم</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'أصغى', 3)">صاح</button>
+            </div>
+            <div class="result"></div>
+        </div>
+
+        <div class="exercise-card synonyms">
+            <h2>اختر مرادف الكلمة</h2>
+            <div class="question">ما هو مرادف كلمة "أسقطه"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'ألقاه', 4)">ألقاه</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'ألقاه', 4)">رفعه</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'ألقاه', 4)">حمله</button>
+            </div>
+            <div class="result"></div>
+        </div>
+
+        <div class="exercise-card singular">
+            <h2>اختر المفرد</h2>
+            <div class="question">ما هو مفرد كلمة "رؤوس"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'رأس', 5)">رأس</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'رأس', 5)">راس</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'رأس', 5)">رؤس</button>
+            </div>
+            <div class="result"></div>
+        </div>
+
+        <div class="exercise-card singular">
+            <h2>اختر المفرد</h2>
+            <div class="question">ما هو مفرد كلمة "دورات"؟</div>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, 'دورة', 6)">دورة</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'دورة', 6)">دور</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'دورة', 6)">دوران</button>
+            </div>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button, correctAnswer, questionNum) {
+            const options = button.parentElement.getElementsByClassName('option-btn');
+            const result = button.parentElement.nextElementSibling;
+            
+            Array.from(options).forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.disabled = true;
+            });
+
+            if (button.textContent === correctAnswer) {
+                button.classList.add('correct');
+                result.textContent = 'أحسنت! إجابة صحيحة 🎉';
+                result.style.color = '#27ae60';
+            } else {
+                button.classList.add('incorrect');
+                Array.from(options).forEach(opt => {
+                    if (opt.textContent === correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                });
+                result.textContent = 'حاول مرة أخرى ❌';
+                result.style.color = '#e74c3c';
+            }
+            
+            result.classList.add('show');
+
+            setTimeout(() => {
+                Array.from(options).forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                    opt.disabled = false;
+                });
+                result.classList.remove('show');
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

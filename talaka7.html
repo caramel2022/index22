@@ -1,201 +1,313 @@
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الطلاقة</title>
+    <title>الوحدة الثانية - الأسبوع الثاني - الطلاقة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
+            font-family: 'Noto Naskh Arabic', serif;
+            background: #f8f9fa;
+            color: #2c3e50;
             margin: 0;
             padding: 20px;
             text-align: right;
-            font-size: 20px;
+            font-size: 22px;
             direction: rtl;
         }
+
         header {
-            background: #3498db;
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
-            padding: 15px 0;
+            padding: 25px 0;
             text-align: center;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(52,152,219,0.2);
+            border-radius: 15px;
             max-width: 800px;
-            margin: auto;
+            margin: 20px auto;
         }
+
         .container {
             max-width: 800px;
             margin: auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -10px rgba(52,152,219,0.3);
+            border: 1px solid rgba(52,152,219,0.1);
         }
+
         h2 {
             color: #3498db;
+            text-align: center;
+            margin: 25px 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            position: relative;
         }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
         p {
-            line-height: 1.6;
+            line-height: 1.8;
+            text-align: justify;
+            padding: 20px;
+            border-right: 4px solid #3498db;
+            background: linear-gradient(to left, #f8f9fa 50%, transparent 100%);
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
         }
+
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .table-header {
-            background: #3498db;
-            color: white;
-        }
-        .table-row {
-            transition: background-color 0.3s;
-        }
-        .table-row:hover {
-            background-color: #f9f9f9;
-        }
-        .table-cell {
-            border: 1px solid #ddd;
-            padding: 15px;
-            font-size: 20px;
-        }
-        .btn {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #45a049;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        /* Styles for dropdowns in the table */
-        input[type='number'] {
-            width: 100%;
-            padding: 10px;
-            font-size: 18px;
-            border: 2px solid #3498db;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: border-color 0.3s;
+        .table-header {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            font-size: 26px;
         }
-        input[type='number']:focus {
+
+        .table-row {
+            transition: all 0.3s ease;
+            background: rgba(52,152,219,0.05);
+        }
+
+        .table-row:hover {
+            transform: translateX(10px);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            background: rgba(52,152,219,0.1);
+        }
+
+        .table-cell {
+            padding: 18px;
+            border: 1px solid rgba(52,152,219,0.1);
+            font-size: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(52,152,219,0.05);
+        }
+
+        input[type="number"]:focus {
             border-color: #2980b9;
+            box-shadow: 0 0 8px rgba(52,152,219,0.3);
             outline: none;
         }
 
-        /* Media Queries */
+        .interactive-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .interactive-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+        }
+
+        #timer {
+            font-size: 48px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background: rgba(52,152,219,0.1);
+            border-radius: 15px;
+            border: 2px solid #3498db;
+            width: fit-content;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .save-button {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+
+        .stop-button {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
         @media (max-width: 768px) {
             body {
-                font-size: 18px;
+                font-size: 20px;
+                padding: 10px;
             }
             .container {
-                padding: 15px;
+                padding: 20px;
+            }
+            #timer {
+                font-size: 36px;
+                padding: 10px 20px;
             }
             .table-cell {
                 font-size: 18px;
+                padding: 15px;
             }
         }
+
         @media (max-width: 480px) {
-            body {
+            .interactive-button {
+                padding: 10px 20px;
+                font-size: 18px;
+            }
+            input[type="number"] {
                 font-size: 16px;
-            }
-            .table-cell {
-                font-size: 16px;
-            }
-        }
-        @media (max-width: 320px) {
-            body {
-                font-size: 14px;
-            }
-            .table-cell {
-                font-size: 14px;
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>- الوحدة الثانية - الاسبوع الثاني - الطلاقة</h1>
-</header>
+    <header>
+        <h1>الوحدة الثانية - الأسبوع الثاني - الطلاقة</h1>
+    </header>
 
-<div class="container">
-    <div class="content">
+    <div class="container">
         <h2>المدينة والقرية</h2>
+        
+        <div style="text-align: center; margin: 20px;">
+            <button class="interactive-button" id="startButton">
+                <i class="fas fa-play"></i> تشغيل
+            </button>
+            <button class="interactive-button stop-button" id="stopButton">
+                <i class="fas fa-stop"></i> إيقاف
+            </button>
+        </div>
+        
+        <div id="timer">00:00</div>
+
         <p>في الْمَدِينَةِ بِنَايَاتٌ عَالِيَةٌ وَشَوَارِعُ وَاسِعَةٌ، أمَّا في القَرْيَةِ فَإنَّ البُيُوتَ صَغِيرَةٌ وَالطُّرُقَ هَادِئَةٌ. القَرْيَةُ مِلِيئَةٌ بالسيَّاراتِ والضَّجِيجِ، وفي القَرْيَةِ نَسمَعُ صَوْتَ العَصافيرِ، وفي المَدِينَةِ نرى المُتَاجِرَ الكَبِيرَةَ. في القَرْيَةِ يَعرِفُ النَّاسُ بَعْضَهُم بَعْضًا وَيَتَزَاوَرُونَ كَالعَائِلَةِ الوَاحِدَةِ. أما في المَدِينَةِ، فَالنَّاسُ مُنشَغَلُونَ دائمًا، يَركَضُونَ مِن مَكَانٍ إِلَى آخَر. في القَرْيَةِ نَرى الحُقولَ الخَضْرَاءَ وَالحَيَوَاناتِ الأَلْيَفَةَ، وفي المَدِينَةِ نَجِدُ الحَدَائِقَ العَامَّةَ وَالمَلاعبَ.</p>
-        <p>ما أَجْمَلَ الحَيَاةَ في كِلَيهما!</p>
+        <p style="text-align: center; font-weight: bold; color: #3498db;">ما أَجْمَلَ الحَيَاةَ في كِلَيهما!</p>
+
+        <h2>أدخل نتائجك</h2>
+        
+        <table class="table">
+            <thead>
+                <tr class="table-header">
+                    <th class="table-cell">رقم المحاولة</th>
+                    <th class="table-cell">عدد الكلمات الصحيحة</th>
+                    <th class="table-cell">زمن القراءة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <select class="interactive-button" style="width: 120px; padding: 8px;">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </td>
+                    <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
+                    <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="الزمن بالدقائق"></td>
+                </tr>
+                <!-- تكرار الصفوف الأخرى بنفس النمط -->
+            </tbody>
+        </table>
+
+        <div class="controls-container">
+            <button class="interactive-button save-button" onclick="saveData()">
+                <i class="fas fa-save"></i> حفظ النتائج
+            </button>
+            <button class="interactive-button" onclick="window.history.back();">
+                <i class="fas fa-arrow-right"></i> عودة
+            </button>
+        </div>
     </div>
-</div>
 
-<div style="text-align: center; margin: 20px;">
-    <div id="timer" style="font-size: 48px; font-weight: bold; color: #3498db;">00:00</div>
-    <div style="margin-top: 10px;">
-        <button id="startButton" onclick="startTimer()" style="font-size: 18px; padding: 10px 15px; background-color: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">تشغيل</button>
-        <button id="stopButton" onclick="stopTimer()" style="font-size: 18px; padding: 10px 15px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">إيقاف</button>
-    </div>
-</div>
+    <script>
+        let timer;
+        let seconds = 0;
+        let isTimerRunning = false;
 
-<table class="table">
-    <thead>
-        <tr class="table-header">
-            <th>رقم المحاولة</th>
-            <th>عدد الكلمات الصحيحة</th>
-            <th>زمن القراءة (بالدقيقة)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="table-row">
-            <td class="table-cell">01</td>
-            <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
-            <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="أدخل الزمن"></td>
-        </tr>
-        <tr class="table-row">
-            <td class="table-cell">02</td>
-            <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
-            <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="أدخل الزمن"></td>
-        </tr>
-        <tr class="table-row">
-            <td class="table-cell">03</td>
-            <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
-            <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="أدخل الزمن"></td>
-        </tr>
-        <tr class="table-row">
-            <td class="table-cell">04</td>
-            <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
-            <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="أدخل الزمن"></td>
-        </tr>
-        <tr class="table-row">
-            <td class="table-cell">05</td>
-            <td class="table-cell"><input type="number" min="0" placeholder="أدخل العدد"></td>
-            <td class="table-cell"><input type="number" step="0.1" min="0" placeholder="أدخل الزمن"></td>
-        </tr>
-    </tbody>
-</table>
-
-<script>
-    let timerInterval;
-    let seconds = 0;
-
-    function startTimer() {
-        timerInterval = setInterval(() => {
-            seconds++;
+        function updateTimerDisplay() {
             const minutes = Math.floor(seconds / 60);
             const displaySeconds = seconds % 60;
-            document.getElementById('timer').innerText =
-                (minutes < 10 ? '0' : '') + minutes + ':' +
-                (displaySeconds < 10 ? '0' : '') + displaySeconds;
-        }, 1000);
-    }
+            document.getElementById('timer').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(displaySeconds).padStart(2, '0')}`;
+        }
 
-    function stopTimer() {
-        clearInterval(timerInterval);
-    }
-</script>
+        function startTimer() {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timer = setInterval(() => {
+                    seconds++;
+                    updateTimerDisplay();
+                }, 1000);
+                document.getElementById('startButton').innerHTML = '<i class="fas fa-pause"></i> إيقاف';
+            } else {
+                clearInterval(timer);
+                isTimerRunning = false;
+                document.getElementById('startButton').innerHTML = '<i class="fas fa-play"></i> تشغيل';
+            }
+        }
 
-<div style="text-align: center; margin: 20px;">
-    <button onclick="window.location.href='reading_fluently.html'" style="font-size: 18px; padding: 10px 15px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">عودة</button>
-</div>
+        function stopTimer() {
+            clearInterval(timer);
+            isTimerRunning = false;
+            seconds = 0;
+            updateTimerDisplay();
+            document.getElementById('startButton').innerHTML = '<i class="fas fa-play"></i> تشغيل';
+        }
+
+        function saveData() {
+            const attempts = [];
+            document.querySelectorAll('.table-row').forEach(row => {
+                const attempt = {
+                    number: row.querySelector('select').value,
+                    correctWords: row.querySelector('input[type="number"]:nth-of-type(1)').value,
+                    time: row.querySelector('input[type="number"]:nth-of-type(2)').value
+                };
+                attempts.push(attempt);
+            });
+            
+            localStorage.setItem('readingFluencyData', JSON.stringify(attempts));
+            alert('تم حفظ البيانات بنجاح!');
+        }
+
+        document.getElementById('startButton').addEventListener('click', startTimer);
+        document.getElementById('stopButton').addEventListener('click', stopTimer);
+    </script>
+</body>
+</html>
