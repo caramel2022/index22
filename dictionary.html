@@ -155,6 +155,19 @@
             border-radius: 50%;
             pointer-events: none;
         }
+        
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #e963a4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -163,33 +176,23 @@
     <div class="container">
         <div class="unit">
             <div class="unit-title">الوحدة1:من نحن؟</div>
-            <p class="week"><a href="dictioryu1S1.html">الأسبوع الأول</a></p>
-            <p class="week"><a href="dictioryu1S2.html">الأسبوع الثاني</a></p>
-            <p class="week"><a href="dictioryu1S3.html">الأسبوع الثالث</a></p>
-            <p class="week"><a href="dictioryu1S4.html">الأسبوع الرابع</a></p>
-            <p class="week"><a href="dictioryu1S5.html">الأسبوع الخامس</a></p>
+            <p class="week" id='unit1_week1' onclick="window.location.href='معمي_الوحدة_1_الأسبوع_1.html';">الأسبوع الأول</p>
+            <p class="week" id='unit1_week2' onclick="window.location.href='معمي_الوحدة_1_الأسبوع_2.html';">الأسبوع الثاني</p>
+            <p class="week" id='unit1_week3' onclick="window.location.href='معمي_الوحدة_1_الأسبوع_3.html';">الأسبوع الثالث</p>
+            <p class="week" id='unit1_week4' onclick="window.location.href='معمي_الوحدة_1_الأسبوع_4.html';">الأسبوع الرابع</p>
+            <p class="week" id='unit1_week5' onclick="window.location.href='معمي_الوحدة_1_الأسبوع_5.html';">الأسبوع الخامس</p>
         </div>
 
         <div class="unit">
             <div class="unit-title">الوحدة 2</div>
-            <p class="week"><a href="dictioryu2S1.html">الأسبوع الأول</a></p>
-            <p class="week"><a href="dictioryu2S2.html">الأسبوع الثاني</a></p>
-            <p class="week"><a href="dictioryu2S3.html">الأسبوع الثالث</a></p>
-            <p class="week"><a href="dictioryu2S4.html">الأسبوع الرابع</a></p>
-            <p class="week"><a href="dictioryu2S5.html">الأسبوع الخامس</a></p>
+            <p class="week" id='unit2_week1' onclick="window.location.href='معمي_الوحدة_2_الأسبوع_1.html';">الأسبوع الأول</p>
+            <p class="week" id='unit2_week2' onclick="window.location.href='معمي_الوحدة_2_الأسبوع_2.html';">الأسبوع الثاني</p>
+            <p class="week" id='unit2_week3' onclick="window.location.href='معمي_الوحدة_2_الأسبوع_3.html';">الأسبوع الثالث</p>
+            <p class="week" id='unit2_week4' onclick="window.location.href='معمي_الوحدة_2_الأسبوع_4.html';">الأسبوع الرابع</p>
+            <p class="week" id='unit2_week5' onclick="window.location.href='معمي_الوحدة_2_الأسبوع_5.html';">الأسبوع الخامس</p>
         </div>
     </div>
-    <button id="week2Button">الأسبوع 2</button>
-    <button onclick="openWeek3()">الأسبوع 3</button>
-    <button onclick="openWeek4()">الأسبوع 4</button>
-    <button onclick="openWeek5()">الأسبوع 5</button>
-    <button onclick="openWeek6()">الأسبوع 6</button>
-    <button onclick="openWeek1Unit2()">الأسبوع 1 الوحدة 2</button>
-    <button onclick="openWeek2Unit2()">الأسبوع 2 الوحدة 2</button>
-    <button onclick="openWeek3Unit2()">الأسبوع 3 الوحدة 2</button>
-    <button onclick="openWeek4Unit2()">الأسبوع 4 الوحدة 2</button>
-    <button onclick="openWeek5Unit2()">الأسبوع 5 الوحدة 2</button>
-    <button onclick="openWeek6Unit2()">الأسبوع 6 الوحدة 2</button>
+    <button class="return-button" onclick="window.location.href='activities.html';">عودة</button>
     <script>
         // إنشاء تأثير الجسيمات
         function createParticles(e) {
@@ -221,55 +224,6 @@
                     this.style.transform = 'scale(1.03)';
                 }, 200);
             });
-        });
-
-        document.getElementById('week2Button').addEventListener('click', function() {
-            window.open('معمي_الوحدة_1_الأسبوع_2.html', '_blank');
-        });
-
-        function openWeek3() {
-            window.open('معمي_الوحدة_1_الأسبوع_3.html', '_blank');
-        }
-
-        function openWeek4() {
-            window.open('معمي_الوحدة_1_الأسبوع_4.html', '_blank');
-        }
-
-        function openWeek5() {
-            window.open('معمي_الوحدة_1_الأسبوع_5.html', '_blank');
-        }
-
-        function openWeek6() {
-            window.open('معمي_الوحدة_1_الأسبوع_6.html', '_blank');
-        }
-
-        function openWeek1Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_1.html', '_blank');
-        }
-
-        function openWeek2Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_2.html', '_blank');
-        }
-
-        function openWeek3Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_3.html', '_blank');
-        }
-
-        function openWeek4Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_4.html', '_blank');
-        }
-
-        function openWeek5Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_5.html', '_blank');
-        }
-
-        function openWeek6Unit2() {
-            window.open('معمي_الوحدة_2_الأسبوع_6.html', '_blank');
-        }
-    </script>
-    <script>
-        document.querySelector('button[onclick="openWeek3()"]').addEventListener('click', function() {
-            console.log('تم الضغط على زر الأسبوع 3');
         });
     </script>
 </body>

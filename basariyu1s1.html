@@ -176,7 +176,7 @@
                 <div class="word-content">
                     <p class="example"> ذَهَبْتُ إلى المَدْرَسَةِ ثُمَّ عُدْتُ إلى البيت</p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+                        <button class="btn btn-listen" onclick="playSound('thumma.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -201,7 +201,7 @@
                 <div class="word-content">
                     <p class="example"> أُحِبُّ السَّفر لَكِنْ  لاأملك المال </p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+                        <button class="btn btn-listen" onclick="playSound('lakinn.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -226,7 +226,7 @@
                 <div class="word-content">
                     <p class="example">لِمَاذَا تَذْهَبُ إلى المَدْرَسَةِ؟</p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+                        <button class="btn btn-listen" onclick="playSound('limada.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -251,7 +251,7 @@
                 <div class="word-content">
                     <p class="example">. سَأَبْقَى في المَدْرَسَةِ حَتَّى السَاعةِ السَادِسَةِ</p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+                        <button class="btn btn-listen" onclick="playSound('hatta.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -276,7 +276,8 @@
                 <div class="word-content">
                     <p class="example">هَلْ تُحِبُ اللُعبَ؟</p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+        
+                        <button class="btn btn-listen" onclick="playSound('halla.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -301,7 +302,7 @@
                 <div class="word-content">
                     <p class="example"> ذَهَبْتُ نَحْوَ المَدْرَسَةِ</p>
                     <div class="buttons">
-                        <button class="btn btn-listen">
+                        <button class="btn btn-listen" onclick="playSound('nahwa.mp3')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -327,6 +328,11 @@
             inputDiv.className = 'input-container';
             inputDiv.innerHTML = '<input type="text" placeholder="اكتب جملة هنا" />';
             wordCard.appendChild(inputDiv);
+        }
+
+        function playSound(soundFile) {
+            var audio = new Audio(soundFile);
+            audio.play();
         }
     </script>
 </body>

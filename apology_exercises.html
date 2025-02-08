@@ -16,40 +16,72 @@
             font-size: 16px;
             font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
             background-color: #f4f6f9;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* يمكن استبدالها بصورة خلفية مناسبة */
+            background-size: cover;
+            background-position: center;
         }
         .container {
             padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
         .page-title {
             text-align: center;
             margin-bottom: 30px;
             color: #2c3e50;
             font-weight: bold;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         .exercise-btn {
             width: 100%;
             padding: 15px;
             margin-bottom: 15px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px; /* حواف أكثر دائرية */
             color: white;
             transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--btn-color-1), var(--btn-color-2));
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* مسافة بين الأيقونة والنص */
         }
         .exercise-btn:hover {
             transform: scale(1.05);
             opacity: 0.9;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .back-btn {
-            background-color: #6c757d;
+            background: linear-gradient(135deg, #6c757d, #5a6268);
             color: white;
         }
         .exercise-description {
             text-align: center;
             margin-bottom: 30px;
             color: #666;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
         }
+        .row {
+            margin-bottom: 20px;
+        }
+        .col-md-6 {
+            padding: 10px;
+        }
+        /* ألوان مختلفة لكل زر */
+        .btn-1 { --btn-color-1: #ff6b6b; --btn-color-2: #ff8787; }
+        .btn-2 { --btn-color-1: #ff9f43; --btn-color-2: #ffc478; }
+        .btn-3 { --btn-color-1: #4ecdc4; --btn-color-2: #6fffe9; }
+        .btn-4 { --btn-color-1: #45aaf2; --btn-color-2: #6dccff; }
+        .btn-5 { --btn-color-1: #a55eea; --btn-color-2: #c08ef0; }
+        .btn-6 { --btn-color-1: #fc5c65; --btn-color-2: #ff7b7b; }
+        .btn-7 { --btn-color-1: #26de81; --btn-color-2: #4ce7a6; }
+        .btn-8 { --btn-color-1: #fed330; --btn-color-2: #ffe77b; }
     </style>
 </head>
 <body>
@@ -59,36 +91,54 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="solar_lunar_ex1.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ff6b6b;">تمرين 1</button>
+                    <button class="exercise-btn btn-1">
+                        <i class="fas fa-sun"></i> تمرين 1
+                    </button>
                 </a>
                 <a href="solar_lunar_ex2.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ff8787;">تمرين 2</button>
+                    <button class="exercise-btn btn-2">
+                        <i class="fas fa-moon"></i> تمرين 2
+                    </button>
                 </a>
                 <a href="solar_lunar_ex3.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ffa8a8;">تمرين 3</button>
+                    <button class="exercise-btn btn-3">
+                        <i class="fas fa-star"></i> تمرين 3
+                    </button>
                 </a>
                 <a href="solar_lunar_ex4.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ffc9c9;">تمرين 4</button>
+                    <button class="exercise-btn btn-4">
+                        <i class="fas fa-cloud"></i> تمرين 4
+                    </button>
                 </a>
             </div>
             <div class="col-md-6">
                 <a href="solar_lunar_ex5.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ffd8a8;">تمرين 5</button>
+                    <button class="exercise-btn btn-5">
+                        <i class="fas fa-leaf"></i> تمرين 5
+                    </button>
                 </a>
                 <a href="solar_lunar_ex6.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #ffe5a8;">تمرين 6</button>
+                    <button class="exercise-btn btn-6">
+                        <i class="fas fa-fire"></i> تمرين 6
+                    </button>
                 </a>
                 <a href="solar_lunar_ex7.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #fff3bf;">تمرين 7</button>
+                    <button class="exercise-btn btn-7">
+                        <i class="fas fa-water"></i> تمرين 7
+                    </button>
                 </a>
                 <a href="solar_lunar_ex8.html" class="text-decoration-none">
-                    <button class="exercise-btn" style="background-color: #fff9db;">تمرين 8</button>
+                    <button class="exercise-btn btn-8">
+                        <i class="fas fa-mountain"></i> تمرين 8
+                    </button>
                 </a>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-12">
-                <button class="exercise-btn back-btn" onclick="window.location.href='exercises.html'">العودة للتمارين</button>
+                <button class="exercise-btn back-btn" onclick="window.location.href='exercises.html'">
+                    <i class="fas fa-arrow-left"></i> العودة للتمارين
+                </button>
             </div>
         </div>
     </div>
